@@ -25,7 +25,8 @@ void Player::update(float elapsed)
 			jump(elapsed);
 			break;
 		case Jumping:
-			fall(elapsed);
+			jump(elapsed);
+			break;
 		case Falling:
 			fall(elapsed);
 			break;
@@ -40,19 +41,43 @@ void Player::move(float elapsed)
 		_currentState = Moving;
 	}
 	else
+	{
 		if (Keyboard::isKeyPressed(Keyboard::Right) && _sprite.getPosition().x < SCREEN_WIDTH - PLAYER_WIDTH)
 		{
 			_sprite.move(_moveSpeed * elapsed, 0);
 			_currentState = Moving;
 		}
+		else
+			_currentState = Idle;
+	}
 }
 
 void Player::jump(float elapsed)
 {
-	if (Keyboard::isKeyPressed(Keyboard::Space))
+	if (Keyboard::isKeyPressed(Keyboard::Space) && _currentState != Jumping)
 	{
 		_sprite.move(0, _jumpSpeed * elapsed);
 		_currentState = Jumping;
+	}
+	else
+	{
+		if (_currentState == Jumping)
+		{
+			if (_sprite.getPosition().y > SCREEN_HEIGHT - PLAYER_JUMP_HEIGHT - GROUND_HEIGHT)
+			{
+				if (Keyboard::isKeyPressed(Keyboard::Left) && _sprite.getPosition().x > 0)
+					_sprite.move(-_moveSpeed * elapsed, _jumpSpeed * elapsed);
+				else
+				{
+					if (Keyboard::isKeyPressed(Keyboard::Right) && _sprite.getPosition().x < SCREEN_WIDTH - PLAYER_WIDTH)
+						_sprite.move(_moveSpeed * elapsed, _jumpSpeed * elapsed);
+					else
+						_sprite.move(0, _jumpSpeed * elapsed);
+				}
+			}
+			else
+				_currentState = Falling;
+		}
 	}
 }
 
@@ -68,12 +93,8 @@ void Player::fall(float elapsed)
 				_sprite.move(_moveSpeed * elapsed, GRAVITY * elapsed);
 			else
 				_sprite.move(0, GRAVITY * elapsed);
-
-			_currentState = Falling;
 		}
 	}
 	else
-	{
 		_currentState = Idle;
-	}
 }

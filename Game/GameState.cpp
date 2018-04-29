@@ -29,28 +29,37 @@ void GameState::input()
 	if (_window->pollEvent(event))
 		switch (event.type)
 		{
-		case Event::Closed:
-			_window->close();
-			break;
-		case Event::KeyReleased:
-			switch (Event::KeyReleased)
-			{
-				case Keyboard::Left | Keyboard::Right:
-					if (_player->getCurrentState() == Moving)
-						_player->setCurrentState(Idle);
-					break;
-			}
+			case Event::Closed:
+				_window->close();
+				break;
 		}
 }
 
+
 void GameState::update(float elapsed)
 {
+	switch (_player->getCurrentState())
+	{
+		case Idle:
+			cout << "Idle" << endl;
+			break;
+		case Moving:
+			cout << "Moving" << endl;
+			break;
+		case Jumping:
+			cout << "Jumping" << endl;
+			break;
+		case Falling:
+			cout << "Falling" << endl;
+			break;
+	}
+
 	_player->update(elapsed);
 }
 
 void GameState::draw(float elapsed)
 {
-	_window->clear(Color::White);
+	_window->clear({ 32, 64, 128, 255 });
 	_window->draw(_player->getSprite());
 	_window->display();
 }
