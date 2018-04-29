@@ -3,11 +3,13 @@
 
 #include <SFML/Graphics.hpp>
 #include "State.h"
+#include "Player.h"
 using namespace sf;
 
 class GameState : public State
 {
 private:
+	Player* _player;
 	bool gameOver;
 
 protected:

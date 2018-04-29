@@ -2,12 +2,12 @@
 
 GameState::GameState(RenderWindow& window) : State(window)
 {
-
+	_player = new Player(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2, PLAYER_PATH);
 }
 
 GameState::~GameState()
 {
-
+	delete _player;
 }
 
 void GameState::run()
@@ -37,11 +37,12 @@ void GameState::input()
 
 void GameState::update(float elapsed)
 {
-
+	_player->update(elapsed);
 }
 
 void GameState::draw(float elapsed)
 {
-	_window->clear(Color::Black);
+	_window->clear(Color::White);
+	_window->draw(_player->getSprite());
 	_window->display();
 }

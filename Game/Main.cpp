@@ -7,7 +7,8 @@ using namespace sf;
 int main()
 {
 	RenderWindow window(VideoMode(SCREEN_WIDTH, SCREEN_HEIGHT), "Game", Style::Titlebar | Style::Close);
-	window.setVerticalSyncEnabled(true);
+	//window.setVerticalSyncEnabled(true);
+	window.setFramerateLimit(60);
 	
 	SplashState* splash = new SplashState(window, SPLASH_LOGO_PATH);
 	splash->start();

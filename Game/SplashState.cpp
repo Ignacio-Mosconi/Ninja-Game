@@ -2,8 +2,7 @@
 
 SplashState::SplashState(RenderWindow& window, const string& logoPath) : State(window)
 {
-	if (!_logoTexture.loadFromFile(logoPath))
-		cout << "Error loading texture." << endl;
+	_logoTexture.loadFromFile(logoPath);
 	_logo.setTexture(_logoTexture);
 	_logo.setOrigin(_logo.getGlobalBounds().width / 2, _logo.getGlobalBounds().height / 2);
 	_logo.setPosition(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2);
