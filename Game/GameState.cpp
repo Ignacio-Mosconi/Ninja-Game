@@ -2,7 +2,7 @@
 
 GameState::GameState(RenderWindow& window) : State(window)
 {
-	_player = new Player(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2, PLAYER_PATH);
+	_player = new Player(SCREEN_WIDTH / 2, SCREEN_HEIGHT - (GROUND_HEIGHT + PLAYER_HEIGHT), PLAYER_PATH);
 }
 
 GameState::~GameState()
@@ -32,6 +32,14 @@ void GameState::input()
 		case Event::Closed:
 			_window->close();
 			break;
+		case Event::KeyReleased:
+			switch (Event::KeyReleased)
+			{
+				case Keyboard::Left | Keyboard::Right:
+					if (_player->getCurrentState() == Moving)
+						_player->setCurrentState(Idle);
+					break;
+			}
 		}
 }
 
