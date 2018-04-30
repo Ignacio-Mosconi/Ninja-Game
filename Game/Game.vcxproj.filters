@@ -25,6 +25,12 @@
     <Filter Include="Source Files\States">
       <UniqueIdentifier>{db410090-821c-4b44-b018-168bca946af2}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\User Interface">
+      <UniqueIdentifier>{0c33b0e1-91d1-4c20-b196-526eb7ceb5e6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\User Interface">
+      <UniqueIdentifier>{cf9af9ef-5e5f-4a00-9de9-2d6610932935}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -49,7 +55,13 @@
       <Filter>Source Files\States</Filter>
     </ClCompile>
     <ClCompile Include="HUD.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\User Interface</Filter>
+    </ClCompile>
+    <ClCompile Include="Collectible.cpp">
+      <Filter>Source Files\Entities</Filter>
+    </ClCompile>
+    <ClCompile Include="Coin.cpp">
+      <Filter>Source Files\Entities</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -75,7 +87,13 @@
       <Filter>Header Files\Entities</Filter>
     </ClInclude>
     <ClInclude Include="HUD.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\User Interface</Filter>
+    </ClInclude>
+    <ClInclude Include="Coin.h">
+      <Filter>Header Files\Entities</Filter>
+    </ClInclude>
+    <ClInclude Include="Collectible.h">
+      <Filter>Header Files\Entities</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -15,8 +15,6 @@ int main()
 	GameState* game = new GameState(window);
 	game->run();
 
-	cin.get();
-
 	delete splash;
 	delete game;
 	return 0;

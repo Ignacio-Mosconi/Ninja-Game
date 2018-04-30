@@ -6,8 +6,11 @@ GameState::GameState(RenderWindow& window) : State(window)
 
 	_player = new Player(SCREEN_WIDTH / 2 - PLAYER_WIDTH / 2, SCREEN_HEIGHT - (GROUND_HEIGHT + PLAYER_HEIGHT), PLAYER_PATH);
 	for (int i = 0; i < FRUITS; i++)
-		_fruits[i] = new Fruit(rand() % (FRUIT_MAX_X - FRUIT_MIN_X) + FRUIT_MIN_X, FRUIT_MIN_Y, FRUIT_PATH);
+		_fruits[i] = new Fruit(rand() % (FRUIT_MAX_X - FRUIT_MIN_X - FRUIT_WIDTH) + FRUIT_MIN_X, FRUIT_MIN_Y, FRUIT_PATH);
 	_ground = new Entity(0, SCREEN_HEIGHT - GROUND_HEIGHT, GROUND_PATH);
+	for (int i = 0; i < COINS; i++)
+		_coins[i] = new Coin(rand() % (COIN_MAX_X - COIN_MIN_X - COIN_WIDTH) + COIN_MIN_X,
+			rand() % (COIN_MAX_Y - COIN_MIN_Y) + COIN_MIN_Y, COIN_PATH);
 
 	_hud = new HUD();
 
@@ -23,6 +26,8 @@ GameState::~GameState()
 	for (int i = 0; i < FRUITS; i++)
 		delete _fruits[i];
 	delete _ground;
+	for (int i = 0; i < COINS; i++)
+		delete _coins[i];
 
 	delete _hud;
 }
@@ -91,6 +96,8 @@ void GameState::update(float elapsed)
 	_player->update(elapsed);
 	for (int i = 0; i < FRUITS; i++)
 		_fruits[i]->update(elapsed);
+	for (int i = 0; i < COINS; i++)
+		_coins[i]->update(elapsed);
 
 	for (int i = 0; i < FRUITS; i++)
 		fruitPlayerCollision(_fruits[i], _player);
@@ -109,6 +116,8 @@ void GameState::draw(float elapsed)
 		for (int i = 0; i < FRUITS; i++)
 			_window->draw(_fruits[i]->getSprite());
 		_window->draw(_ground->getSprite());
+		for (int i = 0; i < COINS; i++)
+			_window->draw(_coins[i]->getSprite());
 
 		_hud->draw(_window, _paused, _gameOver);
 
@@ -122,7 +131,10 @@ void GameState::fruitPlayerCollision(Fruit* f, Player* p)
 	{
 		f->disable();
 		if (p->getLives() > 1)
+		{
 			p->die();
+			_hud->updateHUD(Lives, p->getLives());
+		}
 		else
 			_gameOver = true;
 	}

@@ -27,16 +27,39 @@ HUD::~HUD()
 
 void HUD::updateHUD(Element element, int number)
 {
-
+	switch (element)
+	{
+		case Lives:
+			_lives->setString("Lives: " + to_string(number));
+			switch (number)
+			{
+				case 1:
+					_lives->setFillColor(TEXT_COLOR_RED);
+					break;
+				case 2:
+					_lives->setFillColor(TEXT_COLOR_YELLOW);
+					break;
+				case 3:
+					_lives->setFillColor(TEXT_COLOR_GREEN);
+					break;
+			}
+			break;
+		case Score:
+			_score->setString("Score: " + to_string(number));
+			break;
+	}
 }
 
 void HUD::draw(RenderWindow* window, bool isPaused, bool isGameOver)
 {
-	window->draw(*_lives);
-	window->draw(*_score);
-	if  (isPaused)
-		window->draw(*_paused);
-	if (isGameOver)
+	if (!isGameOver)
+	{
+		window->draw(*_lives);
+		window->draw(*_score);
+		if (isPaused)
+			window->draw(*_paused);
+	}
+	else
 		window->draw(*_gameOver);
 }
 

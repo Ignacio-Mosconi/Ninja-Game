@@ -6,6 +6,7 @@
 #include "State.h"
 #include "Player.h"
 #include "Fruit.h"
+#include "Coin.h"
 #include "HUD.h"
 using namespace sf;
 
@@ -15,6 +16,7 @@ private:
 	Player* _player;
 	Fruit* _fruits[FRUITS];
 	Entity* _ground;
+	Coin* _coins[COINS];
 
 	HUD* _hud;
 
