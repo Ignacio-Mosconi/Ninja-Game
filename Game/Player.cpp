@@ -20,16 +20,20 @@ void Player::update(float elapsed)
 		case Idle:
 			move(elapsed);
 			jump(elapsed);
+			pickUpItem(elapsed);
 			break;
 		case Moving:
 			move(elapsed);
 			jump(elapsed);
+			pickUpItem(elapsed);
 			break;
 		case Jumping:
 			jump(elapsed);
+			pickUpItem(elapsed);
 			break;
 		case Falling:
 			fall(elapsed);
+			pickUpItem(elapsed);
 			break;
 	}
 }
@@ -55,7 +59,7 @@ void Player::move(float elapsed)
 
 void Player::jump(float elapsed)
 {
-	if (Keyboard::isKeyPressed(Keyboard::Space) && _currentState != Jumping)
+	if (Keyboard::isKeyPressed(Keyboard::S) && _currentState != Jumping)
 	{
 		_sprite.move(0, _jumpSpeed * elapsed);
 		_currentState = Jumping;

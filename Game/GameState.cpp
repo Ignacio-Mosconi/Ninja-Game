@@ -9,13 +9,16 @@ GameState::GameState(RenderWindow& window) : State(window)
 		_fruits[i] = new Fruit(rand() % (FRUIT_MAX_X - FRUIT_MIN_X - FRUIT_WIDTH) + FRUIT_MIN_X, FRUIT_MIN_Y, FRUIT_PATH);
 	_ground = new Entity(0, SCREEN_HEIGHT - GROUND_HEIGHT, GROUND_PATH);
 	for (int i = 0; i < COINS; i++)
-		_coins[i] = new Coin(rand() % (COIN_MAX_X - COIN_MIN_X - COIN_WIDTH) + COIN_MIN_X,
-			rand() % (COIN_MAX_Y - COIN_MIN_Y) + COIN_MIN_Y, COIN_PATH);
+		_coins[i] = new Coin(rand() % (COLLECTIBLE_MAX_X - COLLECTIBLE_MIN_X - COIN_WIDTH) + COLLECTIBLE_MIN_X,
+			rand() % (COLLECTIBLE_MAX_Y - COLLECTIBLE_MIN_Y) + COLLECTIBLE_MIN_Y, COIN_PATH);
+	_life = new Life(rand() % (COLLECTIBLE_MAX_X - COLLECTIBLE_MIN_X - COIN_WIDTH) + COLLECTIBLE_MIN_X,
+		rand() % (COLLECTIBLE_MAX_Y - COLLECTIBLE_MIN_Y) + COLLECTIBLE_MIN_Y, LIFE_PATH);
 
 	_hud = new HUD();
 
 	_gameOver = false;
 	_paused = false;
+	_score = 0;
 
 	_deltaTime = 0;
 }
@@ -28,6 +31,7 @@ GameState::~GameState()
 	delete _ground;
 	for (int i = 0; i < COINS; i++)
 		delete _coins[i];
+	delete _life;
 
 	delete _hud;
 }
@@ -98,9 +102,14 @@ void GameState::update(float elapsed)
 		_fruits[i]->update(elapsed);
 	for (int i = 0; i < COINS; i++)
 		_coins[i]->update(elapsed);
+	if (_player->getLives() < PLAYER_LIVES)
+		_life->update(elapsed);
 
 	for (int i = 0; i < FRUITS; i++)
 		fruitPlayerCollision(_fruits[i], _player);
+	for (int i = 0; i < COINS; i++)
+		coinPlayerCollision(_coins[i], _player);
+	lifePlayerCollision(_life, _player);
 }
 
 void GameState::draw(float elapsed)
@@ -118,6 +127,7 @@ void GameState::draw(float elapsed)
 		_window->draw(_ground->getSprite());
 		for (int i = 0; i < COINS; i++)
 			_window->draw(_coins[i]->getSprite());
+		_window->draw(_life->getSprite());
 
 		_hud->draw(_window, _paused, _gameOver);
 
@@ -137,6 +147,26 @@ void GameState::fruitPlayerCollision(Fruit* f, Player* p)
 		}
 		else
 			_gameOver = true;
+	}
+}
+
+void GameState::coinPlayerCollision(Coin* c, Player* p)
+{
+	if (c->getSprite().getGlobalBounds().intersects(p->getSprite().getGlobalBounds()) && c->isEnabled())
+	{
+		c->disable();
+		_score += COIN_SCORE;
+		_hud->updateHUD(Score, _score);
+	}
+}
+
+void GameState::lifePlayerCollision(Life* l, Player* p)
+{
+	if (l->getSprite().getGlobalBounds().intersects(p->getSprite().getGlobalBounds()) && l->isEnabled())
+	{
+		l->disable();
+		p->setLives(p->getLives() + 1);
+		_hud->updateHUD(Lives, p->getLives());
 	}
 }
 

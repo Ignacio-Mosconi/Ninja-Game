@@ -9,13 +9,14 @@ enum PlayerState
 	Idle,
 	Moving,
 	Jumping,
-	Falling
+	Falling,
 };
 
 class Player : public Entity
 {
 private:
 	PlayerState _currentState;
+	PlayerState _previousState;
 	int _lives;
 	float _moveSpeed;
 	float _jumpSpeed;
@@ -33,6 +34,7 @@ public:
 
 	inline PlayerState getCurrentState() { return _currentState; }
 	inline int getLives() { return _lives; }
+	void setLives(int lives) { _lives = lives; }
 };
 
 #endif

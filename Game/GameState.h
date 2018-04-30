@@ -7,6 +7,7 @@
 #include "Player.h"
 #include "Fruit.h"
 #include "Coin.h"
+#include "Life.h"
 #include "HUD.h"
 using namespace sf;
 
@@ -17,16 +18,20 @@ private:
 	Fruit* _fruits[FRUITS];
 	Entity* _ground;
 	Coin* _coins[COINS];
+	Life* _life;
 
 	HUD* _hud;
 
 	bool _gameOver;
 	bool _paused;
+	int _score;
 
 	const float _drawFrameTime = 1.0f / 60.0f;
 	float _deltaTime;
 
-	void fruitPlayerCollision(Fruit* fruit, Player* p);
+	void fruitPlayerCollision(Fruit* f, Player* p);
+	void coinPlayerCollision(Coin* c, Player* p);
+	void lifePlayerCollision(Life* l, Player* p);
 
 protected:
 	void input();

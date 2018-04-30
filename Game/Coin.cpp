@@ -33,5 +33,6 @@ void Coin::respawn()
 	_sprite.setColor({ 255, 255, 255, 255 });
 	_onScreenTime = COIN_DURATION;
 	_spawnTime = rand() % (COIN_MAX_SPAWN_TIME - COIN_MIN_SPAWN_TIME) + COIN_MIN_SPAWN_TIME;
-	_sprite.setPosition(rand() % (COIN_MAX_X - COIN_MIN_X - COIN_WIDTH) + COIN_MIN_X, rand() % (COIN_MAX_Y - COIN_MIN_Y) + COIN_MIN_Y);
+	_sprite.setPosition(rand() % (COLLECTIBLE_MAX_X - COLLECTIBLE_MIN_X - COIN_WIDTH) + COLLECTIBLE_MIN_X, 
+		rand() % (COLLECTIBLE_MAX_Y - COLLECTIBLE_MIN_Y) + COLLECTIBLE_MIN_Y);
 }

@@ -31,16 +31,24 @@
 #define FRUIT_MAX_SPAWN_TIME 12
 
 // Collectibles
-#define COINS 2
+#define COLLECTIBLE_MIN_X 32
+#define COLLECTIBLE_MAX_X 1578
+#define COLLECTIBLE_MIN_Y 400
+#define COLLECTIBLE_MAX_Y 738
+
+#define COINS 3
 #define COIN_DURATION 5
+#define COIN_SCORE 5
 #define COIN_WIDTH 64
 #define COIN_HEIGHT 90
-#define COIN_MIN_SPAWN_TIME 5
-#define COIN_MAX_SPAWN_TIME 30
-#define COIN_MIN_X 32
-#define COIN_MAX_X 1578
-#define COIN_MIN_Y 400
-#define COIN_MAX_Y 738
+#define COIN_MIN_SPAWN_TIME 3
+#define COIN_MAX_SPAWN_TIME 20
+
+#define LIFE_DURATION 5
+#define LIFE_WIDTH 64
+#define LIFE_HEIGHT 90
+#define LIFE_MIN_SPAWN_TIME 10
+#define LIFE_MAX_SPAWN_TIME 60
 
 // Heads Up Display
 #define HUD_TEXT_Y 15
@@ -58,6 +66,7 @@
 #define FRUIT_PATH "Assets/Images/Fruit.png"
 #define GROUND_PATH "Assets/Images/Ground.png"
 #define COIN_PATH "Assets/Images/Coin.png"
+#define LIFE_PATH "Assets/Images/Life.png"
 
 // Fonts File Paths
 #define FONT_PATH "Assets/Fonts/Last Ninja.ttf"
