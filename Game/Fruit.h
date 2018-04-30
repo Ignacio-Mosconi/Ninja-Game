@@ -8,6 +8,7 @@ class Fruit : public Entity
 {
 private:
 	float _speed;
+	float _rotationSpeed;
 	float _spawnTime;
 	bool _enabled;
 

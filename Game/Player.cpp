@@ -3,6 +3,7 @@
 Player::Player(int x, int y, const string& imagePath) : Entity(x, y, imagePath)
 {
 	_currentState = Idle;
+	_facing = Right;
 	_lives = PLAYER_LIVES;
 	_moveSpeed = PLAYER_MOVE_SPEED;
 	_jumpSpeed = PLAYER_JUMP_SPEED;
@@ -20,20 +21,16 @@ void Player::update(float elapsed)
 		case Idle:
 			move(elapsed);
 			jump(elapsed);
-			pickUpItem(elapsed);
 			break;
 		case Moving:
 			move(elapsed);
 			jump(elapsed);
-			pickUpItem(elapsed);
 			break;
 		case Jumping:
 			jump(elapsed);
-			pickUpItem(elapsed);
 			break;
 		case Falling:
 			fall(elapsed);
-			pickUpItem(elapsed);
 			break;
 	}
 }
@@ -43,6 +40,11 @@ void Player::move(float elapsed)
 	if (Keyboard::isKeyPressed(Keyboard::Left) && _sprite.getPosition().x > 0)
 	{
 		_sprite.move(-_moveSpeed * elapsed, 0);
+		if (_facing == Right)
+		{
+			_sprite.setTextureRect(IntRect(PLAYER_WIDTH, 0, -PLAYER_WIDTH, PLAYER_HEIGHT));
+			_facing = Left;
+		}
 		_currentState = Moving;
 	}
 	else
@@ -50,6 +52,11 @@ void Player::move(float elapsed)
 		if (Keyboard::isKeyPressed(Keyboard::Right) && _sprite.getPosition().x < SCREEN_WIDTH - PLAYER_WIDTH)
 		{
 			_sprite.move(_moveSpeed * elapsed, 0);
+			if (_facing == Left)
+			{
+				_sprite.setTextureRect(IntRect(0, 0, PLAYER_WIDTH, PLAYER_HEIGHT));
+				_facing = Right;
+			}
 			_currentState = Moving;
 		}
 		else
@@ -110,5 +117,6 @@ void Player::fall(float elapsed)
 void Player::die()
 {
 	_lives--;
+	_currentState = Idle;
 	_sprite.setPosition(SCREEN_WIDTH / 2 - PLAYER_WIDTH / 2, SCREEN_HEIGHT - GROUND_HEIGHT - PLAYER_HEIGHT);
 }

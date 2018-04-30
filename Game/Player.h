@@ -12,11 +12,18 @@ enum PlayerState
 	Falling,
 };
 
+enum Facing
+{
+	Left,
+	Right
+};
+
 class Player : public Entity
 {
 private:
 	PlayerState _currentState;
 	PlayerState _previousState;
+	Facing _facing;
 	int _lives;
 	float _moveSpeed;
 	float _jumpSpeed;
