@@ -13,7 +13,11 @@ class GameState : public State
 private:
 	Player* _player;
 	Fruit* _fruits[FRUITS];
-	bool gameOver;
+	Entity* _ground;
+	bool _gameOver;
+
+	const float _drawFrameTime = 1.0f / 60.0f;
+	float _deltaTime;
 
 protected:
 	void input();

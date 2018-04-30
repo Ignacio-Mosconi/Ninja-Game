@@ -21,8 +21,8 @@
 #define FRUITS 5
 #define FRUIT_WIDTH 64
 #define FRUIT_HEIGHT 45
-#define FRUIT_MIN_SPEED 20
-#define FRUIT_MAX_SPEED 200
+#define FRUIT_MIN_SPEED 5
+#define FRUIT_MAX_SPEED 100
 #define FRUIT_MIN_X 32
 #define FRUIT_MAX_X 1578
 #define FRUIT_MIN_Y 90
@@ -33,5 +33,6 @@
 #define SPLASH_LOGO_PATH "Assets/Images/Splash Logo.png"
 #define PLAYER_PATH "Assets/Images/Player.png"
 #define FRUIT_PATH "Assets/Images/Fruit.png"
+#define GROUND_PATH "Assets/Images/Ground.png"
 
 #endif

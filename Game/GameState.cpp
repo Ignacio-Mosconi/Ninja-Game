@@ -6,6 +6,10 @@ GameState::GameState(RenderWindow& window) : State(window)
 	_player = new Player(SCREEN_WIDTH / 2, SCREEN_HEIGHT - (GROUND_HEIGHT + PLAYER_HEIGHT), PLAYER_PATH);
 	for (int i = 0; i < FRUITS; i++)
 		_fruits[i] = new Fruit(rand() % (FRUIT_MAX_X - FRUIT_MIN_X) + FRUIT_MIN_X, FRUIT_MIN_Y, FRUIT_PATH);
+	_ground = new Entity(0, SCREEN_HEIGHT - GROUND_HEIGHT, GROUND_PATH);
+
+	_gameOver = false;
+	_deltaTime = 0;
 }
 
 GameState::~GameState()
@@ -13,11 +17,12 @@ GameState::~GameState()
 	delete _player;
 	for (int i = 0; i < FRUITS; i++)
 		delete _fruits[i];
+	delete _ground;
 }
 
 void GameState::run()
 {
-	while (!gameOver &&_window->isOpen())
+	while (!_gameOver &&_window->isOpen())
 	{
 		float elapsed = _clock->restart().asSeconds();
 
@@ -66,9 +71,19 @@ void GameState::update(float elapsed)
 
 void GameState::draw(float elapsed)
 {
-	_window->clear({ 32, 64, 128, 255 });
-	_window->draw(_player->getSprite());
-	for (int i = 0; i < FRUITS; i++)
-		_window->draw(_fruits[i]->getSprite());
-	_window->display();
+	_deltaTime += elapsed;
+
+	if (_deltaTime >= _drawFrameTime)
+	{
+		_deltaTime = 0;
+		_window->clear({ 32, 64, 128, 255 });
+
+		_window->draw(_player->getSprite());
+		for (int i = 0; i < FRUITS; i++)
+			_window->draw(_fruits[i]->getSprite());
+		_window->draw(_ground->getSprite());
+
+		_window->display();
+	}
+
 }

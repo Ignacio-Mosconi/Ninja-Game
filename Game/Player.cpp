@@ -96,5 +96,8 @@ void Player::fall(float elapsed)
 		}
 	}
 	else
+	{
+		_sprite.setPosition(_sprite.getPosition().x, SCREEN_HEIGHT - GROUND_HEIGHT - PLAYER_HEIGHT);
 		_currentState = Idle;
+	}
 }
