@@ -18,6 +18,9 @@ protected:
 	virtual void update(float elapsed) = 0;
 	virtual void draw(float elapsed) = 0;
 
+	virtual void pause() {}
+	virtual void resume() {}
+
 public:
 	State(RenderWindow& window);
 	~State();

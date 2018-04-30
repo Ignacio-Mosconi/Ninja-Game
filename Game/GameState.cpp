@@ -3,12 +3,15 @@
 GameState::GameState(RenderWindow& window) : State(window)
 {
 	srand(time(0));
+
 	_player = new Player(SCREEN_WIDTH / 2 - PLAYER_WIDTH / 2, SCREEN_HEIGHT - (GROUND_HEIGHT + PLAYER_HEIGHT), PLAYER_PATH);
 	for (int i = 0; i < FRUITS; i++)
 		_fruits[i] = new Fruit(rand() % (FRUIT_MAX_X - FRUIT_MIN_X) + FRUIT_MIN_X, FRUIT_MIN_Y, FRUIT_PATH);
 	_ground = new Entity(0, SCREEN_HEIGHT - GROUND_HEIGHT, GROUND_PATH);
 
 	_gameOver = false;
+	_paused = false;
+
 	_deltaTime = 0;
 }
 
@@ -26,9 +29,17 @@ void GameState::run()
 	{
 		float elapsed = _clock->restart().asSeconds();
 
-		input();
-		update(elapsed);
-		draw(elapsed);
+		if (!_paused)
+		{
+			input();
+			update(elapsed);
+			draw(elapsed);
+		}
+		else
+		{
+			input();
+			draw(elapsed);
+		}
 	}
 }
 
@@ -41,6 +52,15 @@ void GameState::input()
 		{
 			case Event::Closed:
 				_window->close();
+				break;
+			case Event::KeyPressed:
+				if (event.key.code == Keyboard::Escape)
+				{
+					if (!_paused)
+						pause();
+					else
+						resume();
+				}
 				break;
 		}
 }
@@ -101,4 +121,14 @@ void GameState::fruitPlayerCollision(Fruit* f, Player* p)
 		else
 			_gameOver = true;
 	}
+}
+
+void GameState::pause()
+{
+	_paused = true;
+}
+
+void GameState::resume()
+{
+	_paused = false;
 }

@@ -14,7 +14,9 @@ private:
 	Player* _player;
 	Fruit* _fruits[FRUITS];
 	Entity* _ground;
+
 	bool _gameOver;
+	bool _paused;
 
 	const float _drawFrameTime = 1.0f / 60.0f;
 	float _deltaTime;
@@ -25,6 +27,9 @@ protected:
 	void input();
 	void update(float elapsed);
 	void draw(float elapsed);
+
+	void pause();
+	void resume();
 
 public:
 	GameState(RenderWindow& window);
