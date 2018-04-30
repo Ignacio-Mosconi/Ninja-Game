@@ -19,6 +19,8 @@ private:
 	const float _drawFrameTime = 1.0f / 60.0f;
 	float _deltaTime;
 
+	void fruitPlayerCollision(Fruit* fruit, Player* p);
+
 protected:
 	void input();
 	void update(float elapsed);

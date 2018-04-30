@@ -16,6 +16,7 @@ class Player : public Entity
 {
 private:
 	PlayerState _currentState;
+	int _lives;
 	float _moveSpeed;
 	float _jumpSpeed;
 
@@ -28,8 +29,10 @@ public:
 	~Player();
 
 	void update(float elapsed);
+	void die();
 
-	PlayerState getCurrentState() { return _currentState; }
+	inline PlayerState getCurrentState() { return _currentState; }
+	inline int getLives() { return _lives; }
 };
 
 #endif

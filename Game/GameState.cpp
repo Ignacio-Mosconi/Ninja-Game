@@ -3,7 +3,7 @@
 GameState::GameState(RenderWindow& window) : State(window)
 {
 	srand(time(0));
-	_player = new Player(SCREEN_WIDTH / 2, SCREEN_HEIGHT - (GROUND_HEIGHT + PLAYER_HEIGHT), PLAYER_PATH);
+	_player = new Player(SCREEN_WIDTH / 2 - PLAYER_WIDTH / 2, SCREEN_HEIGHT - (GROUND_HEIGHT + PLAYER_HEIGHT), PLAYER_PATH);
 	for (int i = 0; i < FRUITS; i++)
 		_fruits[i] = new Fruit(rand() % (FRUIT_MAX_X - FRUIT_MIN_X) + FRUIT_MIN_X, FRUIT_MIN_Y, FRUIT_PATH);
 	_ground = new Entity(0, SCREEN_HEIGHT - GROUND_HEIGHT, GROUND_PATH);
@@ -67,6 +67,9 @@ void GameState::update(float elapsed)
 	_player->update(elapsed);
 	for (int i = 0; i < FRUITS; i++)
 		_fruits[i]->update(elapsed);
+
+	for (int i = 0; i < FRUITS; i++)
+		fruitPlayerCollision(_fruits[i], _player);
 }
 
 void GameState::draw(float elapsed)
@@ -86,4 +89,16 @@ void GameState::draw(float elapsed)
 		_window->display();
 	}
 
+}
+
+void GameState::fruitPlayerCollision(Fruit* f, Player* p)
+{
+	if (f->getSprite().getGlobalBounds().intersects(p->getSprite().getGlobalBounds()) && f->isEnabled())
+	{
+		f->disable();
+		if (p->getLives() > 1)
+			p->die();
+		else
+			_gameOver = true;
+	}
 }

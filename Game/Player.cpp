@@ -3,6 +3,7 @@
 Player::Player(int x, int y, const string& imagePath) : Entity(x, y, imagePath)
 {
 	_currentState = Idle;
+	_lives = PLAYER_LIVES;
 	_moveSpeed = PLAYER_MOVE_SPEED;
 	_jumpSpeed = PLAYER_JUMP_SPEED;
 }
@@ -100,4 +101,10 @@ void Player::fall(float elapsed)
 		_sprite.setPosition(_sprite.getPosition().x, SCREEN_HEIGHT - GROUND_HEIGHT - PLAYER_HEIGHT);
 		_currentState = Idle;
 	}
+}
+
+void Player::die()
+{
+	_lives--;
+	_sprite.setPosition(SCREEN_WIDTH / 2 - PLAYER_WIDTH / 2, SCREEN_HEIGHT - GROUND_HEIGHT - PLAYER_HEIGHT);
 }
