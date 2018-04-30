@@ -18,14 +18,16 @@
 #define GROUND_HEIGHT 72
 
 // Fruits
-#define FRUITS 3
+#define FRUITS 5
 #define FRUIT_WIDTH 64
 #define FRUIT_HEIGHT 45
-#define FRUIT_MIN_SPEED 30
-#define FRUIT_MAX_SPEED 300
+#define FRUIT_MIN_SPEED 20
+#define FRUIT_MAX_SPEED 200
 #define FRUIT_MIN_X 32
 #define FRUIT_MAX_X 1578
 #define FRUIT_MIN_Y 90
+#define FRUIT_MIN_SPAWN_TIME 3
+#define FRUIT_MAX_SPAWN_TIME 12
 
 // Images File Paths
 #define SPLASH_LOGO_PATH "Assets/Images/Splash Logo.png"
