@@ -6,6 +6,7 @@
 #include "State.h"
 #include "Player.h"
 #include "Fruit.h"
+#include "HUD.h"
 using namespace sf;
 
 class GameState : public State
@@ -14,6 +15,8 @@ private:
 	Player* _player;
 	Fruit* _fruits[FRUITS];
 	Entity* _ground;
+
+	HUD* _hud;
 
 	bool _gameOver;
 	bool _paused;

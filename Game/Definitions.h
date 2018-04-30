@@ -30,10 +30,23 @@
 #define FRUIT_MIN_SPAWN_TIME 3
 #define FRUIT_MAX_SPAWN_TIME 12
 
+// Heads Up Display
+#define HUD_TEXT_Y 15
+#define HUD_TEXT_SIZE 60
+#define PAUSED_TEXT_SIZE 90
+#define GAME_OVER_TEXT_SIZE 120
+#define TEXT_COLOR_RED {128, 32, 32, 255}
+#define TEXT_COLOR_GREEN {32, 128, 32, 255}
+#define TEXT_COLOR_BLUE {32, 32, 128, 255}
+#define TEXT_COLOR_YELLOW {200, 128, 32, 255}
+
 // Images File Paths
 #define SPLASH_LOGO_PATH "Assets/Images/Splash Logo.png"
 #define PLAYER_PATH "Assets/Images/Player.png"
 #define FRUIT_PATH "Assets/Images/Fruit.png"
 #define GROUND_PATH "Assets/Images/Ground.png"
+
+// Fonts File Paths
+#define FONT_PATH "Assets/Fonts/Last Ninja.ttf"
 
 #endif

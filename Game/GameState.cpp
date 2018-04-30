@@ -9,6 +9,8 @@ GameState::GameState(RenderWindow& window) : State(window)
 		_fruits[i] = new Fruit(rand() % (FRUIT_MAX_X - FRUIT_MIN_X) + FRUIT_MIN_X, FRUIT_MIN_Y, FRUIT_PATH);
 	_ground = new Entity(0, SCREEN_HEIGHT - GROUND_HEIGHT, GROUND_PATH);
 
+	_hud = new HUD();
+
 	_gameOver = false;
 	_paused = false;
 
@@ -21,6 +23,8 @@ GameState::~GameState()
 	for (int i = 0; i < FRUITS; i++)
 		delete _fruits[i];
 	delete _ground;
+
+	delete _hud;
 }
 
 void GameState::run()
@@ -106,9 +110,10 @@ void GameState::draw(float elapsed)
 			_window->draw(_fruits[i]->getSprite());
 		_window->draw(_ground->getSprite());
 
+		_hud->draw(_window, _paused, _gameOver);
+
 		_window->display();
 	}
-
 }
 
 void GameState::fruitPlayerCollision(Fruit* f, Player* p)
