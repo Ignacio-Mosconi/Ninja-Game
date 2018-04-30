@@ -30,7 +30,6 @@ public:
 	void update(float elapsed);
 
 	PlayerState getCurrentState() { return _currentState; }
-	void setCurrentState(PlayerState state) { _currentState = state; }
 };
 
 #endif

@@ -2,12 +2,17 @@
 
 GameState::GameState(RenderWindow& window) : State(window)
 {
+	srand(time(0));
 	_player = new Player(SCREEN_WIDTH / 2, SCREEN_HEIGHT - (GROUND_HEIGHT + PLAYER_HEIGHT), PLAYER_PATH);
+	for (int i = 0; i < FRUITS; i++)
+		_fruits[i] = new Fruit(rand() % (FRUIT_MAX_X - FRUIT_MIN_X) + FRUIT_MIN_X, FRUIT_MIN_Y, FRUIT_PATH);
 }
 
 GameState::~GameState()
 {
 	delete _player;
+	for (int i = 0; i < FRUITS; i++)
+		delete _fruits[i];
 }
 
 void GameState::run()
@@ -55,11 +60,15 @@ void GameState::update(float elapsed)
 	}
 
 	_player->update(elapsed);
+	for (int i = 0; i < FRUITS; i++)
+		_fruits[i]->update(elapsed);
 }
 
 void GameState::draw(float elapsed)
 {
 	_window->clear({ 32, 64, 128, 255 });
 	_window->draw(_player->getSprite());
+	for (int i = 0; i < FRUITS; i++)
+		_window->draw(_fruits[i]->getSprite());
 	_window->display();
 }

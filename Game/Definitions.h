@@ -17,8 +17,19 @@
 #define GRAVITY 1200
 #define GROUND_HEIGHT 72
 
+// Fruits
+#define FRUITS 3
+#define FRUIT_WIDTH 64
+#define FRUIT_HEIGHT 45
+#define FRUIT_MIN_SPEED 30
+#define FRUIT_MAX_SPEED 300
+#define FRUIT_MIN_X 32
+#define FRUIT_MAX_X 1578
+#define FRUIT_MIN_Y 90
+
 // Images File Paths
 #define SPLASH_LOGO_PATH "Assets/Images/Splash Logo.png"
 #define PLAYER_PATH "Assets/Images/Player.png"
+#define FRUIT_PATH "Assets/Images/Fruit.png"
 
 #endif
