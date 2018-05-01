@@ -8,8 +8,8 @@ HUD::HUD()
 	_score = new Text("Score: 0", _font, HUD_TEXT_SIZE);
 	_paused = new Text("Paused", _font, PAUSED_TEXT_SIZE);
 	_gameOver = new Text("Game Over", _font, GAME_OVER_TEXT_SIZE);
-	_restart = new Text("Press 'ENTER' to restart", _font, HUD_OPTIONS_TEXT_SIZE);
-	_quit = new Text("Press 'ESCAPE' to quit", _font, HUD_OPTIONS_TEXT_SIZE);
+	_restart = new Text("Press enter to restart", _font, HUD_OPTIONS_TEXT_SIZE);
+	_quit = new Text("Press escape to quit", _font, HUD_OPTIONS_TEXT_SIZE);
 	_highestScore = new Text("Highest Score: 0", _font, HUD_OPTIONS_TEXT_SIZE);
 
 
@@ -19,8 +19,8 @@ HUD::HUD()
 		SCREEN_HEIGHT / 2 - _paused->getGlobalBounds().height /2, TEXT_COLOR_GREEN, Color::White, true);
 	formatText(_gameOver, SCREEN_WIDTH / 2 - _gameOver->getGlobalBounds().width / 2,
 		SCREEN_HEIGHT / 4 - _gameOver->getGlobalBounds().height / 2, TEXT_COLOR_RED, Color::Red, true);
-	formatText(_restart, 32, SCREEN_HEIGHT - _restart->getGlobalBounds().height - 180, TEXT_COLOR_GREEN, TEXT_COLOR_BLUE, true);
-	formatText(_quit, SCREEN_WIDTH - _quit->getGlobalBounds().width - 32, SCREEN_HEIGHT - _restart->getGlobalBounds().height - 180,
+	formatText(_restart, 32, SCREEN_HEIGHT - _restart->getGlobalBounds().height - 90, TEXT_COLOR_GREEN, TEXT_COLOR_BLUE, true);
+	formatText(_quit, SCREEN_WIDTH - _quit->getGlobalBounds().width - 32, SCREEN_HEIGHT - _restart->getGlobalBounds().height - 90,
 		TEXT_COLOR_RED, Color::Red, true);
 	formatText(_highestScore, SCREEN_WIDTH / 2 - _highestScore->getGlobalBounds().width / 2,
 		SCREEN_HEIGHT / 2 - _highestScore->getGlobalBounds().height / 2, Color::White, Color::Black, true);

@@ -15,6 +15,9 @@ MenuState::MenuState(RenderWindow& window) : State(window)
 	formatText(_options[1], SCREEN_WIDTH / 2 - _options[1]->getGlobalBounds().width / 2,
 		SCREEN_HEIGHT / 2 + 256 - _options[1]->getGlobalBounds().height / 2, Color::White);
 
+	_selectBuffer.loadFromFile(SELECT_SOUND);
+	_select.setBuffer(_selectBuffer);
+
 	for (int i = 0; i < MENU_OPTIONS; i++)
 		_selected[i] = false;
 }
@@ -73,6 +76,7 @@ void MenuState::update(float elapsed)
 		{
 			if (!_selected[i])
 			{
+				_select.play();
 				_selected[i] = true;
 				_options[i]->setFillColor(TEXT_COLOR_GREEN);
 			}

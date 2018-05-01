@@ -2,6 +2,7 @@
 #define MENU_STATE_H
 
 #include <SFML/Graphics.hpp>
+#include <SFML/Audio.hpp>
 #include "State.h"
 
 class MenuState : public State
@@ -11,6 +12,10 @@ private:
 
 	Text* _title;
 	Text* _options[MENU_OPTIONS];
+
+	SoundBuffer _selectBuffer;
+
+	Sound _select;
 
 	bool _selected[MENU_OPTIONS];
 	int _mouseX;
