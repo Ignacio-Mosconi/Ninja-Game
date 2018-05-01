@@ -19,6 +19,7 @@ GameState::GameState(RenderWindow& window) : State(window)
 	_gameOver = false;
 	_paused = false;
 	_score = 0;
+	_highestScore = 0;
 
 	_deltaTime = 0;
 }
@@ -38,7 +39,7 @@ GameState::~GameState()
 
 void GameState::run()
 {
-	while (!_gameOver &&_window->isOpen())
+	while (!_gameOver && _window->isOpen())
 	{
 		float elapsed = _clock->restart().asSeconds();
 
@@ -54,6 +55,7 @@ void GameState::run()
 			draw(elapsed);
 		}
 	}
+	result();
 }
 
 void GameState::input()
@@ -61,23 +63,42 @@ void GameState::input()
 	Event event;
 
 	if (_window->pollEvent(event))
-		switch (event.type)
-		{
-			case Event::Closed:
-				_window->close();
-				break;
-			case Event::KeyPressed:
-				if (event.key.code == Keyboard::Escape)
-				{
-					if (!_paused)
-						pause();
-					else
-						resume();
-				}
-				break;
-		}
+	{
+		if (!_gameOver)
+			switch (event.type)
+			{
+				case Event::Closed:
+					_window->close();
+					break;
+				case Event::KeyPressed:
+					if (event.key.code == Keyboard::Escape)
+					{
+						if (!_paused)
+							pause();
+						else
+							resume();
+					}
+					break;
+			}
+		else
+			switch (event.type)
+			{
+				case Event::Closed:
+					_window->close();
+					break;
+				case Event::KeyPressed:
+					switch (event.key.code)
+					{
+						case Keyboard::Escape:
+							_window->close();
+							break;
+						case Keyboard::Return:
+							restart();
+							break;
+					}
+			}
+	}
 }
-
 
 void GameState::update(float elapsed)
 {
@@ -178,4 +199,47 @@ void GameState::pause()
 void GameState::resume()
 {
 	_paused = false;
+}
+
+void GameState::result()
+{
+	if (_score > _highestScore)
+		_highestScore = _score;
+
+	while (_gameOver && _window->isOpen())
+	{
+		float elapsed = _clock->restart().asSeconds();
+
+		input();
+		draw(elapsed);
+	}
+}
+
+void GameState::restart()
+{
+	_player->respawn();
+	_player->setLives(PLAYER_LIVES);
+	for (int i = 0; i < FRUITS; i++)
+	{
+		_fruits[i]->respawn();
+		_fruits[i]->disable();
+	}
+	for (int i = 0; i < COINS; i++)
+	{
+		_coins[i]->respawn();
+		_coins[i]->disable();
+	}
+	_life->respawn();
+	_life->disable();
+
+	_hud->updateHUD(Lives, _player->getLives());
+	_hud->updateHUD(Score, _score);
+
+	_gameOver = false;
+	_paused = false;
+	_score = 0;
+
+	_deltaTime = 0;
+
+	run();
 }

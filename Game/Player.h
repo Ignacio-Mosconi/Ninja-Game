@@ -22,7 +22,6 @@ class Player : public Entity
 {
 private:
 	PlayerState _currentState;
-	PlayerState _previousState;
 	Facing _facing;
 	int _lives;
 	float _moveSpeed;
@@ -38,6 +37,7 @@ public:
 
 	void update(float elapsed);
 	void die();
+	void respawn();
 
 	inline PlayerState getCurrentState() { return _currentState; }
 	inline int getLives() { return _lives; }

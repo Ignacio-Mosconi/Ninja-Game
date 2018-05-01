@@ -25,6 +25,7 @@ private:
 	bool _gameOver;
 	bool _paused;
 	int _score;
+	int _highestScore;
 
 	const float _drawFrameTime = 1.0f / 60.0f;
 	float _deltaTime;
@@ -32,6 +33,9 @@ private:
 	void fruitPlayerCollision(Fruit* f, Player* p);
 	void coinPlayerCollision(Coin* c, Player* p);
 	void lifePlayerCollision(Life* l, Player* p);
+
+	void result();
+	void restart();
 
 protected:
 	void input();

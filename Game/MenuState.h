@@ -11,9 +11,12 @@ private:
 
 	Text* _title;
 	Text* _options[MENU_OPTIONS];
+
 	bool _selected[MENU_OPTIONS];
 	int _mouseX;
 	int _mouseY;
+	bool _clicked;
+	bool _startGame;
 
 	void formatText(Text* text, int x, int y, Color fillColor, Color outlineColor = Color::White, bool outline = false);
 
@@ -27,6 +30,8 @@ public:
 	~MenuState();
 
 	void show();
+
+	inline bool startGame() { return _startGame; }
 };
 
 #endif

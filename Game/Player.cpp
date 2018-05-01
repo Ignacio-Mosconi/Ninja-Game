@@ -117,6 +117,11 @@ void Player::fall(float elapsed)
 void Player::die()
 {
 	_lives--;
+	respawn();
+}
+
+void Player::respawn()
+{
 	_currentState = Idle;
 	_sprite.setPosition(SCREEN_WIDTH / 2 - PLAYER_WIDTH / 2, SCREEN_HEIGHT - GROUND_HEIGHT - PLAYER_HEIGHT);
 }

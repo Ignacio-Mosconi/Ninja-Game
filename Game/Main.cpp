@@ -17,7 +17,8 @@ int main()
 	menu->show();
 
 	GameState* game = new GameState(window);
-	game->run();
+	if (menu->startGame())
+		game->run();
 
 	delete splash;
 	delete menu;

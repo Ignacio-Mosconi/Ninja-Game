@@ -22,8 +22,10 @@ private:
 	Text* _score;
 	Text* _paused;
 	Text* _gameOver;
+	Text* _restart;
+	Text* _quit;
 
-	void formatText(Text* text, int x, int y, Color fillColor, Color outlineColor, bool outline);
+	void formatText(Text* text, int x, int y, Color fillColor, Color outlineColor = Color::White, bool outline = false);
 
 public:
 	HUD();

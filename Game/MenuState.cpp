@@ -11,9 +11,9 @@ MenuState::MenuState(RenderWindow& window) : State(window)
 	formatText(_title, SCREEN_WIDTH / 2 - _title->getGlobalBounds().width / 2,
 		SCREEN_HEIGHT / 3 - _title->getGlobalBounds().height / 2, Color::Red, Color::White, true);
 	formatText(_options[0], SCREEN_WIDTH / 2 - _options[0]->getGlobalBounds().width / 2,
-		SCREEN_HEIGHT / 2 - _options[0]->getGlobalBounds().height / 2, Color::White);
+		SCREEN_HEIGHT / 2 + 128- _options[0]->getGlobalBounds().height / 2, Color::White);
 	formatText(_options[1], SCREEN_WIDTH / 2 - _options[1]->getGlobalBounds().width / 2,
-		SCREEN_HEIGHT / 2 + 128 - _options[1]->getGlobalBounds().height / 2, Color::White);
+		SCREEN_HEIGHT / 2 + 256 - _options[1]->getGlobalBounds().height / 2, Color::White);
 
 	for (int i = 0; i < MENU_OPTIONS; i++)
 		_selected[i] = false;
@@ -28,7 +28,7 @@ MenuState::~MenuState()
 
 void MenuState::show()
 {
-	while (_window->isOpen())
+	while (!_startGame && _window->isOpen())
 	{
 		float elapsed = _clock->restart().asSeconds();
 
@@ -51,13 +51,14 @@ void MenuState::input()
 				break;
 			case Event::MouseMoved:
 				_mouseX = event.mouseMove.x;
-				_mouseX = event.mouseMove.y;
+				_mouseY = event.mouseMove.y;
 				break;
 			case Event::MouseButtonPressed:
 				if (event.mouseButton.button == Mouse::Left)
 				{
 					_mouseX = event.mouseButton.x;
 					_mouseY = event.mouseButton.y;
+					_clicked = true;
 				}
 				break;
 		}
@@ -78,10 +79,23 @@ void MenuState::update(float elapsed)
 		}
 		else
 		{
-			_selected[i] = false;
-			_options[i]->setFillColor(Color::White);
+			if (_selected[i])
+			{
+				_selected[i] = false;
+				_options[i]->setFillColor(Color::White);
+			}
 		}
 	}
+
+	if (_clicked)
+	{
+		if (_selected[0])
+			_startGame = true;
+		else
+			if (_selected[1])
+				_window->close();
+	}
+
 }
 
 void MenuState::draw(float elapsed)
