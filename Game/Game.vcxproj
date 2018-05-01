@@ -157,6 +157,7 @@
     <ClCompile Include="HUD.cpp" />
     <ClCompile Include="Life.cpp" />
     <ClCompile Include="Main.cpp" />
+    <ClCompile Include="MenuState.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="SplashState.cpp" />
     <ClCompile Include="State.cpp" />
@@ -170,6 +171,7 @@
     <ClInclude Include="GameState.h" />
     <ClInclude Include="HUD.h" />
     <ClInclude Include="Life.h" />
+    <ClInclude Include="MenuState.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="SplashState.h" />
     <ClInclude Include="State.h" />

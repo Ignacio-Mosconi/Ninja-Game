@@ -8,6 +8,11 @@
 // Splash State
 #define SPLASH_STATE_DURATION 0.5
 
+// Menu State
+#define MENU_OPTIONS 2
+#define TITLE_TEXT_SIZE 160
+#define OPTIONS_TEXT_SIZE 80
+
 // Player
 #define PLAYER_WIDTH 256
 #define PLAYER_HEIGHT 288
