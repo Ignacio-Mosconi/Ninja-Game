@@ -6,7 +6,7 @@
 #define SCREEN_HEIGHT 900
 
 // Splash State
-#define SPLASH_STATE_DURATION 0.5
+#define SPLASH_STATE_DURATION 2.5
 
 // Menu State
 #define MENU_OPTIONS 2
@@ -27,8 +27,8 @@
 #define FRUITS 5
 #define FRUIT_WIDTH 64
 #define FRUIT_HEIGHT 45
-#define FRUIT_MIN_SPEED 2
-#define FRUIT_MAX_SPEED 30
+#define FRUIT_MIN_SPEED 1
+#define FRUIT_MAX_SPEED 5
 #define FRUIT_MIN_X 32
 #define FRUIT_MAX_X 1578
 #define FRUIT_MIN_Y 90
@@ -74,7 +74,16 @@
 #define COIN_PATH "Assets/Images/Coin.png"
 #define LIFE_PATH "Assets/Images/Life.png"
 
+// Sounds File Paths
+#define MAIN_THEME "Assets/Sounds/Music.wav"
+#define JUMP_SOUND "Assets/Sounds/Jump.wav"
+#define FRUIT_HIT_SOUND "Assets/Sounds/Fruit Hit.wav"
+#define PICK_UP_COIN_SOUND "Assets/Sounds/Pick Up Coin.wav"
+#define PICK_UP_LIFE_SOUND "Assets/Sounds/Pick Up Life.wav"
+#define SELECT_SOUND "Assets/Sounds/Select.wav"
+
 // Fonts File Paths
 #define FONT_PATH "Assets/Fonts/Last Ninja.ttf"
+
 
 #endif

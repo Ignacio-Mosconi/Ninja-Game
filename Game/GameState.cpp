@@ -16,6 +16,12 @@ GameState::GameState(RenderWindow& window) : State(window)
 
 	_hud = new HUD();
 
+	_pickUpCoinBuffer.loadFromFile(PICK_UP_COIN_SOUND);
+	_pickUpLifeBuffer.loadFromFile(PICK_UP_LIFE_SOUND);
+
+	_mainTheme.openFromFile(MAIN_THEME);
+	_mainTheme.setLoop(true);
+
 	_gameOver = false;
 	_paused = false;
 	_score = 0;
@@ -39,10 +45,12 @@ GameState::~GameState()
 
 void GameState::run()
 {
+	if (_mainTheme.getStatus() == SoundSource::Status::Stopped)
+		_mainTheme.play();
+
 	while (!_gameOver && _window->isOpen())
 	{
 		float elapsed = _clock->restart().asSeconds();
-
 		if (!_paused)
 		{
 			input();
@@ -159,6 +167,7 @@ void GameState::coinPlayerCollision(Coin* c, Player* p)
 {
 	if (c->getSprite().getGlobalBounds().intersects(p->getSprite().getGlobalBounds()) && c->isEnabled())
 	{
+		_pickUpCoin.play();
 		c->disable();
 		_score += COIN_SCORE;
 		_hud->updateHUD(Score, _score);
@@ -169,6 +178,7 @@ void GameState::lifePlayerCollision(Life* l, Player* p)
 {
 	if (l->getSprite().getGlobalBounds().intersects(p->getSprite().getGlobalBounds()) && l->isEnabled())
 	{
+		_pickUpLife.play();
 		l->disable();
 		p->setLives(p->getLives() + 1);
 		_hud->updateHUD(Lives, p->getLives());
@@ -177,16 +187,20 @@ void GameState::lifePlayerCollision(Life* l, Player* p)
 
 void GameState::pause()
 {
+	_mainTheme.pause();
 	_paused = true;
 }
 
 void GameState::resume()
 {
+	_mainTheme.play();
 	_paused = false;
 }
 
 void GameState::result()
 {
+	_mainTheme.stop();
+
 	if (_score > _highestScore)
 	{
 		_highestScore = _score;

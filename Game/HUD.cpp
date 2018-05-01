@@ -18,12 +18,12 @@ HUD::HUD()
 	formatText(_paused, SCREEN_WIDTH / 2 - _paused->getGlobalBounds().width / 2,
 		SCREEN_HEIGHT / 2 - _paused->getGlobalBounds().height /2, TEXT_COLOR_GREEN, Color::White, true);
 	formatText(_gameOver, SCREEN_WIDTH / 2 - _gameOver->getGlobalBounds().width / 2,
-		SCREEN_HEIGHT / 2 - _gameOver->getGlobalBounds().height / 2, TEXT_COLOR_RED, Color::Red, true);
-	formatText(_restart, 32, SCREEN_HEIGHT - _restart->getGlobalBounds().height - 10, TEXT_COLOR_GREEN, TEXT_COLOR_BLUE, true);
-	formatText(_quit, SCREEN_WIDTH - _quit->getGlobalBounds().width - 32, SCREEN_HEIGHT - _restart->getGlobalBounds().height - 10,
+		SCREEN_HEIGHT / 4 - _gameOver->getGlobalBounds().height / 2, TEXT_COLOR_RED, Color::Red, true);
+	formatText(_restart, 32, SCREEN_HEIGHT - _restart->getGlobalBounds().height - 180, TEXT_COLOR_GREEN, TEXT_COLOR_BLUE, true);
+	formatText(_quit, SCREEN_WIDTH - _quit->getGlobalBounds().width - 32, SCREEN_HEIGHT - _restart->getGlobalBounds().height - 180,
 		TEXT_COLOR_RED, Color::Red, true);
 	formatText(_highestScore, SCREEN_WIDTH / 2 - _highestScore->getGlobalBounds().width / 2,
-		SCREEN_HEIGHT / 2 + 128, Color::White, Color::Black, true);
+		SCREEN_HEIGHT / 2 - _highestScore->getGlobalBounds().height / 2, Color::White, Color::Black, true);
 }
 
 HUD::~HUD()

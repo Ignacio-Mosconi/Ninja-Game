@@ -1,6 +1,7 @@
 #ifndef PLAYER_H
 #define PLAYER_H
 
+#include <SFML/Audio.hpp>
 #include "Entity.h"
 #include "Definitions.h"
 
@@ -21,6 +22,12 @@ enum Facing
 class Player : public Entity
 {
 private:
+	SoundBuffer _jumpBuffer;
+	SoundBuffer _fruitHitBuffer;
+
+	Sound _jump;
+	Sound _fruitHit;
+
 	PlayerState _currentState;
 	Facing _facing;
 	int _lives;

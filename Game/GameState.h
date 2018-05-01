@@ -3,6 +3,7 @@
 
 #include <ctime>
 #include <SFML/Graphics.hpp>
+#include <SFML/Audio.hpp>
 #include "State.h"
 #include "Player.h"
 #include "Fruit.h"
@@ -21,6 +22,14 @@ private:
 	Life* _life;
 
 	HUD* _hud;
+
+	SoundBuffer _pickUpCoinBuffer;
+	SoundBuffer _pickUpLifeBuffer;
+
+	Sound _pickUpCoin;
+	Sound _pickUpLife;
+
+	Music _mainTheme;
 
 	bool _gameOver;
 	bool _paused;

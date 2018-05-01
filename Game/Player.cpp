@@ -2,6 +2,12 @@
 
 Player::Player(int x, int y, const string& imagePath) : Entity(x, y, imagePath)
 {
+	_jumpBuffer.loadFromFile(JUMP_SOUND);
+	_fruitHitBuffer.loadFromFile(FRUIT_HIT_SOUND);
+
+	_jump.setBuffer(_jumpBuffer);
+	_fruitHit.setBuffer(_fruitHitBuffer);
+
 	_currentState = Idle;
 	_facing = Right;
 	_lives = PLAYER_LIVES;
@@ -11,7 +17,6 @@ Player::Player(int x, int y, const string& imagePath) : Entity(x, y, imagePath)
 
 Player::~Player()
 {
-
 }
 
 void Player::update(float elapsed)
@@ -68,6 +73,7 @@ void Player::jump(float elapsed)
 {
 	if (Keyboard::isKeyPressed(Keyboard::S) && _currentState != Jumping)
 	{
+		_jump.play();
 		_sprite.move(0, _jumpSpeed * elapsed);
 		_currentState = Jumping;
 	}
@@ -78,11 +84,25 @@ void Player::jump(float elapsed)
 			if (_sprite.getPosition().y > SCREEN_HEIGHT - PLAYER_JUMP_HEIGHT - GROUND_HEIGHT)
 			{
 				if (Keyboard::isKeyPressed(Keyboard::Left) && _sprite.getPosition().x > 0)
+				{
 					_sprite.move(-_moveSpeed * elapsed, _jumpSpeed * elapsed);
+					if (_facing == Right)
+					{
+						_sprite.setTextureRect(IntRect(PLAYER_WIDTH, 0, -PLAYER_WIDTH, PLAYER_HEIGHT));
+						_facing = Left;
+					}
+				}
 				else
 				{
 					if (Keyboard::isKeyPressed(Keyboard::Right) && _sprite.getPosition().x < SCREEN_WIDTH - PLAYER_WIDTH)
+					{
 						_sprite.move(_moveSpeed * elapsed, _jumpSpeed * elapsed);
+						if (_facing == Left)
+						{
+							_sprite.setTextureRect(IntRect(0, 0, PLAYER_WIDTH, PLAYER_HEIGHT));
+							_facing = Right;
+						}
+					}
 					else
 						_sprite.move(0, _jumpSpeed * elapsed);
 				}
@@ -116,6 +136,7 @@ void Player::fall(float elapsed)
 
 void Player::die()
 {
+	_fruitHit.play();
 	_lives--;
 	respawn();
 }
