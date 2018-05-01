@@ -35,7 +35,8 @@ private:
 	void lifePlayerCollision(Life* l, Player* p);
 
 	void result();
-	void restart();
+
+	void run();
 
 protected:
 	void input();
@@ -49,7 +50,9 @@ public:
 	GameState(RenderWindow& window);
 	~GameState();
 
-	void run();
+	void restart();
+
+	inline bool gameOver() { return _gameOver; }
 };
 
 #endif

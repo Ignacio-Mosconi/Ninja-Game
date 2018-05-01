@@ -32,6 +32,7 @@ public:
 	void show();
 
 	inline bool startGame() { return _startGame; }
+	void setStartGame(bool start) { _startGame = start; }
 };
 
 #endif

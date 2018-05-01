@@ -11,17 +11,26 @@ int main()
 	window.setVerticalSyncEnabled(true);
 	
 	SplashState* splash = new SplashState(window, SPLASH_LOGO_PATH);
-	splash->start();
-
 	MenuState* menu = new MenuState(window);
-	menu->show();
-
 	GameState* game = new GameState(window);
-	if (menu->startGame())
-		game->run();
+
+	splash->start();
+	
+	while (window.isOpen())
+	{
+		if (!game->gameOver())
+			menu->show();
+
+		if (menu->startGame())
+		{
+			menu->setStartGame(false);
+			game->restart();
+		}
+	}
 
 	delete splash;
 	delete menu;
 	delete game;
+
 	return 0;
 }

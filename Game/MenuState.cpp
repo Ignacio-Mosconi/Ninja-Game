@@ -90,7 +90,10 @@ void MenuState::update(float elapsed)
 	if (_clicked)
 	{
 		if (_selected[0])
+		{
 			_startGame = true;
+			_clicked = false;
+		}
 		else
 			if (_selected[1])
 				_window->close();

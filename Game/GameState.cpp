@@ -90,7 +90,7 @@ void GameState::input()
 					switch (event.key.code)
 					{
 						case Keyboard::Escape:
-							_window->close();
+							_gameOver = false;
 							break;
 						case Keyboard::Return:
 							restart();
@@ -102,22 +102,6 @@ void GameState::input()
 
 void GameState::update(float elapsed)
 {
-	switch (_player->getCurrentState())
-	{
-		case Idle:
-			cout << "Idle" << endl;
-			break;
-		case Moving:
-			cout << "Moving" << endl;
-			break;
-		case Jumping:
-			cout << "Jumping" << endl;
-			break;
-		case Falling:
-			cout << "Falling" << endl;
-			break;
-	}
-
 	_player->update(elapsed);
 	for (int i = 0; i < FRUITS; i++)
 		_fruits[i]->update(elapsed);
@@ -204,7 +188,10 @@ void GameState::resume()
 void GameState::result()
 {
 	if (_score > _highestScore)
+	{
 		_highestScore = _score;
+		_hud->updateHUD(HighestScore, _highestScore);
+	}
 
 	while (_gameOver && _window->isOpen())
 	{
@@ -232,12 +219,12 @@ void GameState::restart()
 	_life->respawn();
 	_life->disable();
 
-	_hud->updateHUD(Lives, _player->getLives());
-	_hud->updateHUD(Score, _score);
-
 	_gameOver = false;
 	_paused = false;
 	_score = 0;
+
+	_hud->updateHUD(Lives, _player->getLives());
+	_hud->updateHUD(Score, _score);
 
 	_deltaTime = 0;
 

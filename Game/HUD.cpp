@@ -10,6 +10,7 @@ HUD::HUD()
 	_gameOver = new Text("Game Over", _font, GAME_OVER_TEXT_SIZE);
 	_restart = new Text("Press 'ENTER' to restart", _font, HUD_OPTIONS_TEXT_SIZE);
 	_quit = new Text("Press 'ESCAPE' to quit", _font, HUD_OPTIONS_TEXT_SIZE);
+	_highestScore = new Text("Highest Score: 0", _font, HUD_OPTIONS_TEXT_SIZE);
 
 
 	formatText(_lives, 32, HUD_TEXT_Y, TEXT_COLOR_GREEN, Color::White, true);
@@ -21,6 +22,8 @@ HUD::HUD()
 	formatText(_restart, 32, SCREEN_HEIGHT - _restart->getGlobalBounds().height - 10, TEXT_COLOR_GREEN, TEXT_COLOR_BLUE, true);
 	formatText(_quit, SCREEN_WIDTH - _quit->getGlobalBounds().width - 32, SCREEN_HEIGHT - _restart->getGlobalBounds().height - 10,
 		TEXT_COLOR_RED, Color::Red, true);
+	formatText(_highestScore, SCREEN_WIDTH / 2 - _highestScore->getGlobalBounds().width / 2,
+		SCREEN_HEIGHT / 2 + 128, Color::White, Color::Black, true);
 }
 
 HUD::~HUD()
@@ -53,6 +56,9 @@ void HUD::updateHUD(Element element, int number)
 		case Score:
 			_score->setString("Score: " + to_string(number));
 			break;
+		case HighestScore:
+			_highestScore->setString("Highest Score: " + to_string(number));
+			break;
 	}
 }
 
@@ -70,6 +76,7 @@ void HUD::draw(RenderWindow* window, bool isPaused, bool isGameOver)
 		window->draw(*_gameOver);
 		window->draw(*_restart);
 		window->draw(*_quit);
+		window->draw(*_highestScore);
 	}
 }
 
