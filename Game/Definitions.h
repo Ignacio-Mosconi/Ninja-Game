@@ -4,6 +4,7 @@
 // Game Properties
 #define SCREEN_WIDTH 1600
 #define SCREEN_HEIGHT 900
+#define FRAME_RATE 60
 
 // Splash State
 #define SPLASH_STATE_DURATION 2.5
@@ -27,8 +28,8 @@
 #define FRUITS 5
 #define FRUIT_WIDTH 64
 #define FRUIT_HEIGHT 45
-#define FRUIT_MIN_SPEED 1
-#define FRUIT_MAX_SPEED 5
+#define FRUIT_MIN_SPEED 2
+#define FRUIT_MAX_SPEED 30
 #define FRUIT_MIN_X 32
 #define FRUIT_MAX_X 1578
 #define FRUIT_MIN_Y 90

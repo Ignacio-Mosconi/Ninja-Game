@@ -8,7 +8,7 @@ using namespace sf;
 int main()
 {
 	RenderWindow window(VideoMode(SCREEN_WIDTH, SCREEN_HEIGHT), "Ninja Thief", Style::Titlebar | Style::Close);
-	window.setVerticalSyncEnabled(true);
+	window.setFramerateLimit(FRAME_RATE);
 	
 	SplashState* splash = new SplashState(window, SPLASH_LOGO_PATH);
 	MenuState* menu = new MenuState(window);

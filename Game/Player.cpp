@@ -4,9 +4,13 @@ Player::Player(int x, int y, const string& imagePath) : Entity(x, y, imagePath)
 {
 	_jumpBuffer.loadFromFile(JUMP_SOUND);
 	_fruitHitBuffer.loadFromFile(FRUIT_HIT_SOUND);
+	_pickUpCoinBuffer.loadFromFile(PICK_UP_COIN_SOUND);
+	_pickUpLifeBuffer.loadFromFile(PICK_UP_LIFE_SOUND);
 
 	_jump.setBuffer(_jumpBuffer);
 	_fruitHit.setBuffer(_fruitHitBuffer);
+	_pickUpCoin.setBuffer(_pickUpCoinBuffer);
+	_pickUpLife.setBuffer(_pickUpLifeBuffer);
 
 	_currentState = Idle;
 	_facing = Right;
@@ -131,6 +135,24 @@ void Player::fall(float elapsed)
 	{
 		_sprite.setPosition(_sprite.getPosition().x, SCREEN_HEIGHT - GROUND_HEIGHT - PLAYER_HEIGHT);
 		_currentState = Idle;
+	}
+}
+
+bool Player::pickUpItem(Collectables collectable)
+{
+	if (Keyboard::isKeyPressed(Keyboard::A))
+	{
+		switch (collectable)
+		{
+			case Coins:
+				_pickUpCoin.play();
+				break;
+			case LifeBonuses:
+				_pickUpLife.play();
+				_lives++;
+				break;
+		}
+		return true;
 	}
 }
 

@@ -8,7 +8,6 @@ Coin::Coin(int x, int y, const string& imagePath): Collectible (x, y, imagePath)
 
 Coin::~Coin()
 {
-
 }
 
 void Coin::update(float elapsed)

@@ -23,21 +23,12 @@ private:
 
 	HUD* _hud;
 
-	SoundBuffer _pickUpCoinBuffer;
-	SoundBuffer _pickUpLifeBuffer;
-
-	Sound _pickUpCoin;
-	Sound _pickUpLife;
-
 	Music _mainTheme;
 
 	bool _gameOver;
 	bool _paused;
 	int _score;
 	int _highestScore;
-
-	const float _drawFrameTime = 1.0f / 60.0f;
-	float _deltaTime;
 
 	void fruitPlayerCollision(Fruit* f, Player* p);
 	void coinPlayerCollision(Coin* c, Player* p);
@@ -50,7 +41,7 @@ private:
 protected:
 	void input();
 	void update(float elapsed);
-	void draw(float elapsed);
+	void draw();
 
 	void pause();
 	void resume();

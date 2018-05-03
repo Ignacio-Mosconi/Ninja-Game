@@ -16,9 +16,6 @@ GameState::GameState(RenderWindow& window) : State(window)
 
 	_hud = new HUD();
 
-	_pickUpCoinBuffer.loadFromFile(PICK_UP_COIN_SOUND);
-	_pickUpLifeBuffer.loadFromFile(PICK_UP_LIFE_SOUND);
-
 	_mainTheme.openFromFile(MAIN_THEME);
 	_mainTheme.setLoop(true);
 
@@ -26,8 +23,6 @@ GameState::GameState(RenderWindow& window) : State(window)
 	_paused = false;
 	_score = 0;
 	_highestScore = 0;
-
-	_deltaTime = 0;
 }
 
 GameState::~GameState()
@@ -55,12 +50,12 @@ void GameState::run()
 		{
 			input();
 			update(elapsed);
-			draw(elapsed);
+			draw();
 		}
 		else
 		{
 			input();
-			draw(elapsed);
+			draw();
 		}
 	}
 	result();
@@ -125,27 +120,21 @@ void GameState::update(float elapsed)
 	lifePlayerCollision(_life, _player);
 }
 
-void GameState::draw(float elapsed)
+void GameState::draw()
 {
-	_deltaTime += elapsed;
+	_window->clear({ 32, 64, 128, 255 });
 
-	if (_deltaTime >= _drawFrameTime)
-	{
-		_deltaTime = 0;
-		_window->clear({ 32, 64, 128, 255 });
+	_window->draw(_player->getSprite());
+	for (int i = 0; i < FRUITS; i++)
+		_window->draw(_fruits[i]->getSprite());
+	_window->draw(_ground->getSprite());
+	for (int i = 0; i < COINS; i++)
+		_window->draw(_coins[i]->getSprite());
+	_window->draw(_life->getSprite());
 
-		_window->draw(_player->getSprite());
-		for (int i = 0; i < FRUITS; i++)
-			_window->draw(_fruits[i]->getSprite());
-		_window->draw(_ground->getSprite());
-		for (int i = 0; i < COINS; i++)
-			_window->draw(_coins[i]->getSprite());
-		_window->draw(_life->getSprite());
+	_hud->draw(_window, _paused, _gameOver);
 
-		_hud->draw(_window, _paused, _gameOver);
-
-		_window->display();
-	}
+	_window->display();
 }
 
 void GameState::fruitPlayerCollision(Fruit* f, Player* p)
@@ -167,10 +156,12 @@ void GameState::coinPlayerCollision(Coin* c, Player* p)
 {
 	if (c->getSprite().getGlobalBounds().intersects(p->getSprite().getGlobalBounds()) && c->isEnabled())
 	{
-		_pickUpCoin.play();
-		c->disable();
-		_score += COIN_SCORE;
-		_hud->updateHUD(Score, _score);
+		if (p->pickUpItem(Coins))
+		{
+			c->disable();
+			_score += COIN_SCORE;
+			_hud->updateHUD(Score, _score);
+		}
 	}
 }
 
@@ -178,10 +169,11 @@ void GameState::lifePlayerCollision(Life* l, Player* p)
 {
 	if (l->getSprite().getGlobalBounds().intersects(p->getSprite().getGlobalBounds()) && l->isEnabled())
 	{
-		_pickUpLife.play();
-		l->disable();
-		p->setLives(p->getLives() + 1);
-		_hud->updateHUD(Lives, p->getLives());
+		if (p->pickUpItem(LifeBonuses))
+		{
+			l->disable();
+			_hud->updateHUD(Lives, p->getLives());
+		}
 	}
 }
 
@@ -212,7 +204,7 @@ void GameState::result()
 		float elapsed = _clock->restart().asSeconds();
 
 		input();
-		draw(elapsed);
+		draw();
 	}
 }
 
@@ -239,8 +231,6 @@ void GameState::restart()
 
 	_hud->updateHUD(Lives, _player->getLives());
 	_hud->updateHUD(Score, _score);
-
-	_deltaTime = 0;
 
 	run();
 }

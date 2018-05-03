@@ -10,7 +10,7 @@ enum PlayerState
 	Idle,
 	Moving,
 	Jumping,
-	Falling,
+	Falling
 };
 
 enum Facing
@@ -19,17 +19,28 @@ enum Facing
 	Right
 };
 
+enum Collectables
+{
+	Coins,
+	LifeBonuses
+};
+
 class Player : public Entity
 {
 private:
 	SoundBuffer _jumpBuffer;
 	SoundBuffer _fruitHitBuffer;
+	SoundBuffer _pickUpCoinBuffer;
+	SoundBuffer _pickUpLifeBuffer;
 
 	Sound _jump;
 	Sound _fruitHit;
+	Sound _pickUpCoin;
+	Sound _pickUpLife;
 
 	PlayerState _currentState;
 	Facing _facing;
+
 	int _lives;
 	float _moveSpeed;
 	float _jumpSpeed;
@@ -43,6 +54,7 @@ public:
 	~Player();
 
 	void update(float elapsed);
+	bool pickUpItem(Collectables collectable);
 	void die();
 	void respawn();
 

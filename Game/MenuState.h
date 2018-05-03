@@ -28,7 +28,7 @@ private:
 protected:
 	void input();
 	void update(float elapsed);
-	void draw(float elapsed);
+	void draw();
 
 public:
 	MenuState(RenderWindow& window);

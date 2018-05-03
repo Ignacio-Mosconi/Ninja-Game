@@ -37,7 +37,7 @@ void MenuState::show()
 
 		input();
 		update(elapsed);
-		draw(elapsed);
+		draw();
 	}
 }
 
@@ -105,7 +105,7 @@ void MenuState::update(float elapsed)
 
 }
 
-void MenuState::draw(float elapsed)
+void MenuState::draw()
 {
 	_window->clear(Color::Black);
 

@@ -16,7 +16,7 @@ protected:
 
 	virtual void input() = 0;
 	virtual void update(float elapsed) = 0;
-	virtual void draw(float elapsed) = 0;
+	virtual void draw() = 0;
 
 	virtual void pause() {}
 	virtual void resume() {}
