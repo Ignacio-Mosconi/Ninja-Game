@@ -34,7 +34,7 @@
 #define FRUIT_MAX_X 1578
 #define FRUIT_MIN_Y 90
 #define FRUIT_MIN_SPAWN_TIME 3
-#define FRUIT_MAX_SPAWN_TIME 12
+#define FRUIT_MAX_SPAWN_TIME 15
 
 // Collectibles
 #define COLLECTIBLE_MIN_X 32

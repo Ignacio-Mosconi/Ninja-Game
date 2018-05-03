@@ -154,6 +154,7 @@ bool Player::pickUpItem(Collectables collectable)
 		}
 		return true;
 	}
+	return false;
 }
 
 void Player::die()
