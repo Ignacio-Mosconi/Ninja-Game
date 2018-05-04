@@ -46,27 +46,7 @@ void Player::update(float elapsed)
 			break;
 	}
 	if (_isFlickering)
-	{
-		_flickeringCounter += elapsed;
-		if (_flickeringCounter >= FLICKERING_RATE)
-		{
-			_flickeringCounter = 0;
-			if (_sprite.getColor() != Color::Transparent)
-				_sprite.setColor(Color::Transparent);
-			else
-				_sprite.setColor(Color::White);
-		}
-		else
-			_flickeringCounter += elapsed;
-
-		_flickeringTime -= elapsed;
-		if (_flickeringTime <= 0)
-		{
-			_isFlickering = false;
-			_sprite.setColor(Color::White);
-			_flickeringTime = FLICKERING_TIME;
-		}
-	}
+		flicker(elapsed);
 }
 
 void Player::move(float elapsed)
@@ -194,4 +174,27 @@ void Player::respawn()
 {
 	_currentState = Idle;
 	_sprite.setPosition(SCREEN_WIDTH / 2 - PLAYER_WIDTH / 2, SCREEN_HEIGHT - GROUND_HEIGHT - PLAYER_HEIGHT);
+}
+
+void Player::flicker(float elapsed)
+{
+	_flickeringCounter += elapsed;
+	if (_flickeringCounter >= FLICKERING_RATE)
+	{
+		_flickeringCounter = 0;
+		if (_sprite.getColor() != Color::Transparent)
+			_sprite.setColor(Color::Transparent);
+		else
+			_sprite.setColor(Color::White);
+	}
+	else
+		_flickeringCounter += elapsed;
+
+	_flickeringTime -= elapsed;
+	if (_flickeringTime <= 0)
+	{
+		_isFlickering = false;
+		_sprite.setColor(Color::White);
+		_flickeringTime = FLICKERING_TIME;
+	}
 }

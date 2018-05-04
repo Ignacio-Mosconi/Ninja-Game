@@ -44,13 +44,13 @@ void Fruit::move(float elapsed)
 void Fruit::disable()
 {
 	_enabled = false;
-	_sprite.setColor({ 0, 0, 0, 0 });
+	_sprite.setColor(Color::Transparent);
 }
 
 void Fruit::respawn()
 {
 	_enabled = true;
-	_sprite.setColor({ 255, 255, 255, 255 });
+	_sprite.setColor(Color::White);
 	_spawnTime = rand() % (FRUIT_MAX_SPAWN_TIME - FRUIT_MIN_SPAWN_TIME) + FRUIT_MIN_SPAWN_TIME;
 	_sprite.setPosition(rand() % (FRUIT_MAX_X - FRUIT_MIN_X - FRUIT_WIDTH) + FRUIT_MIN_X, FRUIT_MIN_Y);
 	_speed = rand() % (FRUIT_MAX_SPEED - FRUIT_MIN_SPEED) + FRUIT_MIN_SPEED;

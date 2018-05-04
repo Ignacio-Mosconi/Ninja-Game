@@ -6,6 +6,9 @@
 
 class Life : public Collectible
 {
+protected:
+	void flicker(float elapsed);
+
 public:
 	Life(int x, int y, const string& imagePath);
 	~Life();

@@ -9,6 +9,9 @@ protected:
 	bool _enabled;
 	float _spawnTime;
 	float _onScreenTime;
+	float _flickeringCounter;
+
+	virtual void flicker(float elapsed) = 0;
 	
 public:
 	Collectible(int x, int y, const string& imagePath);

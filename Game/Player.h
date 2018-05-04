@@ -51,6 +51,7 @@ private:
 	void move(float elapsed);
 	void jump(float elapsed);
 	void fall(float elapsed);
+	void flicker(float elapsed);
 
 public:
 	Player(int x, int y, const string& imagePath);

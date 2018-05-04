@@ -15,8 +15,12 @@ void Coin::update(float elapsed)
 	if (_enabled)
 	{
 		_onScreenTime -= elapsed;
-		if (_onScreenTime <= 0)
-			disable();
+		if (_onScreenTime <= COLLECTIBLE_START_FLICKERING)
+		{
+			flicker(elapsed);
+			if (_onScreenTime <= 0)
+				disable();
+		}
 	}
 	else
 	{
@@ -29,9 +33,24 @@ void Coin::update(float elapsed)
 void Coin::respawn()
 {
 	_enabled = true;
-	_sprite.setColor({ 255, 255, 255, 255 });
+	_sprite.setColor(Color::White);
 	_onScreenTime = COIN_DURATION;
 	_spawnTime = rand() % (COIN_MAX_SPAWN_TIME - COIN_MIN_SPAWN_TIME) + COIN_MIN_SPAWN_TIME;
 	_sprite.setPosition(rand() % (COLLECTIBLE_MAX_X - COLLECTIBLE_MIN_X - COIN_WIDTH) + COLLECTIBLE_MIN_X, 
 		rand() % (COLLECTIBLE_MAX_Y - COLLECTIBLE_MIN_Y) + COLLECTIBLE_MIN_Y);
+}
+
+void Coin::flicker(float elapsed)
+{
+	_flickeringCounter += elapsed;
+	if (_flickeringCounter >= FLICKERING_RATE)
+	{
+		_flickeringCounter = 0;
+		if (_sprite.getColor() != Color::Transparent)
+			_sprite.setColor(Color::Transparent);
+		else
+			_sprite.setColor(Color::White);
+	}
+	else
+		_flickeringCounter += elapsed;
 }
