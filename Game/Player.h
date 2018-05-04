@@ -44,6 +44,9 @@ private:
 	int _lives;
 	float _moveSpeed;
 	float _jumpSpeed;
+	bool _isFlickering;
+	float _flickeringTime;
+	float _flickeringCounter;
 
 	void move(float elapsed);
 	void jump(float elapsed);
@@ -60,6 +63,7 @@ public:
 
 	inline PlayerState getCurrentState() { return _currentState; }
 	inline int getLives() { return _lives; }
+	inline bool isFlickering() { return _isFlickering; }
 	void setLives(int lives) { _lives = lives; }
 };
 

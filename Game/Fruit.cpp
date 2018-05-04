@@ -7,11 +7,11 @@ Fruit::Fruit(int x, int y, const string& imagePath) : Entity(x, y, imagePath)
 	_spawnTime = rand() % (FRUIT_MAX_SPAWN_TIME - FRUIT_MIN_SPAWN_TIME) + FRUIT_MIN_SPAWN_TIME;
 	
 	disable();
+	_hasReachedBottom = false;
 }
 
 Fruit::~Fruit()
 {
-
 }
 
 void Fruit::update(float elapsed)
@@ -21,7 +21,10 @@ void Fruit::update(float elapsed)
 		if (_sprite.getPosition().y < SCREEN_HEIGHT - GROUND_HEIGHT)
 			move(elapsed);
 		else
+		{
+			_hasReachedBottom = true;;
 			disable();
+		}
 	}
 	else
 	{

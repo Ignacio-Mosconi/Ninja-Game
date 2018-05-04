@@ -23,6 +23,8 @@
 #define PLAYER_JUMP_HEIGHT 576
 #define GRAVITY 1200
 #define GROUND_HEIGHT 72
+#define FLICKERING_TIME 5
+#define FLICKERING_RATE 0.5
 
 // Fruits
 #define FRUITS 5
@@ -35,6 +37,7 @@
 #define FRUIT_MIN_Y 90
 #define FRUIT_MIN_SPAWN_TIME 3
 #define FRUIT_MAX_SPAWN_TIME 15
+#define FRUIT_SCORE 1
 
 // Collectibles
 #define COLLECTIBLE_MIN_X 32

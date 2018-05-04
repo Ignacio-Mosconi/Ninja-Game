@@ -107,7 +107,15 @@ void GameState::update(float elapsed)
 {
 	_player->update(elapsed);
 	for (int i = 0; i < FRUITS; i++)
+	{
 		_fruits[i]->update(elapsed);
+		if (_fruits[i]->hasReachedBottom())
+		{
+			_score += FRUIT_SCORE;
+			_fruits[i]->setHasReachedBottom(false);
+			_hud->updateHUD(Score, _score);
+		}
+	}
 	for (int i = 0; i < COINS; i++)
 		_coins[i]->update(elapsed);
 	if (_player->getLives() < PLAYER_LIVES)
@@ -139,7 +147,7 @@ void GameState::draw()
 
 void GameState::fruitPlayerCollision(Fruit* f, Player* p)
 {
-	if (f->getSprite().getGlobalBounds().intersects(p->getSprite().getGlobalBounds()) && f->isEnabled())
+	if (f->getSprite().getGlobalBounds().intersects(p->getSprite().getGlobalBounds()) && f->isEnabled() && !p->isFlickering())
 	{
 		f->disable();
 		if (p->getLives() > 1)

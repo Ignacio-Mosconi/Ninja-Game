@@ -11,6 +11,7 @@ private:
 	float _rotationSpeed;
 	float _spawnTime;
 	bool _enabled;
+	bool _hasReachedBottom;
 
 	void move(float elapsed);
 
@@ -24,6 +25,8 @@ public:
 	void respawn();
 
 	inline bool isEnabled() { return _enabled; }
+	inline bool hasReachedBottom() { return _hasReachedBottom; }
+	void setHasReachedBottom(bool value) { _hasReachedBottom = value; }
 };
 
 #endif

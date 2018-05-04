@@ -17,6 +17,9 @@ Player::Player(int x, int y, const string& imagePath) : Entity(x, y, imagePath)
 	_lives = PLAYER_LIVES;
 	_moveSpeed = PLAYER_MOVE_SPEED;
 	_jumpSpeed = PLAYER_JUMP_SPEED;
+	_isFlickering = false;
+	_flickeringTime = FLICKERING_TIME;
+	_flickeringCounter = 0;
 }
 
 Player::~Player()
@@ -41,6 +44,28 @@ void Player::update(float elapsed)
 		case Falling:
 			fall(elapsed);
 			break;
+	}
+	if (_isFlickering)
+	{
+		_flickeringCounter += elapsed;
+		if (_flickeringCounter >= FLICKERING_RATE)
+		{
+			_flickeringCounter = 0;
+			if (_sprite.getColor() != Color::Transparent)
+				_sprite.setColor(Color::Transparent);
+			else
+				_sprite.setColor(Color::White);
+		}
+		else
+			_flickeringCounter += elapsed;
+
+		_flickeringTime -= elapsed;
+		if (_flickeringTime <= 0)
+		{
+			_isFlickering = false;
+			_sprite.setColor(Color::White);
+			_flickeringTime = FLICKERING_TIME;
+		}
 	}
 }
 
@@ -160,6 +185,7 @@ bool Player::pickUpItem(Collectables collectable)
 void Player::die()
 {
 	_fruitHit.play();
+	_isFlickering = true;
 	_lives--;
 	respawn();
 }
