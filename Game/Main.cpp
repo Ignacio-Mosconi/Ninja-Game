@@ -8,6 +8,9 @@ using namespace sf;
 int main()
 {
 	RenderWindow window(VideoMode(SCREEN_WIDTH, SCREEN_HEIGHT), "Ninja Thief", Style::Titlebar | Style::Close);
+	Image icon;
+	icon.loadFromFile(WINDOW_ICON_PATH);
+	window.setIcon(icon.getSize().x, icon.getSize().y, icon.getPixelsPtr());
 	window.setFramerateLimit(FRAME_RATE);
 	
 	SplashState* splash = new SplashState(window, SPLASH_LOGO_PATH);

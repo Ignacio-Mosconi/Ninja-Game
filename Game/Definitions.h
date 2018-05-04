@@ -68,6 +68,7 @@
 #define TEXT_COLOR_YELLOW {200, 128, 32, 255}
 
 // Images File Paths
+#define WINDOW_ICON_PATH "Assets/Images/Icon.png"
 #define SPLASH_LOGO_PATH "Assets/Images/Splash Logo.png"
 #define PLAYER_PATH "Assets/Images/Player.png"
 #define FRUIT_PATH "Assets/Images/Fruit.png"
@@ -85,6 +86,5 @@
 
 // Fonts File Paths
 #define FONT_PATH "Assets/Fonts/Last Ninja.ttf"
-
 
 #endif
