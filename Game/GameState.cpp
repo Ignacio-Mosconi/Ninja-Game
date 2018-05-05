@@ -113,7 +113,21 @@ void GameState::update(float elapsed)
 		_fruits[i]->update(elapsed);
 		if (_fruits[i]->hasReachedBottom())
 		{
-			_score += FRUIT_SCORE;
+			switch (_fruits[i]->getKind())
+			{
+				case Watermelon:
+					_score += WATERMELON_SCORE;
+					break;
+				case Apple:
+					_score += APPLE_SCORE;
+					break;
+				case Pear:
+					_score += PEAR_SCORE;
+					break;
+				case Banana:
+					_score += BANANA_SCORE;
+					break;
+			}
 			_fruits[i]->setHasReachedBottom(false);
 			_hud->updateHUD(Score, _score);
 		}

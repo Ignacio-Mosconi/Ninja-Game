@@ -43,7 +43,11 @@
 #define FRUIT_MIN_Y 90
 #define FRUIT_MIN_SPAWN_TIME 3
 #define FRUIT_MAX_SPAWN_TIME 15
-#define FRUIT_SCORE 1
+#define WATERMELON_SCORE 1
+#define APPLE_SCORE 2
+#define PEAR_SCORE 3
+#define BANANA_SCORE 4
+#define FRUIT_MAX_INDEX 3
 
 // Collectibles
 #define COLLECTIBLE_MIN_X 32
