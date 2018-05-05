@@ -1,9 +1,7 @@
 #ifndef PLAYER_H
 #define PLAYER_H
 
-#include <SFML/Audio.hpp>
 #include "Entity.h"
-#include "Definitions.h"
 
 enum PlayerState
 {
@@ -25,6 +23,14 @@ enum Collectables
 	LifeBonuses
 };
 
+enum Animation
+{
+	IdleRight,
+	IdleLeft,
+	MovingRight,
+	MovingLeft,
+};
+
 class Player : public Entity
 {
 private:
@@ -40,11 +46,13 @@ private:
 
 	PlayerState _currentState;
 	Facing _facing;
+	Vector2i _imagePos;
+	float _animationCounter;
 
 	int _lives;
 	float _moveSpeed;
 	float _jumpSpeed;
-	bool _isFlickering;
+	bool _isInvincible;
 	float _flickeringTime;
 	float _flickeringCounter;
 
@@ -52,6 +60,7 @@ private:
 	void jump(float elapsed);
 	void fall(float elapsed);
 	void flicker(float elapsed);
+	void animate(float elapsed);
 
 public:
 	Player(int x, int y, const string& imagePath);
@@ -64,7 +73,7 @@ public:
 
 	inline PlayerState getCurrentState() { return _currentState; }
 	inline int getLives() { return _lives; }
-	inline bool isFlickering() { return _isFlickering; }
+	inline bool isFlickering() { return _isInvincible; }
 	void setLives(int lives) { _lives = lives; }
 };
 

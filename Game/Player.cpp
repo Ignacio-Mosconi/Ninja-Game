@@ -14,10 +14,15 @@ Player::Player(int x, int y, const string& imagePath) : Entity(x, y, imagePath)
 
 	_currentState = Idle;
 	_facing = Right;
+	_animationCounter = 0;
+	_imagePos.x = 0;
+	_imagePos.y = IdleRight;
+	_sprite.setTextureRect(IntRect(_imagePos.x, _imagePos.y, PLAYER_WIDTH, PLAYER_HEIGHT));
+
 	_lives = PLAYER_LIVES;
 	_moveSpeed = PLAYER_MOVE_SPEED;
 	_jumpSpeed = PLAYER_JUMP_SPEED;
-	_isFlickering = false;
+	_isInvincible = false;
 	_flickeringTime = FLICKERING_TIME;
 	_flickeringCounter = 0;
 }
@@ -45,8 +50,11 @@ void Player::update(float elapsed)
 			fall(elapsed);
 			break;
 	}
-	if (_isFlickering)
+	
+	if (_isInvincible)
 		flicker(elapsed);
+	
+	animate(elapsed);
 }
 
 void Player::move(float elapsed)
@@ -56,10 +64,17 @@ void Player::move(float elapsed)
 		_sprite.move(-_moveSpeed * elapsed, 0);
 		if (_facing == Right)
 		{
-			_sprite.setTextureRect(IntRect(PLAYER_WIDTH, 0, -PLAYER_WIDTH, PLAYER_HEIGHT));
+			//_sprite.setTextureRect(IntRect(PLAYER_WIDTH, PLAYER_HEIGHT, -PLAYER_WIDTH, 2 * PLAYER_HEIGHT));
+			_imagePos.x = 0;
+			_imagePos.y = MovingLeft;
 			_facing = Left;
 		}
-		_currentState = Moving;
+		if (_currentState != Moving)
+		{
+			_imagePos.x = 0;
+			_imagePos.y = MovingLeft;
+			_currentState = Moving;
+		}
 	}
 	else
 	{
@@ -68,13 +83,25 @@ void Player::move(float elapsed)
 			_sprite.move(_moveSpeed * elapsed, 0);
 			if (_facing == Left)
 			{
-				_sprite.setTextureRect(IntRect(0, 0, PLAYER_WIDTH, PLAYER_HEIGHT));
+				//_sprite.setTextureRect(IntRect(0, PLAYER_HEIGHT, PLAYER_WIDTH, 2 * PLAYER_HEIGHT));
+				_imagePos.x = 0;
+				_imagePos.y = MovingRight;
 				_facing = Right;
 			}
-			_currentState = Moving;
+			if (_currentState != Moving)
+			{
+				_imagePos.x = 0;
+				_imagePos.y = MovingRight;
+				_currentState = Moving;
+			}
 		}
 		else
-			_currentState = Idle;
+			if (_currentState != Idle)
+			{
+				_imagePos.x = 0;
+				_imagePos.y = (_facing == Right) ? IdleRight : IdleLeft;
+				_currentState = Idle;
+			}
 	}
 }
 
@@ -97,7 +124,7 @@ void Player::jump(float elapsed)
 					_sprite.move(-_moveSpeed * elapsed, _jumpSpeed * elapsed);
 					if (_facing == Right)
 					{
-						_sprite.setTextureRect(IntRect(PLAYER_WIDTH, 0, -PLAYER_WIDTH, PLAYER_HEIGHT));
+						//_sprite.setTextureRect(IntRect(PLAYER_WIDTH, PLAYER_HEIGHT, -PLAYER_WIDTH, 2 * PLAYER_HEIGHT));
 						_facing = Left;
 					}
 				}
@@ -108,7 +135,7 @@ void Player::jump(float elapsed)
 						_sprite.move(_moveSpeed * elapsed, _jumpSpeed * elapsed);
 						if (_facing == Left)
 						{
-							_sprite.setTextureRect(IntRect(0, 0, PLAYER_WIDTH, PLAYER_HEIGHT));
+							//_sprite.setTextureRect(IntRect(0, PLAYER_HEIGHT, PLAYER_WIDTH, 2 * PLAYER_HEIGHT));
 							_facing = Right;
 						}
 					}
@@ -127,11 +154,25 @@ void Player::fall(float elapsed)
 	if (_sprite.getPosition().y + PLAYER_HEIGHT < SCREEN_HEIGHT - GROUND_HEIGHT)
 	{
 		if (Keyboard::isKeyPressed(Keyboard::Left) && _sprite.getPosition().x > 0)
+		{
 			_sprite.move(-_moveSpeed * elapsed, GRAVITY * elapsed);
+			if (_facing == Right)
+			{
+				//_sprite.setTextureRect(IntRect(PLAYER_WIDTH, PLAYER_HEIGHT, -PLAYER_WIDTH, 2 * PLAYER_HEIGHT));
+				_facing = Left;
+			}
+		}
 		else
 		{
 			if (Keyboard::isKeyPressed(Keyboard::Right) && _sprite.getPosition().x < SCREEN_WIDTH - PLAYER_WIDTH)
+			{
 				_sprite.move(_moveSpeed * elapsed, GRAVITY * elapsed);
+				if (_facing == Left)
+				{
+					//_sprite.setTextureRect(IntRect(0, PLAYER_HEIGHT, PLAYER_WIDTH, 2 * PLAYER_HEIGHT));
+					_facing = Right;
+				}
+			}
 			else
 				_sprite.move(0, GRAVITY * elapsed);
 		}
@@ -165,7 +206,7 @@ bool Player::pickUpItem(Collectables collectable)
 void Player::die()
 {
 	_fruitHit.play();
-	_isFlickering = true;
+	_isInvincible = true;
 	_lives--;
 	respawn();
 }
@@ -193,8 +234,38 @@ void Player::flicker(float elapsed)
 	_flickeringTime -= elapsed;
 	if (_flickeringTime <= 0)
 	{
-		_isFlickering = false;
+		_isInvincible = false;
 		_sprite.setColor(Color::White);
 		_flickeringTime = FLICKERING_TIME;
+	}
+}
+
+void Player::animate(float elapsed)
+{
+	_sprite.setTextureRect(IntRect(_imagePos.x * PLAYER_WIDTH, _imagePos.y * PLAYER_HEIGHT, PLAYER_WIDTH, PLAYER_HEIGHT));
+	_animationCounter += elapsed;
+
+	switch (_currentState)
+	{
+		case Idle:
+			if (_animationCounter >= IDLE_FRAME_TIME)
+			{
+				_animationCounter = 0;
+				if (_imagePos.x < IMAGE_MAX_INDEX)
+					_imagePos.x++;
+				else
+					_imagePos.x = 0;
+			}
+			break;
+		case Moving:
+			if (_animationCounter >= MOVING_FRAME_TIME)
+			{
+				_animationCounter = 0;
+				if (_imagePos.x < IMAGE_MAX_INDEX)
+					_imagePos.x++;
+				else
+					_imagePos.x = 0;
+			}
+			break;
 	}
 }

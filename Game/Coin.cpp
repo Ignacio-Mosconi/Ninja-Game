@@ -39,18 +39,3 @@ void Coin::respawn()
 	_sprite.setPosition(rand() % (COLLECTIBLE_MAX_X - COLLECTIBLE_MIN_X - COIN_WIDTH) + COLLECTIBLE_MIN_X, 
 		rand() % (COLLECTIBLE_MAX_Y - COLLECTIBLE_MIN_Y) + COLLECTIBLE_MIN_Y);
 }
-
-void Coin::flicker(float elapsed)
-{
-	_flickeringCounter += elapsed;
-	if (_flickeringCounter >= FLICKERING_RATE)
-	{
-		_flickeringCounter = 0;
-		if (_sprite.getColor() != Color::Transparent)
-			_sprite.setColor(Color::Transparent);
-		else
-			_sprite.setColor(Color::White);
-	}
-	else
-		_flickeringCounter += elapsed;
-}

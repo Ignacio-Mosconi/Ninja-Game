@@ -11,7 +11,7 @@ protected:
 	float _onScreenTime;
 	float _flickeringCounter;
 
-	virtual void flicker(float elapsed) = 0;
+	virtual void flicker(float elapsed);
 	
 public:
 	Collectible(int x, int y, const string& imagePath);

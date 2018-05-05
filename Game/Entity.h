@@ -3,6 +3,8 @@
 
 #include <string>
 #include <SFML/Graphics.hpp>
+#include <SFML/Audio.hpp>
+#include "Definitions.h"
 using namespace std;
 using namespace sf;
 

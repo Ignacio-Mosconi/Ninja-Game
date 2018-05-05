@@ -2,7 +2,6 @@
 #define FRUIT_H
 
 #include "Entity.h"
-#include "Definitions.h"
 
 class Fruit : public Entity
 {

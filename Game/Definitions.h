@@ -15,7 +15,7 @@
 #define OPTIONS_TEXT_SIZE 80
 
 // Player
-#define PLAYER_WIDTH 256
+#define PLAYER_WIDTH 192
 #define PLAYER_HEIGHT 288
 #define PLAYER_LIVES 3
 #define PLAYER_MOVE_SPEED 500
@@ -25,6 +25,9 @@
 #define GROUND_HEIGHT 72
 #define FLICKERING_TIME 5
 #define FLICKERING_RATE 0.5
+#define IMAGE_MAX_INDEX 5
+#define IDLE_FRAME_TIME 1.0f / 6.0f
+#define MOVING_FRAME_TIME 1.0f / 12.0f
 
 // Fruits
 #define FRUITS 5
