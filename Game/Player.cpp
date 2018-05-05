@@ -111,6 +111,8 @@ void Player::jump(float elapsed)
 	{
 		_jump.play();
 		_sprite.move(0, _jumpSpeed * elapsed);
+		_imagePos.x = 0;
+		_imagePos.y = (_facing == Right) ? JumpingRight : JumpingLeft;
 		_currentState = Jumping;
 	}
 	else
@@ -125,6 +127,7 @@ void Player::jump(float elapsed)
 					if (_facing == Right)
 					{
 						//_sprite.setTextureRect(IntRect(PLAYER_WIDTH, PLAYER_HEIGHT, -PLAYER_WIDTH, 2 * PLAYER_HEIGHT));
+						_imagePos.y = JumpingLeft;
 						_facing = Left;
 					}
 				}
@@ -136,6 +139,7 @@ void Player::jump(float elapsed)
 						if (_facing == Left)
 						{
 							//_sprite.setTextureRect(IntRect(0, PLAYER_HEIGHT, PLAYER_WIDTH, 2 * PLAYER_HEIGHT));
+							_imagePos.y = JumpingRight;
 							_facing = Right;
 						}
 					}
@@ -159,6 +163,7 @@ void Player::fall(float elapsed)
 			if (_facing == Right)
 			{
 				//_sprite.setTextureRect(IntRect(PLAYER_WIDTH, PLAYER_HEIGHT, -PLAYER_WIDTH, 2 * PLAYER_HEIGHT));
+				_imagePos.y = JumpingLeft;
 				_facing = Left;
 			}
 		}
@@ -170,6 +175,7 @@ void Player::fall(float elapsed)
 				if (_facing == Left)
 				{
 					//_sprite.setTextureRect(IntRect(0, PLAYER_HEIGHT, PLAYER_WIDTH, 2 * PLAYER_HEIGHT));
+					_imagePos.y = JumpingRight;
 					_facing = Right;
 				}
 			}
@@ -180,6 +186,8 @@ void Player::fall(float elapsed)
 	else
 	{
 		_sprite.setPosition(_sprite.getPosition().x, SCREEN_HEIGHT - GROUND_HEIGHT - PLAYER_HEIGHT);
+		_imagePos.x = 0;
+		_imagePos.y = (_facing == Right) ? IdleRight : IdleLeft;
 		_currentState = Idle;
 	}
 }
@@ -265,6 +273,14 @@ void Player::animate(float elapsed)
 					_imagePos.x++;
 				else
 					_imagePos.x = 0;
+			}
+			break;
+		case Jumping:
+			if (_animationCounter >= 1.0f / 18.0f)
+			{
+				_animationCounter = 0;
+				if (_imagePos.x < 2)
+					_imagePos.x++;
 			}
 			break;
 	}

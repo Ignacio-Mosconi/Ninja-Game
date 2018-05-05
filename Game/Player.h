@@ -29,6 +29,8 @@ enum Animation
 	IdleLeft,
 	MovingRight,
 	MovingLeft,
+	JumpingRight,
+	JumpingLeft
 };
 
 class Player : public Entity
