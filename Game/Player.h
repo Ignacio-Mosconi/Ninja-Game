@@ -40,11 +40,13 @@ private:
 	SoundBuffer _fruitHitBuffer;
 	SoundBuffer _pickUpCoinBuffer;
 	SoundBuffer _pickUpLifeBuffer;
+	SoundBuffer _gameOverBuffer;
 
 	Sound _jump;
 	Sound _fruitHit;
 	Sound _pickUpCoin;
 	Sound _pickUpLife;
+	Sound _gameOver;
 
 	PlayerState _currentState;
 	Facing _facing;
@@ -77,6 +79,7 @@ public:
 	inline int getLives() { return _lives; }
 	inline bool isFlickering() { return _isInvincible; }
 	void setLives(int lives) { _lives = lives; }
+	void setIsInvincible(bool value) { _isInvincible = value; }
 };
 
 #endif

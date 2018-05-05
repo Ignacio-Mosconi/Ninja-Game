@@ -11,7 +11,8 @@ enum Element
 {
 	Lives,
 	Score,
-	HighestScore
+	HighestScore,
+	FinalScore
 };
 
 class HUD
@@ -25,7 +26,9 @@ private:
 	Text* _gameOver;
 	Text* _restart;
 	Text* _quit;
+	Text* _youScored;
 	Text* _highestScore;
+	Text* _credits;
 
 	void formatText(Text* text, int x, int y, Color fillColor, Color outlineColor = Color::White, bool outline = false);
 

@@ -10,8 +10,9 @@ HUD::HUD()
 	_gameOver = new Text("Game Over", _font, GAME_OVER_TEXT_SIZE);
 	_restart = new Text("Press enter to restart", _font, HUD_OPTIONS_TEXT_SIZE);
 	_quit = new Text("Press escape to quit", _font, HUD_OPTIONS_TEXT_SIZE);
+	_youScored = new Text("You scored: 0", _font, HUD_OPTIONS_TEXT_SIZE);
 	_highestScore = new Text("Highest Score: 0", _font, HUD_OPTIONS_TEXT_SIZE);
-
+	_credits = new Text("Made by Ignacio Mosconi - Powered by SFML 2.4", _font, HUD_OPTIONS_TEXT_SIZE);
 
 	formatText(_lives, 32, HUD_TEXT_Y, TEXT_COLOR_GREEN, Color::White, true);
 	formatText(_score, SCREEN_WIDTH / 2 - _score->getGlobalBounds().width / 2, HUD_TEXT_Y, TEXT_COLOR_BLUE, Color::White, true);
@@ -22,8 +23,12 @@ HUD::HUD()
 	formatText(_restart, 32, SCREEN_HEIGHT - _restart->getGlobalBounds().height - 90, TEXT_COLOR_GREEN, TEXT_COLOR_BLUE, true);
 	formatText(_quit, SCREEN_WIDTH - _quit->getGlobalBounds().width - 32, SCREEN_HEIGHT - _restart->getGlobalBounds().height - 90,
 		TEXT_COLOR_RED, Color::Red, true);
+	formatText(_youScored, SCREEN_WIDTH / 2 - _youScored->getGlobalBounds().width / 2,
+		SCREEN_HEIGHT / 2 - _youScored->getGlobalBounds().height / 2, Color::White, Color::Black, true);
 	formatText(_highestScore, SCREEN_WIDTH / 2 - _highestScore->getGlobalBounds().width / 2,
-		SCREEN_HEIGHT / 2 - _highestScore->getGlobalBounds().height / 2, Color::White, Color::Black, true);
+		SCREEN_HEIGHT / 2 - _highestScore->getGlobalBounds().height / 2 + 64, Color::White, Color::Black, true);
+	formatText(_credits, SCREEN_WIDTH / 2 - _credits->getGlobalBounds().width / 2,
+		SCREEN_HEIGHT / 2 - _credits->getGlobalBounds().height / 2 + 192, Color::Black, TEXT_COLOR_GREEN, true);
 }
 
 HUD::~HUD()
@@ -32,6 +37,9 @@ HUD::~HUD()
 	delete _score;
 	delete _paused;
 	delete _gameOver;
+	delete _youScored;
+	delete _highestScore;
+	delete _credits;
 }
 
 void HUD::updateHUD(Element element, int number)
@@ -59,6 +67,9 @@ void HUD::updateHUD(Element element, int number)
 		case HighestScore:
 			_highestScore->setString("Highest Score: " + to_string(number));
 			break;
+		case FinalScore:
+			_youScored->setString("You Scored: " + to_string(number));
+			break;
 	}
 }
 
@@ -76,7 +87,9 @@ void HUD::draw(RenderWindow* window, bool isPaused, bool isGameOver)
 		window->draw(*_gameOver);
 		window->draw(*_restart);
 		window->draw(*_quit);
+		window->draw(*_youScored);
 		window->draw(*_highestScore);
+		window->draw(*_credits);
 	}
 }
 

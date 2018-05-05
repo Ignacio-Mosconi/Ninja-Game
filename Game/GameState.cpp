@@ -168,12 +168,9 @@ void GameState::fruitPlayerCollision(Fruit* f, Player* p)
 	if (f->getSprite().getGlobalBounds().intersects(p->getSprite().getGlobalBounds()) && f->isEnabled() && !p->isFlickering())
 	{
 		f->disable();
-		if (p->getLives() > 1)
-		{
-			p->die();
-			_hud->updateHUD(Lives, p->getLives());
-		}
-		else
+		p->die();
+		_hud->updateHUD(Lives, p->getLives());
+		if (p->getLives() == 0)
 			_gameOver = true;
 	}
 }
@@ -219,6 +216,7 @@ void GameState::result()
 {
 	_mainTheme.stop();
 
+	_hud->updateHUD(FinalScore, _score);
 	if (_score > _highestScore)
 	{
 		_highestScore = _score;
@@ -238,6 +236,8 @@ void GameState::restart()
 {
 	_player->respawn();
 	_player->setLives(PLAYER_LIVES);
+	_player->setIsInvincible(false);
+
 	for (int i = 0; i < FRUITS; i++)
 	{
 		_fruits[i]->respawn();

@@ -6,11 +6,13 @@ Player::Player(int x, int y, const string& imagePath) : Entity(x, y, imagePath)
 	_fruitHitBuffer.loadFromFile(FRUIT_HIT_SOUND);
 	_pickUpCoinBuffer.loadFromFile(PICK_UP_COIN_SOUND);
 	_pickUpLifeBuffer.loadFromFile(PICK_UP_LIFE_SOUND);
+	_gameOverBuffer.loadFromFile(GAME_OVER_SOUND);
 
 	_jump.setBuffer(_jumpBuffer);
 	_fruitHit.setBuffer(_fruitHitBuffer);
 	_pickUpCoin.setBuffer(_pickUpCoinBuffer);
 	_pickUpLife.setBuffer(_pickUpLifeBuffer);
+	_gameOver.setBuffer(_gameOverBuffer);
 
 	_currentState = Idle;
 	_facing = Right;
@@ -210,12 +212,20 @@ void Player::die()
 	_fruitHit.play();
 	_isInvincible = true;
 	_lives--;
-	respawn();
+	if (_lives == 0)
+		_gameOver.play();
+	else
+		respawn();
 }
 
 void Player::respawn()
 {
 	_currentState = Idle;
+	_facing = Right;
+	_animationCounter = 0;
+	_imagePos.x = 0;
+	_imagePos.y = IdleRight;
+	_sprite.setTextureRect(IntRect(_imagePos.x, _imagePos.y, PLAYER_WIDTH, PLAYER_HEIGHT));
 	_sprite.setPosition(SCREEN_WIDTH / 2 - PLAYER_WIDTH / 2, SCREEN_HEIGHT - GROUND_HEIGHT - PLAYER_HEIGHT);
 }
 

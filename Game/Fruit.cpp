@@ -2,6 +2,8 @@
 
 Fruit::Fruit(int x, int y, const string& imagePath) : Entity(x, y, imagePath)
 {
+	_crashBuffer.loadFromFile(FRUIT_CRASH_SOUND);
+	_crash.setBuffer(_crashBuffer);
 	_speed = rand() % (FRUIT_MAX_SPEED - FRUIT_MIN_SPEED) + FRUIT_MIN_SPEED;
 	_rotationSpeed = _speed;
 	_spawnTime = rand() % (FRUIT_MAX_SPAWN_TIME - FRUIT_MIN_SPAWN_TIME) + FRUIT_MIN_SPAWN_TIME;
@@ -24,6 +26,7 @@ void Fruit::update(float elapsed)
 			move(elapsed);
 		else
 		{
+			_crash.play();
 			_hasReachedBottom = true;;
 			disable();
 		}

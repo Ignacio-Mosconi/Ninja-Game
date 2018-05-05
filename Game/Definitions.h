@@ -99,6 +99,8 @@
 #define MAIN_THEME "Assets/Sounds/Music.wav"
 #define JUMP_SOUND "Assets/Sounds/Jump.wav"
 #define FRUIT_HIT_SOUND "Assets/Sounds/Fruit Hit.wav"
+#define FRUIT_CRASH_SOUND "Assets/Sounds/Fruit Crash.wav"
+#define GAME_OVER_SOUND "Assets/Sounds/Game Over.wav"
 #define PICK_UP_COIN_SOUND "Assets/Sounds/Pick Up Coin.wav"
 #define PICK_UP_LIFE_SOUND "Assets/Sounds/Pick Up Life.wav"
 #define SELECT_SOUND "Assets/Sounds/Select.wav"

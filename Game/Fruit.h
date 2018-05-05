@@ -14,6 +14,9 @@ enum Kind
 class Fruit : public Entity
 {
 private:
+	SoundBuffer _crashBuffer;
+	Sound _crash;
+
 	Kind _kind;
 	float _speed;
 	float _rotationSpeed;
