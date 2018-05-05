@@ -59,6 +59,8 @@
 #define COIN_HEIGHT 90
 #define COIN_MIN_SPAWN_TIME 3
 #define COIN_MAX_SPAWN_TIME 20
+#define COIN_MAX_INDEX 2
+#define COIN_FRAME_TIME 1.0f / 6.0f
 
 #define LIFE_DURATION 5
 #define LIFE_WIDTH 96

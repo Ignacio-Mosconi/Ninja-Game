@@ -4,6 +4,8 @@ Collectible::Collectible(int x, int y, const string& imagePath) : Entity(x, y, i
 {
 	disable();
 	_flickeringCounter = 0;
+	_imagePosX = 0;
+	_animationCounter = 0;
 }
 
 void Collectible::disable()

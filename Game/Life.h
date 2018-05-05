@@ -5,10 +5,7 @@
 
 class Life : public Collectible
 {
-private:
-	float _animationCounter;
-	int _imagePosX;
-
+protected:
 	void animate(float elapsed);
 
 public:

@@ -4,6 +4,7 @@ Coin::Coin(int x, int y, const string& imagePath): Collectible (x, y, imagePath)
 {
 	_onScreenTime = COIN_DURATION;
 	_spawnTime = rand() % (COIN_MAX_SPAWN_TIME - COIN_MIN_SPAWN_TIME) + COIN_MIN_SPAWN_TIME;
+	_sprite.setTextureRect(IntRect(_imagePosX, 0, COIN_WIDTH, COIN_HEIGHT));
 }
 
 Coin::~Coin()
@@ -15,6 +16,7 @@ void Coin::update(float elapsed)
 	if (_enabled)
 	{
 		_onScreenTime -= elapsed;
+		animate(elapsed);
 		if (_onScreenTime <= COLLECTIBLE_START_FLICKERING)
 		{
 			flicker(elapsed);
@@ -38,4 +40,19 @@ void Coin::respawn()
 	_spawnTime = rand() % (COIN_MAX_SPAWN_TIME - COIN_MIN_SPAWN_TIME) + COIN_MIN_SPAWN_TIME;
 	_sprite.setPosition(rand() % (COLLECTIBLE_MAX_X - COLLECTIBLE_MIN_X - COIN_WIDTH) + COLLECTIBLE_MIN_X, 
 		rand() % (COLLECTIBLE_MAX_Y - COLLECTIBLE_MIN_Y) + COLLECTIBLE_MIN_Y);
+}
+
+void Coin::animate(float elapsed)
+{
+	_sprite.setTextureRect(IntRect(_imagePosX * COIN_WIDTH, 0, COIN_WIDTH, COIN_HEIGHT));
+	_animationCounter += elapsed;
+
+	if (_animationCounter >= COIN_FRAME_TIME)
+	{
+		_animationCounter = 0;
+		if (_imagePosX < COIN_MAX_INDEX)
+			_imagePosX++;
+		else
+			_imagePosX = 0;
+	}
 }
