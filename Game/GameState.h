@@ -17,9 +17,11 @@ class GameState : public State
 private:
 	Player* _player;
 	Fruit* _fruits[FRUITS];
-	Entity* _ground;
 	Coin* _coins[COINS];
 	Life* _life;
+
+	Entity* _ground;
+	Entity* _sky;
 
 	HUD* _hud;
 

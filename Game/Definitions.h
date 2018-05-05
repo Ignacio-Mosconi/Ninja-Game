@@ -25,9 +25,12 @@
 #define GROUND_HEIGHT 72
 #define FLICKERING_TIME 5
 #define FLICKERING_RATE 0.5
-#define IMAGE_MAX_INDEX 5
+#define IDLE_MAX_INDEX 5
+#define MOVING_MAX_INDEX 5
+#define JUMPING_MAX_INDEX 2
 #define IDLE_FRAME_TIME 1.0f / 6.0f
 #define MOVING_FRAME_TIME 1.0f / 12.0f
+#define JUMPING_FRAME_TIME 1.0f / 18.0f 
 
 // Fruits
 #define FRUITS 5
@@ -35,8 +38,8 @@
 #define FRUIT_HEIGHT 45
 #define FRUIT_MIN_SPEED 2
 #define FRUIT_MAX_SPEED 30
-#define FRUIT_MIN_X 32
-#define FRUIT_MAX_X 1578
+#define FRUIT_MIN_X 45
+#define FRUIT_MAX_X 1555
 #define FRUIT_MIN_Y 90
 #define FRUIT_MIN_SPAWN_TIME 3
 #define FRUIT_MAX_SPAWN_TIME 15
@@ -58,10 +61,12 @@
 #define COIN_MAX_SPAWN_TIME 20
 
 #define LIFE_DURATION 5
-#define LIFE_WIDTH 64
+#define LIFE_WIDTH 96
 #define LIFE_HEIGHT 90
 #define LIFE_MIN_SPAWN_TIME 10
 #define LIFE_MAX_SPAWN_TIME 60
+#define LIFE_MAX_INDEX 1
+#define LIFE_FRAME_TIME 1.0f / 3.0f 
 
 // Heads Up Display
 #define HUD_TEXT_Y 15
@@ -79,9 +84,10 @@
 #define SPLASH_LOGO_PATH "Assets/Images/Splash Logo.png"
 #define PLAYER_PATH "Assets/Images/Player.png"
 #define FRUIT_PATH "Assets/Images/Fruit.png"
-#define GROUND_PATH "Assets/Images/Ground.png"
 #define COIN_PATH "Assets/Images/Coin.png"
 #define LIFE_PATH "Assets/Images/Life.png"
+#define GROUND_PATH "Assets/Images/Ground.png"
+#define SKY_PATH "Assets/Images/Sky Backdrop.png"
 
 // Sounds File Paths
 #define MAIN_THEME "Assets/Sounds/Music.wav"

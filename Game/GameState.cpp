@@ -7,13 +7,15 @@ GameState::GameState(RenderWindow& window) : State(window)
 	_player = new Player(SCREEN_WIDTH / 2 - PLAYER_WIDTH / 2, SCREEN_HEIGHT - (GROUND_HEIGHT + PLAYER_HEIGHT), PLAYER_PATH);
 	for (int i = 0; i < FRUITS; i++)
 		_fruits[i] = new Fruit(rand() % (FRUIT_MAX_X - FRUIT_MIN_X - FRUIT_WIDTH) + FRUIT_MIN_X, FRUIT_MIN_Y, FRUIT_PATH);
-	_ground = new Entity(0, SCREEN_HEIGHT - GROUND_HEIGHT, GROUND_PATH);
 	for (int i = 0; i < COINS; i++)
 		_coins[i] = new Coin(rand() % (COLLECTIBLE_MAX_X - COLLECTIBLE_MIN_X - COIN_WIDTH) + COLLECTIBLE_MIN_X,
 			rand() % (COLLECTIBLE_MAX_Y - COLLECTIBLE_MIN_Y) + COLLECTIBLE_MIN_Y, COIN_PATH);
 	_life = new Life(rand() % (COLLECTIBLE_MAX_X - COLLECTIBLE_MIN_X - COIN_WIDTH) + COLLECTIBLE_MIN_X,
 		rand() % (COLLECTIBLE_MAX_Y - COLLECTIBLE_MIN_Y) + COLLECTIBLE_MIN_Y, LIFE_PATH);
-
+	
+	_ground = new Entity(0, SCREEN_HEIGHT - GROUND_HEIGHT, GROUND_PATH);
+	_sky = new Entity(0, 0, SKY_PATH);
+	
 	_hud = new HUD();
 
 	_mainTheme.openFromFile(MAIN_THEME);
@@ -130,12 +132,14 @@ void GameState::update(float elapsed)
 
 void GameState::draw()
 {
-	_window->clear({ 32, 64, 128, 255 });
+	_window->clear();
+	
+	_window->draw(_sky->getSprite());
+	_window->draw(_ground->getSprite());
 
 	_window->draw(_player->getSprite());
 	for (int i = 0; i < FRUITS; i++)
 		_window->draw(_fruits[i]->getSprite());
-	_window->draw(_ground->getSprite());
 	for (int i = 0; i < COINS; i++)
 		_window->draw(_coins[i]->getSprite());
 	_window->draw(_life->getSprite());

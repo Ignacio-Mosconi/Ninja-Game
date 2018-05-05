@@ -64,7 +64,6 @@ void Player::move(float elapsed)
 		_sprite.move(-_moveSpeed * elapsed, 0);
 		if (_facing == Right)
 		{
-			//_sprite.setTextureRect(IntRect(PLAYER_WIDTH, PLAYER_HEIGHT, -PLAYER_WIDTH, 2 * PLAYER_HEIGHT));
 			_imagePos.x = 0;
 			_imagePos.y = MovingLeft;
 			_facing = Left;
@@ -83,7 +82,6 @@ void Player::move(float elapsed)
 			_sprite.move(_moveSpeed * elapsed, 0);
 			if (_facing == Left)
 			{
-				//_sprite.setTextureRect(IntRect(0, PLAYER_HEIGHT, PLAYER_WIDTH, 2 * PLAYER_HEIGHT));
 				_imagePos.x = 0;
 				_imagePos.y = MovingRight;
 				_facing = Right;
@@ -126,7 +124,6 @@ void Player::jump(float elapsed)
 					_sprite.move(-_moveSpeed * elapsed, _jumpSpeed * elapsed);
 					if (_facing == Right)
 					{
-						//_sprite.setTextureRect(IntRect(PLAYER_WIDTH, PLAYER_HEIGHT, -PLAYER_WIDTH, 2 * PLAYER_HEIGHT));
 						_imagePos.y = JumpingLeft;
 						_facing = Left;
 					}
@@ -138,7 +135,6 @@ void Player::jump(float elapsed)
 						_sprite.move(_moveSpeed * elapsed, _jumpSpeed * elapsed);
 						if (_facing == Left)
 						{
-							//_sprite.setTextureRect(IntRect(0, PLAYER_HEIGHT, PLAYER_WIDTH, 2 * PLAYER_HEIGHT));
 							_imagePos.y = JumpingRight;
 							_facing = Right;
 						}
@@ -162,7 +158,6 @@ void Player::fall(float elapsed)
 			_sprite.move(-_moveSpeed * elapsed, GRAVITY * elapsed);
 			if (_facing == Right)
 			{
-				//_sprite.setTextureRect(IntRect(PLAYER_WIDTH, PLAYER_HEIGHT, -PLAYER_WIDTH, 2 * PLAYER_HEIGHT));
 				_imagePos.y = JumpingLeft;
 				_facing = Left;
 			}
@@ -174,7 +169,6 @@ void Player::fall(float elapsed)
 				_sprite.move(_moveSpeed * elapsed, GRAVITY * elapsed);
 				if (_facing == Left)
 				{
-					//_sprite.setTextureRect(IntRect(0, PLAYER_HEIGHT, PLAYER_WIDTH, 2 * PLAYER_HEIGHT));
 					_imagePos.y = JumpingRight;
 					_facing = Right;
 				}
@@ -259,7 +253,7 @@ void Player::animate(float elapsed)
 			if (_animationCounter >= IDLE_FRAME_TIME)
 			{
 				_animationCounter = 0;
-				if (_imagePos.x < IMAGE_MAX_INDEX)
+				if (_imagePos.x < IDLE_MAX_INDEX)
 					_imagePos.x++;
 				else
 					_imagePos.x = 0;
@@ -269,17 +263,17 @@ void Player::animate(float elapsed)
 			if (_animationCounter >= MOVING_FRAME_TIME)
 			{
 				_animationCounter = 0;
-				if (_imagePos.x < IMAGE_MAX_INDEX)
+				if (_imagePos.x < MOVING_MAX_INDEX)
 					_imagePos.x++;
 				else
 					_imagePos.x = 0;
 			}
 			break;
 		case Jumping:
-			if (_animationCounter >= 1.0f / 18.0f)
+			if (_animationCounter >= JUMPING_FRAME_TIME)
 			{
 				_animationCounter = 0;
-				if (_imagePos.x < 2)
+				if (_imagePos.x < JUMPING_MAX_INDEX)
 					_imagePos.x++;
 			}
 			break;
