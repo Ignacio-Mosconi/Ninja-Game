@@ -6,6 +6,7 @@ HUD::HUD()
 
 	_lives = new Text("Lives: 3", _font, HUD_TEXT_SIZE);
 	_score = new Text("Score: 0", _font, HUD_TEXT_SIZE);
+	_time = new Text("Time: 120", _font, HUD_TEXT_SIZE);
 	_paused = new Text("Paused", _font, PAUSED_TEXT_SIZE);
 	_gameOver = new Text("Game Over", _font, GAME_OVER_TEXT_SIZE);
 	_restart = new Text("Press enter to restart", _font, HUD_OPTIONS_TEXT_SIZE);
@@ -16,6 +17,7 @@ HUD::HUD()
 
 	formatText(_lives, 32, HUD_TEXT_Y, TEXT_COLOR_GREEN, Color::White, true);
 	formatText(_score, SCREEN_WIDTH / 2 - _score->getGlobalBounds().width / 2, HUD_TEXT_Y, TEXT_COLOR_BLUE, Color::White, true);
+	formatText(_time, SCREEN_WIDTH - _time->getGlobalBounds().width - 32, HUD_TEXT_Y, TEXT_COLOR_GREEN, Color::White, true);
 	formatText(_paused, SCREEN_WIDTH / 2 - _paused->getGlobalBounds().width / 2,
 		SCREEN_HEIGHT / 2 - _paused->getGlobalBounds().height /2, TEXT_COLOR_GREEN, Color::White, true);
 	formatText(_gameOver, SCREEN_WIDTH / 2 - _gameOver->getGlobalBounds().width / 2,
@@ -28,13 +30,17 @@ HUD::HUD()
 	formatText(_highestScore, SCREEN_WIDTH / 2 - _highestScore->getGlobalBounds().width / 2,
 		SCREEN_HEIGHT / 2 - _highestScore->getGlobalBounds().height / 2 + 64, Color::White, Color::Black, true);
 	formatText(_credits, SCREEN_WIDTH / 2 - _credits->getGlobalBounds().width / 2,
-		SCREEN_HEIGHT / 2 - _credits->getGlobalBounds().height / 2 + 192, Color::Black, TEXT_COLOR_GREEN, true);
+		SCREEN_HEIGHT / 2 - _credits->getGlobalBounds().height / 2 + 192, TEXT_COLOR_GREEN, Color::White, true);
+
+	_clockTickBuffer.loadFromFile(CLOCK_TICK_SOUND);
+	_clockTick.setBuffer(_clockTickBuffer);
 }
 
 HUD::~HUD()
 {
 	delete _lives;
 	delete _score;
+	delete _time;
 	delete _paused;
 	delete _gameOver;
 	delete _youScored;
@@ -64,6 +70,22 @@ void HUD::updateHUD(Element element, int number)
 		case Score:
 			_score->setString("Score: " + to_string(number));
 			break;
+		case TimeLeft:
+			_time->setString("Time: " + to_string(number));
+			if (number > 60)
+				_time->setFillColor(TEXT_COLOR_GREEN);
+			else
+			{
+				if (number > 20)
+					_time->setFillColor(TEXT_COLOR_YELLOW);
+				else
+				{
+					_time->setFillColor(TEXT_COLOR_RED);
+					if (number <= 10)
+						_clockTick.play();
+				}
+			}
+			break;
 		case HighestScore:
 			_highestScore->setString("Highest Score: " + to_string(number));
 			break;
@@ -79,6 +101,7 @@ void HUD::draw(RenderWindow* window, bool isPaused, bool isGameOver)
 	{
 		window->draw(*_lives);
 		window->draw(*_score);
+		window->draw(*_time);
 		if (isPaused)
 			window->draw(*_paused);
 	}

@@ -6,12 +6,14 @@ Player::Player(int x, int y, const string& imagePath) : Entity(x, y, imagePath)
 	_fruitHitBuffer.loadFromFile(FRUIT_HIT_SOUND);
 	_pickUpCoinBuffer.loadFromFile(PICK_UP_COIN_SOUND);
 	_pickUpLifeBuffer.loadFromFile(PICK_UP_LIFE_SOUND);
+	_pickUpTimeBonusBuffer.loadFromFile(PICK_UP_TIME_BONUS_SOUND);
 	_gameOverBuffer.loadFromFile(GAME_OVER_SOUND);
 
 	_jump.setBuffer(_jumpBuffer);
 	_fruitHit.setBuffer(_fruitHitBuffer);
 	_pickUpCoin.setBuffer(_pickUpCoinBuffer);
 	_pickUpLife.setBuffer(_pickUpLifeBuffer);
+	_pickUpTimeBonus.setBuffer(_pickUpTimeBonusBuffer);
 	_gameOver.setBuffer(_gameOverBuffer);
 
 	_currentState = Idle;
@@ -200,6 +202,9 @@ bool Player::pickUpItem(Collectables collectable)
 			case LifeBonuses:
 				_pickUpLife.play();
 				_lives++;
+				break;
+			case TimeBonuses:
+				_pickUpTimeBonus.play();
 				break;
 		}
 		return true;

@@ -10,8 +10,10 @@ GameState::GameState(RenderWindow& window) : State(window)
 	for (int i = 0; i < COINS; i++)
 		_coins[i] = new Coin(rand() % (COLLECTIBLE_MAX_X - COLLECTIBLE_MIN_X - COIN_WIDTH) + COLLECTIBLE_MIN_X,
 			rand() % (COLLECTIBLE_MAX_Y - COLLECTIBLE_MIN_Y) + COLLECTIBLE_MIN_Y, COIN_PATH);
-	_life = new Life(rand() % (COLLECTIBLE_MAX_X - COLLECTIBLE_MIN_X - COIN_WIDTH) + COLLECTIBLE_MIN_X,
+	_life = new Life(rand() % (COLLECTIBLE_MAX_X - COLLECTIBLE_MIN_X - LIFE_WIDTH) + COLLECTIBLE_MIN_X,
 		rand() % (COLLECTIBLE_MAX_Y - COLLECTIBLE_MIN_Y) + COLLECTIBLE_MIN_Y, LIFE_PATH);
+	_timeBonus = new TimeBonus(rand() % (COLLECTIBLE_MAX_X - COLLECTIBLE_MIN_X - TIME_BONUS_WIDTH) + COLLECTIBLE_MIN_X,
+		rand() % (COLLECTIBLE_MAX_Y - COLLECTIBLE_MIN_Y) + COLLECTIBLE_MIN_Y, TIME_BONUS_PATH);
 	
 	_ground = new Entity(0, SCREEN_HEIGHT - GROUND_HEIGHT, GROUND_PATH);
 	_sky = new Entity(0, 0, SKY_PATH);
@@ -25,6 +27,8 @@ GameState::GameState(RenderWindow& window) : State(window)
 	_paused = false;
 	_score = 0;
 	_highestScore = 0;
+	_time = GAME_TIME;
+	_timeSinceLastFrame = 0;
 }
 
 GameState::~GameState()
@@ -36,6 +40,7 @@ GameState::~GameState()
 	for (int i = 0; i < COINS; i++)
 		delete _coins[i];
 	delete _life;
+	delete _timeBonus;
 
 	delete _hud;
 }
@@ -107,6 +112,16 @@ void GameState::input()
 
 void GameState::update(float elapsed)
 {
+	_time -= elapsed;
+	_timeSinceLastFrame += elapsed;
+	if (_timeSinceLastFrame >= 1)
+	{
+		_hud->updateHUD(TimeLeft, int(_time));
+		_timeSinceLastFrame = 0;
+	}
+	if (_time <= 0)
+		_gameOver = true;
+
 	_player->update(elapsed);
 	for (int i = 0; i < FRUITS; i++)
 	{
@@ -136,12 +151,14 @@ void GameState::update(float elapsed)
 		_coins[i]->update(elapsed);
 	if (_player->getLives() < PLAYER_LIVES)
 		_life->update(elapsed);
+	_timeBonus->update(elapsed);
 
 	for (int i = 0; i < FRUITS; i++)
 		fruitPlayerCollision(_fruits[i], _player);
 	for (int i = 0; i < COINS; i++)
 		coinPlayerCollision(_coins[i], _player);
 	lifePlayerCollision(_life, _player);
+	timeBonusPlayerCollision(_timeBonus, _player);
 }
 
 void GameState::draw()
@@ -157,6 +174,7 @@ void GameState::draw()
 	for (int i = 0; i < COINS; i++)
 		_window->draw(_coins[i]->getSprite());
 	_window->draw(_life->getSprite());
+	_window->draw(_timeBonus->getSprite());
 
 	_hud->draw(_window, _paused, _gameOver);
 
@@ -196,6 +214,18 @@ void GameState::lifePlayerCollision(Life* l, Player* p)
 		{
 			l->disable();
 			_hud->updateHUD(Lives, p->getLives());
+		}
+	}
+}
+
+void GameState::timeBonusPlayerCollision(TimeBonus* t, Player* p)
+{
+	if (t->getSprite().getGlobalBounds().intersects(p->getSprite().getGlobalBounds()) && t->isEnabled())
+	{
+		if (p->pickUpItem(TimeBonuses))
+		{
+			t->disable();
+			_time += TIME_BONUS_TIME;
 		}
 	}
 }
@@ -250,13 +280,18 @@ void GameState::restart()
 	}
 	_life->respawn();
 	_life->disable();
+	_timeBonus->respawn();
+	_timeBonus->disable();
 
 	_gameOver = false;
 	_paused = false;
 	_score = 0;
+	_time = GAME_TIME;
+	_timeSinceLastFrame = 0;
 
 	_hud->updateHUD(Lives, _player->getLives());
 	_hud->updateHUD(Score, _score);
+	_hud->updateHUD(TimeLeft, _time);
 
 	run();
 }

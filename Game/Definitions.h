@@ -74,6 +74,16 @@
 #define LIFE_MAX_INDEX 1
 #define LIFE_FRAME_TIME 1.0f / 3.0f 
 
+#define GAME_TIME 120
+#define TIME_BONUS_TIME 20
+#define TIME_BONUS_DURATION 5
+#define TIME_BONUS_WIDTH 96
+#define TIME_BONUS_HEIGHT 90
+#define TIME_BONUS_MIN_SPAWN_TIME 20
+#define TIME_BONUS_MAX_SPAWN_TIME 40
+#define TIME_BONUS_MAX_INDEX 1
+#define TIME_BONUS_FRAME_TIME 1.0f / 3.0f 
+
 // Heads Up Display
 #define HUD_TEXT_Y 15
 #define HUD_TEXT_SIZE 60
@@ -92,6 +102,7 @@
 #define FRUIT_PATH "Assets/Images/Fruit.png"
 #define COIN_PATH "Assets/Images/Coin.png"
 #define LIFE_PATH "Assets/Images/Life.png"
+#define TIME_BONUS_PATH "Assets/Images/Time Bonus.png"
 #define GROUND_PATH "Assets/Images/Ground.png"
 #define SKY_PATH "Assets/Images/Sky Backdrop.png"
 
@@ -103,6 +114,8 @@
 #define GAME_OVER_SOUND "Assets/Sounds/Game Over.wav"
 #define PICK_UP_COIN_SOUND "Assets/Sounds/Pick Up Coin.wav"
 #define PICK_UP_LIFE_SOUND "Assets/Sounds/Pick Up Life.wav"
+#define PICK_UP_TIME_BONUS_SOUND "Assets/Sounds/Pick Up Time Bonus.wav"
+#define CLOCK_TICK_SOUND "Assets/Sounds/Clock Tick.wav"
 #define SELECT_SOUND "Assets/Sounds/Select.wav"
 
 // Fonts File Paths

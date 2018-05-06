@@ -3,6 +3,7 @@
 
 #include <string>
 #include <SFML/Graphics.hpp>
+#include <SFML/Audio.hpp>
 #include "Definitions.h"
 using namespace std;
 using namespace sf;
@@ -11,6 +12,7 @@ enum Element
 {
 	Lives,
 	Score,
+	TimeLeft,
 	HighestScore,
 	FinalScore
 };
@@ -22,6 +24,7 @@ private:
 
 	Text* _lives;
 	Text* _score;
+	Text* _time;
 	Text* _paused;
 	Text* _gameOver;
 	Text* _restart;
@@ -29,6 +32,9 @@ private:
 	Text* _youScored;
 	Text* _highestScore;
 	Text* _credits;
+
+	SoundBuffer _clockTickBuffer;
+	Sound _clockTick;
 
 	void formatText(Text* text, int x, int y, Color fillColor, Color outlineColor = Color::White, bool outline = false);
 

@@ -9,6 +9,7 @@
 #include "Fruit.h"
 #include "Coin.h"
 #include "Life.h"
+#include "TimeBonus.h"
 #include "HUD.h"
 using namespace sf;
 
@@ -19,6 +20,7 @@ private:
 	Fruit* _fruits[FRUITS];
 	Coin* _coins[COINS];
 	Life* _life;
+	TimeBonus* _timeBonus;
 
 	Entity* _ground;
 	Entity* _sky;
@@ -31,10 +33,13 @@ private:
 	bool _paused;
 	int _score;
 	int _highestScore;
+	float _time;
+	float _timeSinceLastFrame;
 
 	void fruitPlayerCollision(Fruit* f, Player* p);
 	void coinPlayerCollision(Coin* c, Player* p);
 	void lifePlayerCollision(Life* l, Player* p);
+	void timeBonusPlayerCollision(TimeBonus* t, Player* p);
 
 	void result();
 
