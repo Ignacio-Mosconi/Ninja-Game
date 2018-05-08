@@ -43,6 +43,8 @@ HUD::~HUD()
 	delete _time;
 	delete _paused;
 	delete _gameOver;
+	delete _restart;
+	delete _quit;
 	delete _youScored;
 	delete _highestScore;
 	delete _credits;

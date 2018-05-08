@@ -36,11 +36,13 @@ GameState::~GameState()
 	delete _player;
 	for (int i = 0; i < FRUITS; i++)
 		delete _fruits[i];
-	delete _ground;
 	for (int i = 0; i < COINS; i++)
 		delete _coins[i];
 	delete _life;
 	delete _timeBonus;
+
+	delete _ground;
+	delete _sky;
 
 	delete _hud;
 }
