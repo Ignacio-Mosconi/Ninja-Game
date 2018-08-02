@@ -5,12 +5,13 @@
 #include <SFML/Graphics.hpp>
 #include <SFML/Audio.hpp>
 #include "State.h"
-#include "Player.h"
-#include "Fruit.h"
-#include "Coin.h"
-#include "Life.h"
-#include "TimeBonus.h"
-#include "HUD.h"
+class Player;
+class Fruit;
+class Coin;
+class Life;
+class TimeBonus;
+class Entity;
+class HUD;
 using namespace sf;
 
 class GameState : public State
@@ -48,15 +49,14 @@ private:
 protected:
 	void input();
 	void update(float elapsed);
-	void draw();
-
-	void pause();
-	void resume();
+	void draw() const;
 
 public:
 	GameState(RenderWindow& window);
 	~GameState();
 
+	void pause();
+	void resume();
 	void restart();
 
 	inline bool gameOver() { return _gameOver; }

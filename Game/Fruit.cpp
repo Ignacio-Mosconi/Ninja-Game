@@ -1,17 +1,15 @@
 #include "Fruit.h"
 
-Fruit::Fruit(int x, int y, const string& imagePath) : Entity(x, y, imagePath)
+Fruit::Fruit(int x, int y, const string& imagePath) : Entity(x, y, imagePath),
+_speed(rand() % (FRUIT_MAX_SPEED - FRUIT_MIN_SPEED) + FRUIT_MIN_SPEED), _rotationSpeed(_speed),
+_spawnTime(rand() % (FRUIT_MAX_SPAWN_TIME - FRUIT_MIN_SPAWN_TIME) + FRUIT_MIN_SPAWN_TIME),
+_kind(chooseKind()), _hasReachedBottom(false)
 {
 	_crashBuffer.loadFromFile(FRUIT_CRASH_SOUND);
 	_crash.setBuffer(_crashBuffer);
-	_speed = rand() % (FRUIT_MAX_SPEED - FRUIT_MIN_SPEED) + FRUIT_MIN_SPEED;
-	_rotationSpeed = _speed;
-	_spawnTime = rand() % (FRUIT_MAX_SPAWN_TIME - FRUIT_MIN_SPAWN_TIME) + FRUIT_MIN_SPAWN_TIME;
-	_kind = chooseKind();
 	_sprite.setTextureRect(IntRect(_kind * FRUIT_WIDTH, 0, FRUIT_WIDTH, FRUIT_HEIGHT));
 	
 	disable();
-	_hasReachedBottom = false;
 }
 
 Fruit::~Fruit()

@@ -1,6 +1,9 @@
 #include "Player.h"
 
-Player::Player(int x, int y, const string& imagePath) : Entity(x, y, imagePath)
+Player::Player(int x, int y, const string& imagePath) : Entity(x, y, imagePath),
+_currentState(Idle), _facing(Right), _animationCounter(0), _imagePos(0, IdleRight), _lives(PLAYER_LIVES),
+_moveSpeed(PLAYER_MOVE_SPEED), _jumpSpeed(PLAYER_JUMP_SPEED), _isInvincible(false), _flickeringTime(FLICKERING_TIME),
+_flickeringCounter(0)
 {
 	_jumpBuffer.loadFromFile(JUMP_SOUND);
 	_fruitHitBuffer.loadFromFile(FRUIT_HIT_SOUND);
@@ -16,19 +19,7 @@ Player::Player(int x, int y, const string& imagePath) : Entity(x, y, imagePath)
 	_pickUpTimeBonus.setBuffer(_pickUpTimeBonusBuffer);
 	_gameOver.setBuffer(_gameOverBuffer);
 
-	_currentState = Idle;
-	_facing = Right;
-	_animationCounter = 0;
-	_imagePos.x = 0;
-	_imagePos.y = IdleRight;
 	_sprite.setTextureRect(IntRect(_imagePos.x, _imagePos.y, PLAYER_WIDTH, PLAYER_HEIGHT));
-
-	_lives = PLAYER_LIVES;
-	_moveSpeed = PLAYER_MOVE_SPEED;
-	_jumpSpeed = PLAYER_JUMP_SPEED;
-	_isInvincible = false;
-	_flickeringTime = FLICKERING_TIME;
-	_flickeringCounter = 0;
 }
 
 Player::~Player()

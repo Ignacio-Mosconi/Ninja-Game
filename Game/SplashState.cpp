@@ -47,7 +47,7 @@ void SplashState::update(float elapsed)
 		_start = true;
 }
 
-void SplashState::draw()
+void SplashState::draw() const
 {
 	_window->clear(Color::Black);
 	_window->draw(_logo);

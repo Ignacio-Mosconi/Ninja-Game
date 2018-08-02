@@ -15,7 +15,7 @@ private:
 protected:
 	void input();
 	void update(float elapsed);
-	void draw();
+	void draw() const;
 
 public:
 	SplashState(RenderWindow& window, const string &logoPath);

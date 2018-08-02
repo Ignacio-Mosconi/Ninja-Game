@@ -1,9 +1,8 @@
 #include "Life.h"
 
-Life::Life(int x, int y, const string& imagePath) : Collectible(x, y, imagePath)
+Life::Life(int x, int y, const string& imagePath):
+Collectible(x, y, imagePath, rand() % (LIFE_MAX_SPAWN_TIME - LIFE_MIN_SPAWN_TIME) + LIFE_MIN_SPAWN_TIME, LIFE_DURATION)
 {
-	_onScreenTime = LIFE_DURATION;
-	_spawnTime = rand() % (LIFE_MAX_SPAWN_TIME - LIFE_MIN_SPAWN_TIME) + LIFE_MIN_SPAWN_TIME;
 	_sprite.setTextureRect(IntRect(_imagePosX, 0, LIFE_WIDTH, LIFE_HEIGHT));
 }
 

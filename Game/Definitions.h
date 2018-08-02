@@ -57,7 +57,7 @@
 #define COLLECTIBLE_START_FLICKERING 2.5
 
 #define COINS 3
-#define COIN_DURATION 7.5
+#define COIN_DURATION 7.5f
 #define COIN_SCORE 5
 #define COIN_WIDTH 64
 #define COIN_HEIGHT 90

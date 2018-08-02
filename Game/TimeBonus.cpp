@@ -1,9 +1,9 @@
 #include "TimeBonus.h"
 
-TimeBonus::TimeBonus(int x, int y, const string& imagePath) : Collectible(x, y, imagePath)
+TimeBonus::TimeBonus(int x, int y, const string& imagePath) :
+Collectible(x, y, imagePath, rand() % (TIME_BONUS_MAX_SPAWN_TIME - TIME_BONUS_MIN_SPAWN_TIME) + TIME_BONUS_MIN_SPAWN_TIME,
+			TIME_BONUS_DURATION)
 {
-	_onScreenTime = TIME_BONUS_DURATION;
-	_spawnTime = rand() % (TIME_BONUS_MAX_SPAWN_TIME - TIME_BONUS_MIN_SPAWN_TIME) + TIME_BONUS_MIN_SPAWN_TIME;
 	_sprite.setTextureRect(IntRect(_imagePosX, 0, TIME_BONUS_WIDTH, TIME_BONUS_HEIGHT));
 }
 

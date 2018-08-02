@@ -17,7 +17,7 @@ protected:
 	virtual void animate(float elapsed) = 0;
 	
 public:
-	Collectible(int x, int y, const string& imagePath);
+	Collectible(int x, int y, const string& imagePath, float spawnTime, float onScreenTime);
 
 	virtual void update(float elapsed) = 0;
 

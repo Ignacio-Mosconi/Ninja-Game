@@ -105,7 +105,7 @@ void MenuState::update(float elapsed)
 
 }
 
-void MenuState::draw()
+void MenuState::draw() const
 {
 	_window->clear(Color::Black);
 

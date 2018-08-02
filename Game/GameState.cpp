@@ -1,6 +1,14 @@
 #include "GameState.h"
+#include "Player.h"
+#include "Fruit.h"
+#include "Coin.h"
+#include "Life.h"
+#include "TimeBonus.h"
+#include "Entity.h"
+#include "HUD.h"
 
-GameState::GameState(RenderWindow& window) : State(window)
+GameState::GameState(RenderWindow& window) : State(window),
+_gameOver(false), _paused(false), _score(0), _highestScore(0), _time(GAME_TIME), _timeSinceLastFrame(0)
 {
 	srand(time(0));
 
@@ -22,13 +30,6 @@ GameState::GameState(RenderWindow& window) : State(window)
 
 	_mainTheme.openFromFile(MAIN_THEME);
 	_mainTheme.setLoop(true);
-
-	_gameOver = false;
-	_paused = false;
-	_score = 0;
-	_highestScore = 0;
-	_time = GAME_TIME;
-	_timeSinceLastFrame = 0;
 }
 
 GameState::~GameState()
@@ -163,7 +164,7 @@ void GameState::update(float elapsed)
 	timeBonusPlayerCollision(_timeBonus, _player);
 }
 
-void GameState::draw()
+void GameState::draw() const
 {
 	_window->clear();
 	

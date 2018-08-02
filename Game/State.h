@@ -1,8 +1,6 @@
 #ifndef STATE_H
 #define STATE_H
 
-#include <iostream>
-#include <string>
 #include <SFML/Graphics.hpp>
 #include "Definitions.h"
 using namespace std;
@@ -16,10 +14,7 @@ protected:
 
 	virtual void input() = 0;
 	virtual void update(float elapsed) = 0;
-	virtual void draw() = 0;
-
-	virtual void pause() {}
-	virtual void resume() {}
+	virtual void draw() const = 0;
 
 public:
 	State(RenderWindow& window);
