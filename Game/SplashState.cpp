@@ -1,14 +1,12 @@
 #include "SplashState.h"
 
-SplashState::SplashState(RenderWindow& window, const string& logoPath) : State(window)
+SplashState::SplashState(RenderWindow& window, const string& logoPath) : State(window),
+_onScreenTime(0), _start(false)
 {
 	_logoTexture.loadFromFile(logoPath);
 	_logo.setTexture(_logoTexture);
 	_logo.setOrigin(_logo.getGlobalBounds().width / 2, _logo.getGlobalBounds().height / 2);
 	_logo.setPosition(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2);
-
-	_onScreenTime = 0;
-	_start = false;
 }
 
 SplashState::~SplashState()
@@ -43,13 +41,16 @@ void SplashState::input()
 void SplashState::update(float elapsed)
 {
 	_onScreenTime += elapsed;
+	
+	Color newColor(255, 255, 255, 255 * (_onScreenTime / SPLASH_STATE_DURATION));
+	_logo.setColor(newColor);
 	if (_onScreenTime >= SPLASH_STATE_DURATION)
 		_start = true;
 }
 
 void SplashState::draw() const
 {
-	_window->clear(Color::Black);
+	_window->clear();
 	_window->draw(_logo);
 	_window->display();
 }

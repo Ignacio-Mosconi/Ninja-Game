@@ -5,6 +5,7 @@
 #define SCREEN_WIDTH 1600
 #define SCREEN_HEIGHT 900
 #define FRAME_RATE 60
+#define GAME_TITLE "Ninja Thief"
 
 // Splash State
 #define SPLASH_STATE_DURATION 2.5
@@ -109,6 +110,7 @@
 
 // Images File Paths
 #define WINDOW_ICON_PATH "Assets/Images/Icon.png"
+#define CURSOR_PATH "Assets/Images/Cursor.png"
 #define SPLASH_LOGO_PATH "Assets/Images/Splash Logo.png"
 #define PLAYER_PATH "Assets/Images/Player.png"
 #define FRUIT_PATH "Assets/Images/Fruit.png"
