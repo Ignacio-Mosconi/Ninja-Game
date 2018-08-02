@@ -8,7 +8,7 @@
 #define GAME_TITLE "Ninja Thief"
 
 // Splash State
-#define SPLASH_STATE_DURATION 2.5
+#define SPLASH_STATE_DURATION 6.0f
 
 // Menu State
 #define MENU_OPTIONS 2

@@ -10,6 +10,7 @@ private:
 	Texture _logoTexture;
 	Sprite _logo;
 	float _onScreenTime;
+	float _fadeTime;
 	bool _start;
 
 protected:

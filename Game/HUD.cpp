@@ -13,7 +13,7 @@ HUD::HUD()
 	_quit = new Text("Press escape to quit", _font, HUD_OPTIONS_TEXT_SIZE);
 	_youScored = new Text("You scored: 0", _font, HUD_OPTIONS_TEXT_SIZE);
 	_highestScore = new Text("Highest Score: 0", _font, HUD_OPTIONS_TEXT_SIZE);
-	_credits = new Text("Made by Ignacio Mosconi - Powered by SFML 2.4", _font, HUD_OPTIONS_TEXT_SIZE);
+	_credits = new Text("Made by Ignacio Mosconi - Powered by SFML 2.5.0", _font, HUD_OPTIONS_TEXT_SIZE);
 
 	formatText(_lives, 32, HUD_TEXT_Y, TEXT_COLOR_GREEN, Color::White, true);
 	formatText(_score, SCREEN_WIDTH / 2 - _score->getGlobalBounds().width / 2, HUD_TEXT_Y, TEXT_COLOR_BLUE, Color::White, true);

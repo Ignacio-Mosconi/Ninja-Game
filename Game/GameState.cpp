@@ -316,5 +316,6 @@ void GameState::restart()
 	_hud->updateHUD(Score, _score);
 	_hud->updateHUD(TimeLeft, _time);
 
+	_clock->restart();
 	run();
 }

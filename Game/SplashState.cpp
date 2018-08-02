@@ -1,7 +1,8 @@
 #include "SplashState.h"
+#include <iostream>
 
 SplashState::SplashState(RenderWindow& window, const string& logoPath) : State(window),
-_onScreenTime(0), _start(false)
+_onScreenTime(0), _fadeTime(0), _start(false)
 {
 	_logoTexture.loadFromFile(logoPath);
 	_logo.setTexture(_logoTexture);
@@ -41,9 +42,16 @@ void SplashState::input()
 void SplashState::update(float elapsed)
 {
 	_onScreenTime += elapsed;
+	if (_onScreenTime < SPLASH_STATE_DURATION / 3)
+		_fadeTime += elapsed;
+	else
+		if (_onScreenTime > SPLASH_STATE_DURATION * 2/3)
+			_fadeTime -= elapsed;
 	
-	Color newColor(255, 255, 255, 255 * (_onScreenTime / SPLASH_STATE_DURATION));
+	float alphaMultiplier = std::max(0.0f, std::min(_fadeTime / (SPLASH_STATE_DURATION / 3), SPLASH_STATE_DURATION / 3));
+	Color newColor(255, 255, 255, 255 * alphaMultiplier);
 	_logo.setColor(newColor);
+	
 	if (_onScreenTime >= SPLASH_STATE_DURATION)
 		_start = true;
 }
