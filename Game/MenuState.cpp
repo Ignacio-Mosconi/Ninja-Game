@@ -31,6 +31,8 @@ MenuState::~MenuState()
 
 void MenuState::show()
 {
+	_window->setMouseCursorVisible(true);
+
 	while (!_startGame && _window->isOpen())
 	{
 		float elapsed = _clock->restart().asSeconds();
@@ -95,6 +97,7 @@ void MenuState::update(float elapsed)
 	{
 		if (_selected[0])
 		{
+			_window->setMouseCursorVisible(false);
 			_startGame = true;
 			_clicked = false;
 		}

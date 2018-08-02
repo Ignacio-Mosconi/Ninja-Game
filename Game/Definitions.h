@@ -22,6 +22,8 @@
 #define JUMP_BUTTON 1
 #define COLLECT_BUTTON 2
 #define PAUSE_BUTTON 9
+#define RESTART_BUTTON 8
+#define QUIT_BUTTON 9
 #define STICK_SENSITIVITY 10
 
 // Player

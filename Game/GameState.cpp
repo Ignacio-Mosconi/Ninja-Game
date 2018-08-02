@@ -119,6 +119,16 @@ void GameState::input()
 							restart();
 							break;
 					}
+				case Event::JoystickButtonPressed:
+					switch (event.joystickButton.button)
+					{
+						case QUIT_BUTTON:
+							_gameOver = false;
+							break;
+						case RESTART_BUTTON:
+							restart();
+							break;
+					}
 			}
 	}
 }

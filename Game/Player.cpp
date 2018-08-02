@@ -103,7 +103,7 @@ void Player::move(float elapsed)
 
 void Player::jump(float elapsed)
 {
-	if ((Keyboard::isKeyPressed(Keyboard::JUMP_KEY)) || (Joystick::isButtonPressed(0, JUMP_BUTTON)) 
+	if ((Keyboard::isKeyPressed(Keyboard::JUMP_KEY) || Joystick::isButtonPressed(0, JUMP_BUTTON)) 
 		&& _currentState != Jumping)
 	{
 		_jump.play();
