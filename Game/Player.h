@@ -71,7 +71,7 @@ private:
 
 public:
 	Player(int x, int y, const string& imagePath);
-	~Player();
+	virtual ~Player();
 
 	void update(float elapsed);
 	bool pickUpItem(Collectables collectable);

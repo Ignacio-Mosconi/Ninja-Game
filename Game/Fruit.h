@@ -29,7 +29,7 @@ private:
 
 public:
 	Fruit(int x, int y, const string& imagePath);
-	~Fruit();
+	virtual ~Fruit();
 
 	void update(float elapsed);
 

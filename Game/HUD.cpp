@@ -101,10 +101,13 @@ void HUD::draw(RenderWindow* window, bool isPaused, bool isGameOver)
 {
 	if (!isGameOver)
 	{
-		window->draw(*_lives);
-		window->draw(*_score);
-		window->draw(*_time);
-		if (isPaused)
+		if (!isPaused)
+		{
+			window->draw(*_lives);
+			window->draw(*_score);
+			window->draw(*_time);
+		}
+		else
 			window->draw(*_paused);
 	}
 	else

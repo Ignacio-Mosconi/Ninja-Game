@@ -199,6 +199,14 @@ void GameState::draw() const
 	_window->draw(_life->getSprite());
 	_window->draw(_timeBonus->getSprite());
 
+	if (_paused || _gameOver)
+	{
+		RectangleShape alphaRect(Vector2f(_window->getSize().x, _window->getSize().y));
+		Color rectColor(0, 0, 0, 128);
+		alphaRect.setFillColor(rectColor);
+		_window->draw(alphaRect);
+	}
+
 	_hud->draw(_window, _paused, _gameOver);
 
 	_window->display();

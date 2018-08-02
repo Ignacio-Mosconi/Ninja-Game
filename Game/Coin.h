@@ -10,7 +10,7 @@ protected:
 
 public:
 	Coin(int x, int y, const string& imagePath);
-	~Coin();
+	virtual ~Coin();
 
 	void update(float elapsed);
 

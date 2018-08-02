@@ -10,7 +10,7 @@ protected:
 
 public:
 	Life(int x, int y, const string& imagePath);
-	~Life();
+	virtual ~Life();
 
 	void update(float elapsed);
 

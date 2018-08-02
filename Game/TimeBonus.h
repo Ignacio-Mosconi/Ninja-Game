@@ -10,7 +10,7 @@ protected:
 
 public:
 	TimeBonus(int x, int y, const string& imagePath);
-	~TimeBonus();
+	virtual ~TimeBonus();
 
 	void update(float elapsed);
 
