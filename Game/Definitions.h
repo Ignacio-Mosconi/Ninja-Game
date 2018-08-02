@@ -14,6 +14,16 @@
 #define TITLE_TEXT_SIZE 160
 #define OPTIONS_TEXT_SIZE 80
 
+// Input
+#define JUMP_KEY S
+#define COLLECT_KEY A
+#define ESCAPE_KEY Escape
+#define ENTER_KEY Return
+#define JUMP_BUTTON 1
+#define COLLECT_BUTTON 2
+#define PAUSE_BUTTON 9
+#define STICK_SENSITIVITY 10
+
 // Player
 #define PLAYER_WIDTH 192
 #define PLAYER_HEIGHT 288

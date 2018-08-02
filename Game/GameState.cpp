@@ -78,21 +78,31 @@ void GameState::input()
 	if (_window->pollEvent(event))
 	{
 		if (!_gameOver)
+		{
+			bool pauseInput = false;
+
 			switch (event.type)
 			{
 				case Event::Closed:
 					_window->close();
 					break;
 				case Event::KeyPressed:
-					if (event.key.code == Keyboard::Escape)
-					{
-						if (!_paused)
-							pause();
-						else
-							resume();
-					}
+					if (event.key.code == Keyboard::ESCAPE_KEY)
+						pauseInput = true;
+					break;
+				case Event::JoystickButtonPressed:
+					if (event.joystickButton.button == PAUSE_BUTTON)
+						pauseInput = true;
 					break;
 			}
+			if (pauseInput)
+			{
+				if (!_paused)
+					pause();
+				else
+					resume();
+			}
+		}
 		else
 			switch (event.type)
 			{

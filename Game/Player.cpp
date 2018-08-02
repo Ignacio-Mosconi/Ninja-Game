@@ -54,7 +54,9 @@ void Player::update(float elapsed)
 
 void Player::move(float elapsed)
 {
-	if (Keyboard::isKeyPressed(Keyboard::Left) && _sprite.getPosition().x > 0)
+	if ((Keyboard::isKeyPressed(Keyboard::Left) || Joystick::getAxisPosition(0, Joystick::PovX) < 0 || 
+		Joystick::getAxisPosition(0, Joystick::X) < -STICK_SENSITIVITY) 
+		&& _sprite.getPosition().x > 0)
 	{
 		_sprite.move(-_moveSpeed * elapsed, 0);
 		if (_facing == Right)
@@ -72,7 +74,8 @@ void Player::move(float elapsed)
 	}
 	else
 	{
-		if (Keyboard::isKeyPressed(Keyboard::Right) && _sprite.getPosition().x < SCREEN_WIDTH - PLAYER_WIDTH)
+		if ((Keyboard::isKeyPressed(Keyboard::Right) || Joystick::getAxisPosition(0, Joystick::PovX) > 0 ||
+			Joystick::getAxisPosition(0, Joystick::X) > STICK_SENSITIVITY) && _sprite.getPosition().x < SCREEN_WIDTH - PLAYER_WIDTH)
 		{
 			_sprite.move(_moveSpeed * elapsed, 0);
 			if (_facing == Left)
@@ -100,7 +103,8 @@ void Player::move(float elapsed)
 
 void Player::jump(float elapsed)
 {
-	if (Keyboard::isKeyPressed(Keyboard::S) && _currentState != Jumping)
+	if ((Keyboard::isKeyPressed(Keyboard::JUMP_KEY)) || (Joystick::isButtonPressed(0, JUMP_BUTTON)) 
+		&& _currentState != Jumping)
 	{
 		_jump.play();
 		_sprite.move(0, _jumpSpeed * elapsed);
@@ -114,7 +118,8 @@ void Player::jump(float elapsed)
 		{
 			if (_sprite.getPosition().y > SCREEN_HEIGHT - PLAYER_JUMP_HEIGHT - GROUND_HEIGHT)
 			{
-				if (Keyboard::isKeyPressed(Keyboard::Left) && _sprite.getPosition().x > 0)
+				if ((Keyboard::isKeyPressed(Keyboard::Left) || Joystick::getAxisPosition(0, Joystick::PovX) < 0 ||
+					Joystick::getAxisPosition(0, Joystick::X) < -STICK_SENSITIVITY) && _sprite.getPosition().x > 0)
 				{
 					_sprite.move(-_moveSpeed * elapsed, _jumpSpeed * elapsed);
 					if (_facing == Right)
@@ -125,7 +130,8 @@ void Player::jump(float elapsed)
 				}
 				else
 				{
-					if (Keyboard::isKeyPressed(Keyboard::Right) && _sprite.getPosition().x < SCREEN_WIDTH - PLAYER_WIDTH)
+					if ((Keyboard::isKeyPressed(Keyboard::Right) || Joystick::getAxisPosition(0, Joystick::PovX) > 0 ||
+						Joystick::getAxisPosition(0, Joystick::X) > STICK_SENSITIVITY) && _sprite.getPosition().x < SCREEN_WIDTH - PLAYER_WIDTH)
 					{
 						_sprite.move(_moveSpeed * elapsed, _jumpSpeed * elapsed);
 						if (_facing == Left)
@@ -148,7 +154,8 @@ void Player::fall(float elapsed)
 {
 	if (_sprite.getPosition().y + PLAYER_HEIGHT < SCREEN_HEIGHT - GROUND_HEIGHT)
 	{
-		if (Keyboard::isKeyPressed(Keyboard::Left) && _sprite.getPosition().x > 0)
+		if ((Keyboard::isKeyPressed(Keyboard::Left) || Joystick::getAxisPosition(0, Joystick::PovX) < 0 ||
+			Joystick::getAxisPosition(0, Joystick::X) < -STICK_SENSITIVITY) && _sprite.getPosition().x > 0)
 		{
 			_sprite.move(-_moveSpeed * elapsed, GRAVITY * elapsed);
 			if (_facing == Right)
@@ -159,7 +166,8 @@ void Player::fall(float elapsed)
 		}
 		else
 		{
-			if (Keyboard::isKeyPressed(Keyboard::Right) && _sprite.getPosition().x < SCREEN_WIDTH - PLAYER_WIDTH)
+			if ((Keyboard::isKeyPressed(Keyboard::Right) || Joystick::getAxisPosition(0, Joystick::PovX) > 0 ||
+				Joystick::getAxisPosition(0, Joystick::X) > STICK_SENSITIVITY) && _sprite.getPosition().x < SCREEN_WIDTH - PLAYER_WIDTH)
 			{
 				_sprite.move(_moveSpeed * elapsed, GRAVITY * elapsed);
 				if (_facing == Left)
@@ -183,7 +191,7 @@ void Player::fall(float elapsed)
 
 bool Player::pickUpItem(Collectables collectable)
 {
-	if (Keyboard::isKeyPressed(Keyboard::A))
+	if (Keyboard::isKeyPressed(Keyboard::COLLECT_KEY) || Joystick::isButtonPressed(0, COLLECT_BUTTON))
 	{
 		switch (collectable)
 		{
