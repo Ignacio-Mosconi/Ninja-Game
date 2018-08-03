@@ -1,7 +1,8 @@
 #include "PauseState.h"
 #include "UtilityFunctions.h"
 
-PauseState::PauseState(RenderWindow& window) : State(window)
+PauseState::PauseState(RenderWindow& window) : State(window),
+_mouseX(0), _mouseY(0), _clicked(false), _resumeGame(false), _quitGame(false)
 {
 	_font.loadFromFile(FONT_PATH);
 
@@ -122,18 +123,12 @@ void PauseState::update(float elapsed)
 	if (_clicked)
 	{
 		if (_selected[0])
-		{
 			_resumeGame = true;
-			_clicked = false;
-		}
 		else
 			if (_selected[1])
-			{
 				_quitGame = true;
-				_clicked = false;
-			}
+		_clicked = false;
 	}
-
 }
 
 void PauseState::draw() const

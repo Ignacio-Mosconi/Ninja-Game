@@ -40,7 +40,6 @@ private:
 
 	bool _gameOver;
 	int _score;
-	int _highestScore;
 	float _time;
 	float _timeSinceLastFrame;
 

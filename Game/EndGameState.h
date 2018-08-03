@@ -1,6 +1,8 @@
 #ifndef END_GAME_STATE_H
 #define END_GAME_STATE_H
 
+#include <iostream>
+#include <fstream>
 #include <SFML/Audio.hpp>
 #include "State.h"
 
@@ -11,6 +13,8 @@ private:
 
 	Text* _title;
 	Text* _options[END_GAME_OPTIONS];
+	Text* _youScoredText;
+	Text* _highestScoreText;
 
 	SoundBuffer _selectBuffer;
 
@@ -25,6 +29,11 @@ private:
 	bool _clicked;
 	bool _restartGame;
 	bool _quitGame;
+	
+	int _highestScore;
+
+	void saveHighScore(int& score);
+	void loadHighScore();
 
 protected:
 	void input();
@@ -35,7 +44,7 @@ public:
 	EndGameState(RenderWindow& window);
 	~EndGameState();
 
-	void show(Sprite& background);
+	void show(Sprite& background, int& score);
 	void restart();
 
 	inline bool quitGame() { return _quitGame; }

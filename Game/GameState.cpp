@@ -10,7 +10,7 @@
 #include "EndGameState.h"
 
 GameState::GameState(RenderWindow& window) : State(window),
-_gameOver(false), _score(0), _highestScore(0), _time(GAME_TIME), _timeSinceLastFrame(0)
+_gameOver(false), _score(0), _time(GAME_TIME), _timeSinceLastFrame(0)
 {
 	srand(time(0));
 
@@ -277,7 +277,7 @@ void GameState::result()
 
 	_mainTheme.stop();
 	_pause.play();
-	_endGameState->show(background);
+	_endGameState->show(background, _score);
 }
 
 void GameState::restart()

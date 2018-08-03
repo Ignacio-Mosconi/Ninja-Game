@@ -23,11 +23,12 @@
 // End Game State
 #define END_GAME_OPTIONS 2
 #define END_GAME_TEXT_SIZE 120
-#define END_GAME_OPTIONS_TEXT_SIZE 32
+#define END_GAME_OPTIONS_TEXT_SIZE 60
 #define END_GAME_SCORE_TEXT_SIZE 48
+#define SCORE_OUTPUT_PATH "Saves//High-Score.dat"
 
 // States
-#define ALPHA_RECT_VALUE 64
+#define ALPHA_RECT_VALUE 164
 
 // Input
 #define JUMP_KEY S

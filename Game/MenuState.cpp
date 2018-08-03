@@ -1,7 +1,8 @@
 #include "MenuState.h"
 #include "UtilityFunctions.h"
 
-MenuState::MenuState(RenderWindow& window) : State(window)
+MenuState::MenuState(RenderWindow& window) : State(window),
+_mouseX(0), _mouseY(0), _clicked(false), _startGame(false)
 {
 	_font.loadFromFile(FONT_PATH);
 
@@ -100,13 +101,12 @@ void MenuState::update(float elapsed)
 		{
 			_window->setMouseCursorVisible(false);
 			_startGame = true;
-			_clicked = false;
 		}
 		else
 			if (_selected[1])
 				_window->close();
+		_clicked = false;
 	}
-
 }
 
 void MenuState::draw() const
