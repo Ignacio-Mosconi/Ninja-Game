@@ -25,7 +25,6 @@ private:
 	Text* _lives;
 	Text* _score;
 	Text* _time;
-	Text* _paused;
 	Text* _gameOver;
 	Text* _restart;
 	Text* _quit;
@@ -36,14 +35,12 @@ private:
 	SoundBuffer _clockTickBuffer;
 	Sound _clockTick;
 
-	void formatText(Text* text, int x, int y, Color fillColor, Color outlineColor = Color::White, bool outline = false);
-
 public:
 	HUD();
 	~HUD();
 
 	void updateHUD(Element element, int number);
-	void draw(RenderWindow* window, bool isPaused, bool isGameOver);
+	void draw(RenderWindow* window, bool isGameOver);
 };
 
 #endif

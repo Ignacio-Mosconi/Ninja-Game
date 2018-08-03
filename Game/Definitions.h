@@ -20,6 +20,9 @@
 #define PAUSED_TEXT_SIZE 90
 #define PAUSED_OPTIONS_TEXT_SIZE 60
 
+// States
+#define ALPHA_RECT_VALUE 64
+
 // Input
 #define JUMP_KEY S
 #define COLLECT_KEY A

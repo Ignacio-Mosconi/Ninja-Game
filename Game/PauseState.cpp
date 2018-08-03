@@ -22,6 +22,10 @@ PauseState::PauseState(RenderWindow& window) : State(window)
 	_resumeBuffer.loadFromFile(RESUME_SOUND);
 	_resume.setBuffer(_resumeBuffer);
 
+	_alphaRect.setSize(Vector2f(_window->getSize().x, _window->getSize().y));
+	Color rectColor(0, 0, 0, ALPHA_RECT_VALUE);
+	_alphaRect.setFillColor(rectColor);
+
 	for (int i = 0; i < MENU_OPTIONS; i++)
 		_selected[i] = false;
 }
@@ -33,9 +37,10 @@ PauseState::~PauseState()
 		delete _options[i];
 }
 
-void PauseState::show()
+void PauseState::show(Sprite& background)
 {
 	_window->setMouseCursorVisible(true);
+	_background = background;
 
 	while (!_resumeGame && !_quitGame && _window->isOpen())
 	{
@@ -126,6 +131,10 @@ void PauseState::update(float elapsed)
 void PauseState::draw() const
 {
 	_window->clear();
+
+	_window->draw(_background);
+
+	_window->draw(_alphaRect);
 
 	_window->draw(*_title);
 	for (int i = 0; i < MENU_OPTIONS; i++)

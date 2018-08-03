@@ -18,6 +18,9 @@ private:
 	Sound _select;
 	Sound _resume;
 
+	Sprite _background;
+	RectangleShape _alphaRect;
+
 	bool _selected[PAUSE_OPTIONS];
 	int _mouseX;
 	int _mouseY;
@@ -34,7 +37,7 @@ public:
 	PauseState(RenderWindow& window);
 	~PauseState();
 
-	void show();
+	void show(Sprite& background);
 	void resume();
 
 	inline bool quitGame() { return _quitGame; }

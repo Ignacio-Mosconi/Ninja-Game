@@ -37,7 +37,6 @@ private:
 	Sound _pause;
 
 	bool _gameOver;
-	bool _paused;
 	int _score;
 	int _highestScore;
 	float _time;
@@ -62,7 +61,6 @@ public:
 	~GameState();
 
 	void pause(bool& wasPaused);
-	void resume();
 	void restart();
 
 	inline bool gameOver() { return _gameOver; }

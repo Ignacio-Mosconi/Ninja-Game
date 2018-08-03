@@ -1,4 +1,5 @@
 #include "HUD.h"
+#include "UtilityFunctions.h"
 
 HUD::HUD()
 {
@@ -7,7 +8,6 @@ HUD::HUD()
 	_lives = new Text("Lives: 3", _font, HUD_TEXT_SIZE);
 	_score = new Text("Score: 0", _font, HUD_TEXT_SIZE);
 	_time = new Text("Time: 120", _font, HUD_TEXT_SIZE);
-	_paused = new Text("Paused", _font, PAUSED_TEXT_SIZE);
 	_gameOver = new Text("Game Over", _font, GAME_OVER_TEXT_SIZE);
 	_restart = new Text("Press enter to restart", _font, HUD_OPTIONS_TEXT_SIZE);
 	_quit = new Text("Press escape to quit", _font, HUD_OPTIONS_TEXT_SIZE);
@@ -18,8 +18,6 @@ HUD::HUD()
 	formatText(_lives, 32, HUD_TEXT_Y, TEXT_COLOR_GREEN, Color::White, true);
 	formatText(_score, SCREEN_WIDTH / 2 - _score->getGlobalBounds().width / 2, HUD_TEXT_Y, TEXT_COLOR_BLUE, Color::White, true);
 	formatText(_time, SCREEN_WIDTH - _time->getGlobalBounds().width - 32, HUD_TEXT_Y, TEXT_COLOR_GREEN, Color::White, true);
-	formatText(_paused, SCREEN_WIDTH / 2 - _paused->getGlobalBounds().width / 2,
-		SCREEN_HEIGHT / 2 - _paused->getGlobalBounds().height /2, TEXT_COLOR_GREEN, Color::White, true);
 	formatText(_gameOver, SCREEN_WIDTH / 2 - _gameOver->getGlobalBounds().width / 2,
 		SCREEN_HEIGHT / 4 - _gameOver->getGlobalBounds().height / 2, TEXT_COLOR_RED, Color::Red, true);
 	formatText(_restart, 32, SCREEN_HEIGHT - _restart->getGlobalBounds().height - 90, TEXT_COLOR_GREEN, TEXT_COLOR_BLUE, true);
@@ -41,7 +39,6 @@ HUD::~HUD()
 	delete _lives;
 	delete _score;
 	delete _time;
-	delete _paused;
 	delete _gameOver;
 	delete _restart;
 	delete _quit;
@@ -97,18 +94,13 @@ void HUD::updateHUD(Element element, int number)
 	}
 }
 
-void HUD::draw(RenderWindow* window, bool isPaused, bool isGameOver)
+void HUD::draw(RenderWindow* window, bool isGameOver)
 {
 	if (!isGameOver)
 	{
-		if (!isPaused)
-		{
-			window->draw(*_lives);
-			window->draw(*_score);
-			window->draw(*_time);
-		}
-		else
-			window->draw(*_paused);
+		window->draw(*_lives);
+		window->draw(*_score);
+		window->draw(*_time);
 	}
 	else
 	{
@@ -119,15 +111,4 @@ void HUD::draw(RenderWindow* window, bool isPaused, bool isGameOver)
 		window->draw(*_highestScore);
 		window->draw(*_credits);
 	}
-}
-
-void HUD::formatText(Text* text, int x, int y, Color fillColor, Color outlineColor, bool outline)
-{
-	text->setFillColor(fillColor);
-	if (outline)
-	{
-		text->setOutlineThickness(3);
-		text->setOutlineColor(outlineColor);
-	}
-	text->setPosition(x, y);
 }

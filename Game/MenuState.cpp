@@ -1,4 +1,5 @@
 #include "MenuState.h"
+#include "UtilityFunctions.h"
 
 MenuState::MenuState(RenderWindow& window) : State(window)
 {
@@ -117,15 +118,4 @@ void MenuState::draw() const
 		_window->draw(*_options[i]);
 
 	_window->display();
-}
-
-void MenuState::formatText(Text* text, int x, int y, Color fillColor, Color outlineColor, bool outline)
-{
-	text->setFillColor(fillColor);
-	if (outline)
-	{
-		text->setOutlineThickness(3);
-		text->setOutlineColor(outlineColor);
-	}
-	text->setPosition(x, y);
 }

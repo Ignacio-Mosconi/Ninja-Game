@@ -23,8 +23,6 @@ private:
 	bool _clicked;
 	bool _startGame;
 
-	void formatText(Text* text, int x, int y, Color fillColor, Color outlineColor = Color::White, bool outline = false);
-
 protected:
 	void input();
 	void update(float elapsed);

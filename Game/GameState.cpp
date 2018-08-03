@@ -9,7 +9,7 @@
 #include "PauseState.h"
 
 GameState::GameState(RenderWindow& window) : State(window),
-_gameOver(false), _paused(false), _score(0), _highestScore(0), _time(GAME_TIME), _timeSinceLastFrame(0)
+_gameOver(false), _score(0), _highestScore(0), _time(GAME_TIME), _timeSinceLastFrame(0)
 {
 	srand(time(0));
 
@@ -203,15 +203,7 @@ void GameState::draw() const
 	_window->draw(_life->getSprite());
 	_window->draw(_timeBonus->getSprite());
 
-	//if (_paused || _gameOver)
-	//{
-	//	RectangleShape alphaRect(Vector2f(_window->getSize().x, _window->getSize().y));
-	//	Color rectColor(0, 0, 0, 128);
-	//	alphaRect.setFillColor(rectColor);
-	//	_window->draw(alphaRect);
-	//}
-
-	_hud->draw(_window, _paused, _gameOver);
+	_hud->draw(_window, _gameOver);
 
 	_window->display();
 }
@@ -267,17 +259,18 @@ void GameState::timeBonusPlayerCollision(TimeBonus* t, Player* p)
 
 void GameState::pause(bool& wasPaused)
 {
+	Texture backgroundTexture;
+	Sprite background;
+
+	backgroundTexture.create(_window->getSize().x, _window->getSize().y);
+	backgroundTexture.update(*_window);
+	background.setTexture(backgroundTexture);
+
 	wasPaused = true;
 	_mainTheme.pause();
 	_pause.play();
-	_pauseState->show();
+	_pauseState->show(background);
 }
-
-//void GameState::resume()
-//{
-//	_mainTheme.play();
-//	//_paused = false;
-//}
 
 void GameState::result()
 {
@@ -321,7 +314,6 @@ void GameState::restart()
 	_timeBonus->disable();
 
 	_gameOver = false;
-	_paused = false;
 	_score = 0;
 	_time = GAME_TIME;
 	_timeSinceLastFrame = 0;
