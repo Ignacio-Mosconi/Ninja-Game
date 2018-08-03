@@ -56,6 +56,7 @@ void PauseState::show(Sprite& background)
 
 void PauseState::resume()
 {
+	_window->setMouseCursorVisible(false);
 	_resume.play();
 	_resumeGame = false;
 }
@@ -83,6 +84,14 @@ void PauseState::input()
 					_clicked = true;
 				}
 				break;
+			case Event::KeyPressed:
+				if (event.key.code == Keyboard::ESCAPE_KEY)
+					_resumeGame = true;
+				break;
+			case Event::JoystickButtonPressed:
+				if (event.joystickButton.button == ESCAPE_BUTTON)
+					_resumeGame = true;
+				break;
 		}
 	}
 }
@@ -97,7 +106,7 @@ void PauseState::update(float elapsed)
 			{
 				_select.play();
 				_selected[i] = true;
-				_options[i]->setFillColor(TEXT_COLOR_GREEN);
+				_options[i]->setFillColor(TEXT_COLOR_RED);
 			}
 		}
 		else
@@ -114,7 +123,6 @@ void PauseState::update(float elapsed)
 	{
 		if (_selected[0])
 		{
-			_window->setMouseCursorVisible(false);
 			_resumeGame = true;
 			_clicked = false;
 		}

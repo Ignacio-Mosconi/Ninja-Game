@@ -126,7 +126,7 @@ void GameState::input()
 				case Event::JoystickButtonPressed:
 					switch (event.joystickButton.button)
 					{
-						case QUIT_BUTTON:
+						case ESCAPE_BUTTON:
 							_gameOver = false;
 							break;
 						case RESTART_BUTTON:
@@ -153,38 +153,20 @@ void GameState::update(float elapsed)
 	for (int i = 0; i < FRUITS; i++)
 	{
 		_fruits[i]->update(elapsed);
-		if (_fruits[i]->hasReachedBottom())
-		{
-			switch (_fruits[i]->getKind())
-			{
-				case Watermelon:
-					_score += WATERMELON_SCORE;
-					break;
-				case Apple:
-					_score += APPLE_SCORE;
-					break;
-				case Pear:
-					_score += PEAR_SCORE;
-					break;
-				case Banana:
-					_score += BANANA_SCORE;
-					break;
-			}
-			_fruits[i]->setHasReachedBottom(false);
-			_hud->updateHUD(Score, _score);
-		}
+		fruitPlayerCollision(_fruits[i], _player);
+		fruitGroundCollision(_fruits[i]);
 	}
 	for (int i = 0; i < COINS; i++)
+	{
 		_coins[i]->update(elapsed);
-	if (_player->getLives() < PLAYER_LIVES)
-		_life->update(elapsed);
-	_timeBonus->update(elapsed);
-
-	for (int i = 0; i < FRUITS; i++)
-		fruitPlayerCollision(_fruits[i], _player);
-	for (int i = 0; i < COINS; i++)
 		coinPlayerCollision(_coins[i], _player);
-	lifePlayerCollision(_life, _player);
+	}
+	if (_player->getLives() < PLAYER_LIVES)
+	{
+		_life->update(elapsed);
+		lifePlayerCollision(_life, _player);
+	}
+	_timeBonus->update(elapsed);
 	timeBonusPlayerCollision(_timeBonus, _player);
 }
 
@@ -254,6 +236,30 @@ void GameState::timeBonusPlayerCollision(TimeBonus* t, Player* p)
 			t->disable();
 			_time += TIME_BONUS_TIME;
 		}
+	}
+}
+
+void GameState::fruitGroundCollision(Fruit* f)
+{
+	if (f->hasReachedBottom())
+	{
+		switch (f->getKind())
+		{
+			case Watermelon:
+				_score += WATERMELON_SCORE;
+				break;
+			case Apple:
+				_score += APPLE_SCORE;
+				break;
+			case Pear:
+				_score += PEAR_SCORE;
+				break;
+			case Banana:
+				_score += BANANA_SCORE;
+				break;
+		}
+		f->setHasReachedBottom(false);
+		_hud->updateHUD(Score, _score);
 	}
 }
 

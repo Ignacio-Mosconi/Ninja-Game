@@ -46,6 +46,7 @@ private:
 	void coinPlayerCollision(Coin* c, Player* p);
 	void lifePlayerCollision(Life* l, Player* p);
 	void timeBonusPlayerCollision(TimeBonus* t, Player* p);
+	void fruitGroundCollision(Fruit* f);
 
 	void result();
 

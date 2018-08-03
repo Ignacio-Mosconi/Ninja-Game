@@ -81,7 +81,7 @@ void MenuState::update(float elapsed)
 			{
 				_select.play();
 				_selected[i] = true;
-				_options[i]->setFillColor(TEXT_COLOR_GREEN);
+				_options[i]->setFillColor(TEXT_COLOR_RED);
 			}
 		}
 		else
