@@ -15,6 +15,11 @@
 #define TITLE_TEXT_SIZE 160
 #define OPTIONS_TEXT_SIZE 80
 
+// Pause State
+#define PAUSE_OPTIONS 2
+#define PAUSED_TEXT_SIZE 90
+#define PAUSED_OPTIONS_TEXT_SIZE 60
+
 // Input
 #define JUMP_KEY S
 #define COLLECT_KEY A
@@ -100,7 +105,6 @@
 // Heads Up Display
 #define HUD_TEXT_Y 15
 #define HUD_TEXT_SIZE 60
-#define PAUSED_TEXT_SIZE 90
 #define GAME_OVER_TEXT_SIZE 120
 #define HUD_OPTIONS_TEXT_SIZE 32
 #define TEXT_COLOR_RED {128, 32, 32, 255}
@@ -131,6 +135,8 @@
 #define PICK_UP_TIME_BONUS_SOUND "Assets/Sounds/Pick Up Time Bonus.wav"
 #define CLOCK_TICK_SOUND "Assets/Sounds/Clock Tick.wav"
 #define SELECT_SOUND "Assets/Sounds/Select.wav"
+#define PAUSE_SOUND "Assets/Sounds/Pause.wav"
+#define RESUME_SOUND "Assets/Sounds/Resume.wav"
 
 // Fonts File Paths
 #define FONT_PATH "Assets/Fonts/Last Ninja.ttf"

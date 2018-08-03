@@ -1,5 +1,5 @@
-#ifndef GAME_H
-#define GAME_H
+#ifndef GAME_STATE_H
+#define GAME_STATE_H
 
 #include <ctime>
 #include <SFML/Graphics.hpp>
@@ -12,6 +12,7 @@ class Life;
 class TimeBonus;
 class Entity;
 class HUD;
+class PauseState;
 using namespace sf;
 
 class GameState : public State
@@ -28,7 +29,12 @@ private:
 
 	HUD* _hud;
 
+	PauseState* _pauseState;
+
 	Music _mainTheme;
+	
+	SoundBuffer _pauseBuffer;
+	Sound _pause;
 
 	bool _gameOver;
 	bool _paused;
@@ -55,7 +61,7 @@ public:
 	GameState(RenderWindow& window);
 	~GameState();
 
-	void pause();
+	void pause(bool& wasPaused);
 	void resume();
 	void restart();
 

@@ -161,10 +161,12 @@ xcopy "$(SolutionDir)Dependencies\Visual Leak Detector\dlls\x64" "$(OutDir)" /i 
     <ClCompile Include="Life.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="MenuState.cpp" />
+    <ClCompile Include="PauseState.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="SplashState.cpp" />
     <ClCompile Include="State.cpp" />
     <ClCompile Include="TimeBonus.cpp" />
+    <ClCompile Include="UtilityFunctions.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Coin.h" />
@@ -176,10 +178,12 @@ xcopy "$(SolutionDir)Dependencies\Visual Leak Detector\dlls\x64" "$(OutDir)" /i 
     <ClInclude Include="HUD.h" />
     <ClInclude Include="Life.h" />
     <ClInclude Include="MenuState.h" />
+    <ClInclude Include="PauseState.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="SplashState.h" />
     <ClInclude Include="State.h" />
     <ClInclude Include="TimeBonus.h" />
+    <ClInclude Include="UtilityFunctions.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

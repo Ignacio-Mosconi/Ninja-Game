@@ -6,6 +6,7 @@
 #include "TimeBonus.h"
 #include "Entity.h"
 #include "HUD.h"
+#include "PauseState.h"
 
 GameState::GameState(RenderWindow& window) : State(window),
 _gameOver(false), _paused(false), _score(0), _highestScore(0), _time(GAME_TIME), _timeSinceLastFrame(0)
@@ -28,8 +29,13 @@ _gameOver(false), _paused(false), _score(0), _highestScore(0), _time(GAME_TIME),
 	
 	_hud = new HUD();
 
+	_pauseState = new PauseState(*_window);
+
 	_mainTheme.openFromFile(MAIN_THEME);
 	_mainTheme.setLoop(true);
+
+	_pauseBuffer.loadFromFile(PAUSE_SOUND);
+	_pause.setBuffer(_pauseBuffer);
 }
 
 GameState::~GameState()
@@ -46,29 +52,29 @@ GameState::~GameState()
 	delete _sky;
 
 	delete _hud;
+	delete _pauseState;
 }
 
 void GameState::run()
 {
-	if (_mainTheme.getStatus() == SoundSource::Status::Stopped)
+	if (_mainTheme.getStatus() == SoundSource::Status::Stopped || _mainTheme.getStatus() == SoundSource::Status::Paused)
 		_mainTheme.play();
 
-	while (!_gameOver && _window->isOpen())
+	while (!_gameOver && !_pauseState->quitGame() && _window->isOpen())
 	{
 		float elapsed = _clock->restart().asSeconds();
-		if (!_paused)
+
+		input();
+		if (!_pauseState->quitGame())
 		{
-			input();
 			update(elapsed);
 			draw();
 		}
-		else
-		{
-			input();
-			draw();
-		}
 	}
-	result();
+	if (!_pauseState->quitGame())
+		result();
+	else
+		_pauseState->setQuitGame(false);
 }
 
 void GameState::input()
@@ -79,7 +85,7 @@ void GameState::input()
 	{
 		if (!_gameOver)
 		{
-			bool pauseInput = false;
+			bool wasPaused = false;
 
 			switch (event.type)
 			{
@@ -88,19 +94,17 @@ void GameState::input()
 					break;
 				case Event::KeyPressed:
 					if (event.key.code == Keyboard::ESCAPE_KEY)
-						pauseInput = true;
+						pause(wasPaused);
 					break;
 				case Event::JoystickButtonPressed:
 					if (event.joystickButton.button == PAUSE_BUTTON)
-						pauseInput = true;
+						pause(wasPaused);
 					break;
 			}
-			if (pauseInput)
+			if (wasPaused && !_pauseState->quitGame())
 			{
-				if (!_paused)
-					pause();
-				else
-					resume();
+				_mainTheme.play();
+				_clock->restart();
 			}
 		}
 		else
@@ -199,13 +203,13 @@ void GameState::draw() const
 	_window->draw(_life->getSprite());
 	_window->draw(_timeBonus->getSprite());
 
-	if (_paused || _gameOver)
-	{
-		RectangleShape alphaRect(Vector2f(_window->getSize().x, _window->getSize().y));
-		Color rectColor(0, 0, 0, 128);
-		alphaRect.setFillColor(rectColor);
-		_window->draw(alphaRect);
-	}
+	//if (_paused || _gameOver)
+	//{
+	//	RectangleShape alphaRect(Vector2f(_window->getSize().x, _window->getSize().y));
+	//	Color rectColor(0, 0, 0, 128);
+	//	alphaRect.setFillColor(rectColor);
+	//	_window->draw(alphaRect);
+	//}
 
 	_hud->draw(_window, _paused, _gameOver);
 
@@ -261,17 +265,19 @@ void GameState::timeBonusPlayerCollision(TimeBonus* t, Player* p)
 	}
 }
 
-void GameState::pause()
+void GameState::pause(bool& wasPaused)
 {
+	wasPaused = true;
 	_mainTheme.pause();
-	_paused = true;
+	_pause.play();
+	_pauseState->show();
 }
 
-void GameState::resume()
-{
-	_mainTheme.play();
-	_paused = false;
-}
+//void GameState::resume()
+//{
+//	_mainTheme.play();
+//	//_paused = false;
+//}
 
 void GameState::result()
 {

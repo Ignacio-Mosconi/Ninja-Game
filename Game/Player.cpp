@@ -231,6 +231,7 @@ void Player::respawn()
 	_imagePos.y = IdleRight;
 	_sprite.setTextureRect(IntRect(_imagePos.x, _imagePos.y, PLAYER_WIDTH, PLAYER_HEIGHT));
 	_sprite.setPosition(SCREEN_WIDTH / 2 - PLAYER_WIDTH / 2, SCREEN_HEIGHT - GROUND_HEIGHT - PLAYER_HEIGHT);
+	_sprite.setColor(Color::White);
 }
 
 void Player::flicker(float elapsed)
