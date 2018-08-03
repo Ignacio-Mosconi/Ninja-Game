@@ -13,6 +13,7 @@ class TimeBonus;
 class Entity;
 class HUD;
 class PauseState;
+class EndGameState;
 using namespace sf;
 
 class GameState : public State
@@ -30,6 +31,7 @@ private:
 	HUD* _hud;
 
 	PauseState* _pauseState;
+	EndGameState* _endGameState;
 
 	Music _mainTheme;
 	

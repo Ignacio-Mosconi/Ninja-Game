@@ -1,26 +1,23 @@
-#include "PauseState.h"
+#include "EndGameState.h"
 #include "UtilityFunctions.h"
 
-PauseState::PauseState(RenderWindow& window) : State(window)
+EndGameState::EndGameState(RenderWindow& window) : State(window)
 {
 	_font.loadFromFile(FONT_PATH);
 
-	_title = new Text("Paused", _font, PAUSED_TEXT_SIZE);
-	_options[0] = new Text("Resume", _font, PAUSED_OPTIONS_TEXT_SIZE);
-	_options[1] = new Text("Quit", _font, PAUSED_OPTIONS_TEXT_SIZE);
+	_title = new Text("Game Over", _font, END_GAME_TEXT_SIZE);
+	_options[0] = new Text("Restart", _font, END_GAME_OPTIONS_TEXT_SIZE);
+	_options[1] = new Text("Quit", _font, END_GAME_OPTIONS_TEXT_SIZE);
 
 	formatText(_title, SCREEN_WIDTH / 2 - _title->getGlobalBounds().width / 2,
-		SCREEN_HEIGHT / 4 - _title->getGlobalBounds().height / 2, TEXT_COLOR_GREEN, Color::White, true);
-	formatText(_options[0], SCREEN_WIDTH / 2 - _options[0]->getGlobalBounds().width / 2,
-		SCREEN_HEIGHT / 2 - _options[0]->getGlobalBounds().height / 2, Color::White);
-	formatText(_options[1], SCREEN_WIDTH / 2 - _options[1]->getGlobalBounds().width / 2,
-		SCREEN_HEIGHT / 2 + 128 - _options[1]->getGlobalBounds().height / 2, Color::White);
+		SCREEN_HEIGHT / 4 - _title->getGlobalBounds().height / 2, TEXT_COLOR_RED, Color::Red, true);
+	formatText(_options[0], 32, SCREEN_HEIGHT - _options[0]->getGlobalBounds().height - 90,
+		Color::White, TEXT_COLOR_BLUE, true);
+	formatText(_options[1], SCREEN_WIDTH - _options[1]->getGlobalBounds().width - 32,
+		SCREEN_HEIGHT - _options[1]->getGlobalBounds().height - 90, Color::White, Color::Red, true);
 
 	_selectBuffer.loadFromFile(SELECT_SOUND);
 	_select.setBuffer(_selectBuffer);
-
-	_resumeBuffer.loadFromFile(RESUME_SOUND);
-	_resume.setBuffer(_resumeBuffer);
 
 	_alphaRect.setSize(Vector2f(_window->getSize().x, _window->getSize().y));
 	Color rectColor(0, 0, 0, ALPHA_RECT_VALUE);
@@ -30,19 +27,19 @@ PauseState::PauseState(RenderWindow& window) : State(window)
 		_selected[i] = false;
 }
 
-PauseState::~PauseState()
+EndGameState::~EndGameState()
 {
 	delete _title;
 	for (int i = 0; i < MENU_OPTIONS; i++)
 		delete _options[i];
 }
 
-void PauseState::show(Sprite& background)
+void EndGameState::show(Sprite& background)
 {
 	_window->setMouseCursorVisible(true);
 	_background = background;
 
-	while (!_resumeGame && !_quitGame && _window->isOpen())
+	while (!_restartGame && !_quitGame && _window->isOpen())
 	{
 		float elapsed = _clock->restart().asSeconds();
 
@@ -51,17 +48,16 @@ void PauseState::show(Sprite& background)
 		draw();
 	}
 	if (!_quitGame)
-		resume();
+		restart();
 }
 
-void PauseState::resume()
+void EndGameState::restart()
 {
 	_window->setMouseCursorVisible(false);
-	_resume.play();
-	_resumeGame = false;
+	_restartGame = false;
 }
 
-void PauseState::input()
+void EndGameState::input()
 {
 	Event event;
 
@@ -84,19 +80,11 @@ void PauseState::input()
 					_clicked = true;
 				}
 				break;
-			case Event::KeyPressed:
-				if (event.key.code == Keyboard::ESCAPE_KEY)
-					_resumeGame = true;
-				break;
-			case Event::JoystickButtonPressed:
-				if (event.joystickButton.button == ESCAPE_BUTTON)
-					_resumeGame = true;
-				break;
 		}
 	}
 }
 
-void PauseState::update(float elapsed)
+void EndGameState::update(float elapsed)
 {
 	for (int i = 0; i < MENU_OPTIONS; i++)
 	{
@@ -123,7 +111,7 @@ void PauseState::update(float elapsed)
 	{
 		if (_selected[0])
 		{
-			_resumeGame = true;
+			_restartGame = true;
 			_clicked = false;
 		}
 		else
@@ -136,7 +124,7 @@ void PauseState::update(float elapsed)
 
 }
 
-void PauseState::draw() const
+void EndGameState::draw() const
 {
 	_window->clear();
 
@@ -145,7 +133,7 @@ void PauseState::draw() const
 	_window->draw(_alphaRect);
 
 	_window->draw(*_title);
-	for (int i = 0; i < PAUSE_OPTIONS; i++)
+	for (int i = 0; i < MENU_OPTIONS; i++)
 		_window->draw(*_options[i]);
 
 	_window->display();

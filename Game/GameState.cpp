@@ -7,6 +7,7 @@
 #include "Entity.h"
 #include "HUD.h"
 #include "PauseState.h"
+#include "EndGameState.h"
 
 GameState::GameState(RenderWindow& window) : State(window),
 _gameOver(false), _score(0), _highestScore(0), _time(GAME_TIME), _timeSinceLastFrame(0)
@@ -30,6 +31,7 @@ _gameOver(false), _score(0), _highestScore(0), _time(GAME_TIME), _timeSinceLastF
 	_hud = new HUD();
 
 	_pauseState = new PauseState(*_window);
+	_endGameState = new EndGameState(*_window);
 
 	_mainTheme.openFromFile(MAIN_THEME);
 	_mainTheme.setLoop(true);
@@ -53,11 +55,12 @@ GameState::~GameState()
 
 	delete _hud;
 	delete _pauseState;
+	delete _endGameState;
 }
 
 void GameState::run()
 {
-	if (_mainTheme.getStatus() == SoundSource::Status::Stopped || _mainTheme.getStatus() == SoundSource::Status::Paused)
+	if (_mainTheme.getStatus() == SoundSource::Status::Stopped)
 		_mainTheme.play();
 
 	while (!_gameOver && !_pauseState->quitGame() && _window->isOpen())
@@ -72,9 +75,21 @@ void GameState::run()
 		}
 	}
 	if (!_pauseState->quitGame())
+	{
 		result();
+		if (!_endGameState->quitGame())
+			restart();
+		else
+		{
+			_endGameState->setQuitGame(false);
+			_gameOver = false;
+		}
+	}
 	else
+	{
+		_mainTheme.stop();
 		_pauseState->setQuitGame(false);
+	}
 }
 
 void GameState::input()
@@ -107,33 +122,6 @@ void GameState::input()
 				_clock->restart();
 			}
 		}
-		else
-			switch (event.type)
-			{
-				case Event::Closed:
-					_window->close();
-					break;
-				case Event::KeyPressed:
-					switch (event.key.code)
-					{
-						case Keyboard::Escape:
-							_gameOver = false;
-							break;
-						case Keyboard::Return:
-							restart();
-							break;
-					}
-				case Event::JoystickButtonPressed:
-					switch (event.joystickButton.button)
-					{
-						case ESCAPE_BUTTON:
-							_gameOver = false;
-							break;
-						case RESTART_BUTTON:
-							restart();
-							break;
-					}
-			}
 	}
 }
 
@@ -185,7 +173,7 @@ void GameState::draw() const
 	_window->draw(_life->getSprite());
 	_window->draw(_timeBonus->getSprite());
 
-	_hud->draw(_window, _gameOver);
+	_hud->draw(_window);
 
 	_window->display();
 }
@@ -280,22 +268,16 @@ void GameState::pause(bool& wasPaused)
 
 void GameState::result()
 {
+	Texture backgroundTexture;
+	Sprite background;
+
+	backgroundTexture.create(_window->getSize().x, _window->getSize().y);
+	backgroundTexture.update(*_window);
+	background.setTexture(backgroundTexture);
+
 	_mainTheme.stop();
-
-	_hud->updateHUD(FinalScore, _score);
-	if (_score > _highestScore)
-	{
-		_highestScore = _score;
-		_hud->updateHUD(HighestScore, _highestScore);
-	}
-
-	while (_gameOver && _window->isOpen())
-	{
-		float elapsed = _clock->restart().asSeconds();
-
-		input();
-		draw();
-	}
+	_pause.play();
+	_endGameState->show(background);
 }
 
 void GameState::restart()

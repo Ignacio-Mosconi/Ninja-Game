@@ -154,6 +154,7 @@ xcopy "$(SolutionDir)Dependencies\Visual Leak Detector\dlls\x64" "$(OutDir)" /i 
   <ItemGroup>
     <ClCompile Include="Coin.cpp" />
     <ClCompile Include="Collectible.cpp" />
+    <ClCompile Include="EndGameState.cpp" />
     <ClCompile Include="Entity.cpp" />
     <ClCompile Include="Fruit.cpp" />
     <ClCompile Include="GameState.cpp" />
@@ -172,6 +173,7 @@ xcopy "$(SolutionDir)Dependencies\Visual Leak Detector\dlls\x64" "$(OutDir)" /i 
     <ClInclude Include="Coin.h" />
     <ClInclude Include="Collectible.h" />
     <ClInclude Include="Definitions.h" />
+    <ClInclude Include="EndGameState.h" />
     <ClInclude Include="Entity.h" />
     <ClInclude Include="Fruit.h" />
     <ClInclude Include="GameState.h" />

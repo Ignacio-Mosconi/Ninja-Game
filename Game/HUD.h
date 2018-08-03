@@ -13,8 +13,8 @@ enum Element
 	Lives,
 	Score,
 	TimeLeft,
-	HighestScore,
-	FinalScore
+	//HighestScore,
+	//FinalScore
 };
 
 class HUD
@@ -25,12 +25,12 @@ private:
 	Text* _lives;
 	Text* _score;
 	Text* _time;
-	Text* _gameOver;
-	Text* _restart;
-	Text* _quit;
-	Text* _youScored;
-	Text* _highestScore;
-	Text* _credits;
+	//Text* _gameOver;
+	//Text* _restart;
+	//Text* _quit;
+	//Text* _youScored;
+	//Text* _highestScore;
+	//Text* _credits;
 
 	SoundBuffer _clockTickBuffer;
 	Sound _clockTick;
@@ -40,7 +40,7 @@ public:
 	~HUD();
 
 	void updateHUD(Element element, int number);
-	void draw(RenderWindow* window, bool isGameOver);
+	void draw(RenderWindow* window);
 };
 
 #endif
