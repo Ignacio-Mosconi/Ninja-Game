@@ -45,6 +45,7 @@ void HUD::updateHUD(Element element, int number)
 			break;
 		case Score:
 			_score->setString("Score: " + to_string(number));
+			formatText(_score, SCREEN_WIDTH / 2 - _score->getGlobalBounds().width / 2, HUD_TEXT_Y, TEXT_COLOR_BLUE, Color::White, true);
 			break;
 		case TimeLeft:
 			_time->setString("Time: " + to_string(number));

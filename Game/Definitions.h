@@ -42,6 +42,9 @@
 #define ESCAPE_BUTTON 9
 #define STICK_SENSITIVITY 10
 
+// Entities
+#define HIT_BOX_REDUCTION 40
+
 // Player
 #define PLAYER_WIDTH 192
 #define PLAYER_HEIGHT 288
@@ -59,6 +62,7 @@
 #define IDLE_FRAME_TIME 1.0f / 6.0f
 #define MOVING_FRAME_TIME 1.0f / 12.0f
 #define JUMPING_FRAME_TIME 1.0f / 18.0f 
+#define PICK_UP_COOLDOWN 0.33f
 
 // Fruits
 #define FRUITS 5

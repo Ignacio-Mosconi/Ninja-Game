@@ -3,7 +3,7 @@
 Player::Player(int x, int y, const string& imagePath) : Entity(x, y, imagePath),
 _currentState(Idle), _facing(Right), _animationCounter(0), _imagePos(0, IdleRight), _lives(PLAYER_LIVES),
 _moveSpeed(PLAYER_MOVE_SPEED), _jumpSpeed(PLAYER_JUMP_SPEED), _isInvincible(false), _flickeringTime(FLICKERING_TIME),
-_flickeringCounter(0)
+_flickeringCounter(0), _hasCollectedItem(false), _pickUpCooldown(0)
 {
 	_jumpBuffer.loadFromFile(JUMP_SOUND);
 	_fruitHitBuffer.loadFromFile(FRUIT_HIT_SOUND);
@@ -46,6 +46,16 @@ void Player::update(float elapsed)
 			break;
 	}
 	
+	if (_hasCollectedItem)
+	{
+		_pickUpCooldown += elapsed;
+		if (_pickUpCooldown >= PICK_UP_COOLDOWN)
+		{
+			_pickUpCooldown = 0;
+			_hasCollectedItem = false;
+		}
+	}
+
 	if (_isInvincible)
 		flicker(elapsed);
 	
@@ -191,23 +201,24 @@ void Player::fall(float elapsed)
 
 bool Player::pickUpItem(Collectables collectable)
 {
-	if (Keyboard::isKeyPressed(Keyboard::COLLECT_KEY) || Joystick::isButtonPressed(0, COLLECT_BUTTON))
-	{
+	if (Keyboard::isKeyPressed(Keyboard::COLLECT_KEY) || Joystick::isButtonPressed(0, COLLECT_BUTTON) &&
+		!_hasCollectedItem)
 		switch (collectable)
 		{
 			case Coins:
 				_pickUpCoin.play();
-				break;
+				_hasCollectedItem = true;
+				return true;
 			case LifeBonuses:
 				_pickUpLife.play();
 				_lives++;
-				break;
+				_hasCollectedItem = true;
+				return true;
 			case TimeBonuses:
 				_pickUpTimeBonus.play();
-				break;
+				_hasCollectedItem = true;
+				return true;
 		}
-		return true;
-	}
 	return false;
 }
 

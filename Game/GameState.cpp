@@ -68,13 +68,13 @@ void GameState::run()
 		float elapsed = _clock->restart().asSeconds();
 
 		input();
-		if (!_pauseState->quitGame())
+		if (!_pauseState->quitGame() && _window->isOpen())
 		{
 			update(elapsed);
 			draw();
 		}
 	}
-	if (!_pauseState->quitGame())
+	if (!_pauseState->quitGame() && _window->isOpen())
 	{
 		result();
 		if (!_endGameState->quitGame())
@@ -180,7 +180,12 @@ void GameState::draw() const
 
 void GameState::fruitPlayerCollision(Fruit* f, Player* p)
 {
-	if (f->getSprite().getGlobalBounds().intersects(p->getSprite().getGlobalBounds()) && f->isEnabled() && !p->isFlickering())
+	FloatRect fruitHitbox(f->getSprite().getGlobalBounds().left + HIT_BOX_REDUCTION, f->getSprite().getGlobalBounds().top + HIT_BOX_REDUCTION,
+		f->getSprite().getGlobalBounds().width - HIT_BOX_REDUCTION, f->getSprite().getGlobalBounds().height - HIT_BOX_REDUCTION);
+	FloatRect playerHitbox(p->getSprite().getGlobalBounds().left + HIT_BOX_REDUCTION, p->getSprite().getGlobalBounds().top + HIT_BOX_REDUCTION,
+		p->getSprite().getGlobalBounds().width - HIT_BOX_REDUCTION, p->getSprite().getGlobalBounds().height - HIT_BOX_REDUCTION);
+	
+	if (fruitHitbox.intersects(playerHitbox) && f->isEnabled() && !p->isFlickering())
 	{
 		f->disable();
 		p->die();
@@ -192,7 +197,12 @@ void GameState::fruitPlayerCollision(Fruit* f, Player* p)
 
 void GameState::coinPlayerCollision(Coin* c, Player* p)
 {
-	if (c->getSprite().getGlobalBounds().intersects(p->getSprite().getGlobalBounds()) && c->isEnabled())
+	FloatRect coinHitbox(c->getSprite().getGlobalBounds().left + HIT_BOX_REDUCTION, c->getSprite().getGlobalBounds().top + HIT_BOX_REDUCTION,
+		c->getSprite().getGlobalBounds().width - HIT_BOX_REDUCTION, c->getSprite().getGlobalBounds().height - HIT_BOX_REDUCTION);
+	FloatRect playerHitbox(p->getSprite().getGlobalBounds().left + HIT_BOX_REDUCTION, p->getSprite().getGlobalBounds().top + HIT_BOX_REDUCTION,
+		p->getSprite().getGlobalBounds().width - HIT_BOX_REDUCTION, p->getSprite().getGlobalBounds().height - HIT_BOX_REDUCTION);
+	
+	if (coinHitbox.intersects(playerHitbox) && c->isEnabled())
 	{
 		if (p->pickUpItem(Coins))
 		{
@@ -205,7 +215,12 @@ void GameState::coinPlayerCollision(Coin* c, Player* p)
 
 void GameState::lifePlayerCollision(Life* l, Player* p)
 {
-	if (l->getSprite().getGlobalBounds().intersects(p->getSprite().getGlobalBounds()) && l->isEnabled())
+	FloatRect lifeHitbox(l->getSprite().getGlobalBounds().left + HIT_BOX_REDUCTION, l->getSprite().getGlobalBounds().top + HIT_BOX_REDUCTION,
+		l->getSprite().getGlobalBounds().width - HIT_BOX_REDUCTION, l->getSprite().getGlobalBounds().height - HIT_BOX_REDUCTION);
+	FloatRect playerHitbox(p->getSprite().getGlobalBounds().left + HIT_BOX_REDUCTION, p->getSprite().getGlobalBounds().top + HIT_BOX_REDUCTION,
+		p->getSprite().getGlobalBounds().width - HIT_BOX_REDUCTION, p->getSprite().getGlobalBounds().height - HIT_BOX_REDUCTION);
+
+	if (lifeHitbox.intersects(playerHitbox) && l->isEnabled())
 	{
 		if (p->pickUpItem(LifeBonuses))
 		{
@@ -217,7 +232,12 @@ void GameState::lifePlayerCollision(Life* l, Player* p)
 
 void GameState::timeBonusPlayerCollision(TimeBonus* t, Player* p)
 {
-	if (t->getSprite().getGlobalBounds().intersects(p->getSprite().getGlobalBounds()) && t->isEnabled())
+	FloatRect timeHitbox(t->getSprite().getGlobalBounds().left + HIT_BOX_REDUCTION, t->getSprite().getGlobalBounds().top + HIT_BOX_REDUCTION,
+		t->getSprite().getGlobalBounds().width - HIT_BOX_REDUCTION, t->getSprite().getGlobalBounds().height - HIT_BOX_REDUCTION);
+	FloatRect playerHitbox(p->getSprite().getGlobalBounds().left + HIT_BOX_REDUCTION, p->getSprite().getGlobalBounds().top + HIT_BOX_REDUCTION,
+		p->getSprite().getGlobalBounds().width - HIT_BOX_REDUCTION, p->getSprite().getGlobalBounds().height - HIT_BOX_REDUCTION);
+	
+	if (timeHitbox.intersects(playerHitbox) && t->isEnabled())
 	{
 		if (p->pickUpItem(TimeBonuses))
 		{
@@ -276,7 +296,6 @@ void GameState::result()
 	background.setTexture(backgroundTexture);
 
 	_mainTheme.stop();
-	_pause.play();
 	_endGameState->show(background, _score);
 }
 

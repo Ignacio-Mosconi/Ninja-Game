@@ -62,6 +62,8 @@ private:
 	bool _isInvincible;
 	float _flickeringTime;
 	float _flickeringCounter;
+	bool _hasCollectedItem;
+	float _pickUpCooldown;
 
 	void move(float elapsed);
 	void jump(float elapsed);
