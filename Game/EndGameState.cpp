@@ -32,14 +32,14 @@ _mouseX(0), _mouseY(0), _restartGame(false), _quitGame(false), _highestScore(0)
 	Color rectColor(0, 0, 0, ALPHA_RECT_VALUE);
 	_alphaRect.setFillColor(rectColor);
 
-	for (int i = 0; i < MENU_OPTIONS; i++)
+	for (int i = 0; i < END_GAME_OPTIONS; i++)
 		_selected[i] = false;
 }
 
 EndGameState::~EndGameState()
 {
 	delete _title;
-	for (int i = 0; i < MENU_OPTIONS; i++)
+	for (int i = 0; i < END_GAME_OPTIONS; i++)
 		delete _options[i];
 	delete _youScoredText;
 	delete _highestScoreText;
@@ -105,7 +105,7 @@ void EndGameState::input()
 
 void EndGameState::update(float elapsed)
 {
-	for (int i = 0; i < MENU_OPTIONS; i++)
+	for (int i = 0; i < END_GAME_OPTIONS; i++)
 	{
 		if (_options[i]->getGlobalBounds().contains(_mouseX, _mouseY))
 		{
@@ -146,7 +146,7 @@ void EndGameState::draw() const
 	_window->draw(_alphaRect);
 
 	_window->draw(*_title);
-	for (int i = 0; i < MENU_OPTIONS; i++)
+	for (int i = 0; i < END_GAME_OPTIONS; i++)
 		_window->draw(*_options[i]);
 	_window->draw(*_youScoredText);
 	_window->draw(*_highestScoreText);

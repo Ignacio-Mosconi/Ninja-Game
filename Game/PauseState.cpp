@@ -27,14 +27,14 @@ _mouseX(0), _mouseY(0), _clicked(false), _resumeGame(false), _quitGame(false)
 	Color rectColor(0, 0, 0, ALPHA_RECT_VALUE);
 	_alphaRect.setFillColor(rectColor);
 
-	for (int i = 0; i < MENU_OPTIONS; i++)
+	for (int i = 0; i < PAUSE_OPTIONS; i++)
 		_selected[i] = false;
 }
 
 PauseState::~PauseState()
 {
 	delete _title;
-	for (int i = 0; i < MENU_OPTIONS; i++)
+	for (int i = 0; i < PAUSE_OPTIONS; i++)
 		delete _options[i];
 }
 
@@ -99,7 +99,7 @@ void PauseState::input()
 
 void PauseState::update(float elapsed)
 {
-	for (int i = 0; i < MENU_OPTIONS; i++)
+	for (int i = 0; i < PAUSE_OPTIONS; i++)
 	{
 		if (_options[i]->getGlobalBounds().contains(_mouseX, _mouseY))
 		{
