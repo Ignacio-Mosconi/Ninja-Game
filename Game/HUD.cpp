@@ -8,12 +8,12 @@ HUD::HUD() : _showScoreMultBonus(false)
 	_lives = new Text("Lives: 3", _font, HUD_TEXT_SIZE);
 	_score = new Text("Score: 0", _font, HUD_TEXT_SIZE);
 	_time = new Text("Time: 120", _font, HUD_TEXT_SIZE);
-	_scoreMult = new Text("Score x2", _font, HUD_TEXT_SIZE);
+	_scoreMult = new Text("Score x2", _font, HUD_SCORE_MULT_TEXT_SIZE);
 
 	formatText(_lives, 32, HUD_TEXT_Y, TEXT_COLOR_GREEN, Color::White, true);
 	formatText(_score, SCREEN_WIDTH / 2 - _score->getGlobalBounds().width / 2, HUD_TEXT_Y, TEXT_COLOR_BLUE, Color::White, true);
 	formatText(_time, SCREEN_WIDTH - _time->getGlobalBounds().width - 32, HUD_TEXT_Y, TEXT_COLOR_GREEN, Color::White, true);
-	formatText(_scoreMult, 32, SCREEN_HEIGHT - _scoreMult->getGlobalBounds().height - 45, TEXT_COLOR_YELLOW, Color::Green, true);
+	formatText(_scoreMult, 32, SCREEN_HEIGHT - _scoreMult->getGlobalBounds().height - 32, TEXT_COLOR_YELLOW, Color::Green, true);
 
 	_clockTickBuffer.loadFromFile(CLOCK_TICK_SOUND);
 	_clockTick.setBuffer(_clockTickBuffer);

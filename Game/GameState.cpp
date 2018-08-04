@@ -142,6 +142,7 @@ void GameState::update(float elapsed)
 		_gameOver = true;
 
 	_player->update(elapsed);
+	Fruit::increaseGameTime(elapsed);
 	for (int i = 0; i < FRUITS; i++)
 	{
 		_fruits[i]->update(elapsed);
@@ -339,10 +340,17 @@ void GameState::result()
 
 void GameState::restart()
 {
+	_gameOver = false;
+	_score = 0;
+	_time = GAME_TIME;
+	_timeSinceLastFrame = 0;
+	_scoreMult = 1;
+	_scoreMultBonusCounter = 0;
+
 	_player->respawn();
 	_player->setLives(PLAYER_LIVES);
 	_player->setIsInvincible(false);
-
+	Fruit::resetGameTime();
 	for (int i = 0; i < FRUITS; i++)
 	{
 		_fruits[i]->respawn();
@@ -360,12 +368,6 @@ void GameState::restart()
 	_scoreMultiplier->respawn();
 	_scoreMultiplier->disable();
 
-	_gameOver = false;
-	_score = 0;
-	_time = GAME_TIME;
-	_timeSinceLastFrame = 0;
-	_scoreMult = 1;
-	_scoreMultBonusCounter = 0;
 
 	_hud->updateHUD(Lives, _player->getLives());
 	_hud->updateHUD(Score, _score);

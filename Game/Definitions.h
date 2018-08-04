@@ -129,6 +129,7 @@
 // Heads Up Display
 #define HUD_TEXT_Y 15
 #define HUD_TEXT_SIZE 60
+#define HUD_SCORE_MULT_TEXT_SIZE 48
 #define GAME_OVER_TEXT_SIZE 120
 #define HUD_OPTIONS_TEXT_SIZE 32
 #define TEXT_COLOR_RED {128, 32, 32, 255}

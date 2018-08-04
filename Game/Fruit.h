@@ -24,6 +24,8 @@ private:
 	bool _enabled;
 	bool _hasReachedBottom;
 
+	static float _gameTime;
+
 	void move(float elapsed);
 	Kind chooseKind();
 
@@ -40,6 +42,8 @@ public:
 	inline bool hasReachedBottom() { return _hasReachedBottom; }
 	inline Kind getKind() { return _kind; }
 	void setHasReachedBottom(bool value) { _hasReachedBottom = value; }
+	void static increaseGameTime(float elapsed) { _gameTime += elapsed; }
+	void static resetGameTime() { _gameTime = 0; }
 };
 
 #endif

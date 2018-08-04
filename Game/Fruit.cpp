@@ -1,5 +1,7 @@
 #include "Fruit.h"
 
+float Fruit::_gameTime = 0;
+
 Fruit::Fruit(int x, int y, const string& imagePath) : Entity(x, y, imagePath),
 _speed(rand() % (FRUIT_MAX_SPEED - FRUIT_MIN_SPEED) + FRUIT_MIN_SPEED), _rotationSpeed(_speed),
 _spawnTime(rand() % (FRUIT_MAX_SPAWN_TIME - FRUIT_MIN_SPAWN_TIME) + FRUIT_MIN_SPAWN_TIME),
@@ -41,7 +43,8 @@ void Fruit::move(float elapsed)
 {
 	_sprite.move(0, _speed * elapsed);
 	_sprite.rotate(_rotationSpeed * elapsed);
-	_speed++;
+	_speed += 2;
+	_rotationSpeed = _speed / 5;
 }
 
 void Fruit::disable()
@@ -55,8 +58,8 @@ void Fruit::respawn()
 	_enabled = true;
 	_sprite.setColor(Color::White);
 	_sprite.setPosition(rand() % (FRUIT_MAX_X - FRUIT_MIN_X - FRUIT_WIDTH) + FRUIT_MIN_X, FRUIT_MIN_Y);
-	_speed = rand() % (FRUIT_MAX_SPEED - FRUIT_MIN_SPEED) + FRUIT_MIN_SPEED;
-	_rotationSpeed = _speed;
+	_speed = rand() % (FRUIT_MAX_SPEED - FRUIT_MIN_SPEED) + FRUIT_MIN_SPEED * (_gameTime / 2);
+	_rotationSpeed = _speed / 5;
 	_spawnTime = rand() % (FRUIT_MAX_SPAWN_TIME - FRUIT_MIN_SPAWN_TIME) + FRUIT_MIN_SPAWN_TIME;
 	_kind = chooseKind();
 	_sprite.setTextureRect(IntRect(_kind * FRUIT_WIDTH, 0, FRUIT_WIDTH, FRUIT_HEIGHT));
