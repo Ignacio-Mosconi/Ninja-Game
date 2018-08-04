@@ -114,7 +114,17 @@
 #define TIME_BONUS_MIN_SPAWN_TIME 20
 #define TIME_BONUS_MAX_SPAWN_TIME 40
 #define TIME_BONUS_MAX_INDEX 1
-#define TIME_BONUS_FRAME_TIME 1.0f / 3.0f 
+#define TIME_BONUS_FRAME_TIME 1.0f / 3.0f
+
+#define SCORE_MULTIPLIER 2
+#define SCORE_MULT_BONUS_DURATION 20
+#define SCORE_MULT_DURATION 3
+#define SCORE_MULT_WIDTH 96
+#define SCORE_MULT_HEIGHT 90
+#define SCORE_MULT_MIN_SPAWN_TIME 25
+#define SCORE_MULT_MAX_SPAWN_TIME 50
+#define SCORE_MULT_MAX_INDEX 1
+#define SCORE_MULT_FRAME_TIME 1.0f / 3.0f 
 
 // Heads Up Display
 #define HUD_TEXT_Y 15
@@ -135,6 +145,7 @@
 #define COIN_PATH "Assets/Images/Coin.png"
 #define LIFE_PATH "Assets/Images/Life.png"
 #define TIME_BONUS_PATH "Assets/Images/Time Bonus.png"
+#define SCORE_MULT_PATH "Assets/Images/Score Multiplier.png"
 #define GROUND_PATH "Assets/Images/Ground.png"
 #define SKY_PATH "Assets/Images/Sky Backdrop.png"
 
@@ -147,6 +158,7 @@
 #define PICK_UP_COIN_SOUND "Assets/Sounds/Pick Up Coin.wav"
 #define PICK_UP_LIFE_SOUND "Assets/Sounds/Pick Up Life.wav"
 #define PICK_UP_TIME_BONUS_SOUND "Assets/Sounds/Pick Up Time Bonus.wav"
+#define PICK_UP_SCORE_MULT_SOUND "Assets/Sounds/Pick Up Score Multiplier.wav"
 #define CLOCK_TICK_SOUND "Assets/Sounds/Clock Tick.wav"
 #define SELECT_SOUND "Assets/Sounds/Select.wav"
 #define PAUSE_SOUND "Assets/Sounds/Pause.wav"

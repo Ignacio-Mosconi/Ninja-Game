@@ -164,6 +164,7 @@ xcopy "$(SolutionDir)Dependencies\Visual Leak Detector\dlls\x64" "$(OutDir)" /i 
     <ClCompile Include="MenuState.cpp" />
     <ClCompile Include="PauseState.cpp" />
     <ClCompile Include="Player.cpp" />
+    <ClCompile Include="ScoreMultiplier.cpp" />
     <ClCompile Include="SplashState.cpp" />
     <ClCompile Include="State.cpp" />
     <ClCompile Include="TimeBonus.cpp" />
@@ -182,6 +183,7 @@ xcopy "$(SolutionDir)Dependencies\Visual Leak Detector\dlls\x64" "$(OutDir)" /i 
     <ClInclude Include="MenuState.h" />
     <ClInclude Include="PauseState.h" />
     <ClInclude Include="Player.h" />
+    <ClInclude Include="ScoreMultiplier.h" />
     <ClInclude Include="SplashState.h" />
     <ClInclude Include="State.h" />
     <ClInclude Include="TimeBonus.h" />

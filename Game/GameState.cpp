@@ -4,13 +4,14 @@
 #include "Coin.h"
 #include "Life.h"
 #include "TimeBonus.h"
+#include "ScoreMultiplier.h"
 #include "Entity.h"
 #include "HUD.h"
 #include "PauseState.h"
 #include "EndGameState.h"
 
 GameState::GameState(RenderWindow& window) : State(window),
-_gameOver(false), _score(0), _time(GAME_TIME), _timeSinceLastFrame(0)
+_gameOver(false), _score(0), _time(GAME_TIME), _timeSinceLastFrame(0), _scoreMult(1), _scoreMultBonusCounter(0)
 {
 	srand(time(0));
 
@@ -24,6 +25,8 @@ _gameOver(false), _score(0), _time(GAME_TIME), _timeSinceLastFrame(0)
 		rand() % (COLLECTIBLE_MAX_Y - COLLECTIBLE_MIN_Y) + COLLECTIBLE_MIN_Y, LIFE_PATH);
 	_timeBonus = new TimeBonus(rand() % (COLLECTIBLE_MAX_X - COLLECTIBLE_MIN_X - TIME_BONUS_WIDTH) + COLLECTIBLE_MIN_X,
 		rand() % (COLLECTIBLE_MAX_Y - COLLECTIBLE_MIN_Y) + COLLECTIBLE_MIN_Y, TIME_BONUS_PATH);
+	_scoreMultiplier = new ScoreMultiplier(rand() % (COLLECTIBLE_MAX_X - COLLECTIBLE_MIN_X - SCORE_MULT_WIDTH) + COLLECTIBLE_MIN_X,
+		rand() % (COLLECTIBLE_MAX_Y - COLLECTIBLE_MIN_Y) + COLLECTIBLE_MIN_Y, SCORE_MULT_PATH);
 	
 	_ground = new Entity(0, SCREEN_HEIGHT - GROUND_HEIGHT, GROUND_PATH);
 	_sky = new Entity(0, 0, SKY_PATH);
@@ -49,6 +52,7 @@ GameState::~GameState()
 		delete _coins[i];
 	delete _life;
 	delete _timeBonus;
+	delete _scoreMultiplier;
 
 	delete _ground;
 	delete _sky;
@@ -128,12 +132,12 @@ void GameState::input()
 void GameState::update(float elapsed)
 {
 	_time -= elapsed;
-	_timeSinceLastFrame += elapsed;
+	_timeSinceLastFrame += elapsed;	
 	if (_timeSinceLastFrame >= 1)
 	{
 		_hud->updateHUD(TimeLeft, int(_time));
 		_timeSinceLastFrame = 0;
-	}
+	}	
 	if (_time <= 0)
 		_gameOver = true;
 
@@ -156,6 +160,21 @@ void GameState::update(float elapsed)
 	}
 	_timeBonus->update(elapsed);
 	timeBonusPlayerCollision(_timeBonus, _player);
+	if (_scoreMult != SCORE_MULTIPLIER)
+	{
+		_scoreMultiplier->update(elapsed);
+		scoreMultiplierPlayerCollision(_scoreMultiplier, _player);
+	}
+	else
+	{
+		_scoreMultBonusCounter += elapsed;
+		if (_scoreMultBonusCounter >= SCORE_MULT_BONUS_DURATION)
+		{
+			_scoreMultBonusCounter = 0;
+			_scoreMult = 1;
+			_hud->updateHUD(ScoreMultBonus, 0);
+		}
+	}
 }
 
 void GameState::draw() const
@@ -172,6 +191,7 @@ void GameState::draw() const
 		_window->draw(_coins[i]->getSprite());
 	_window->draw(_life->getSprite());
 	_window->draw(_timeBonus->getSprite());
+	_window->draw(_scoreMultiplier->getSprite());
 
 	_hud->draw(_window);
 
@@ -207,7 +227,7 @@ void GameState::coinPlayerCollision(Coin* c, Player* p)
 		if (p->pickUpItem(Coins))
 		{
 			c->disable();
-			_score += COIN_SCORE;
+			_score += COIN_SCORE * _scoreMult;
 			_hud->updateHUD(Score, _score);
 		}
 	}
@@ -247,6 +267,24 @@ void GameState::timeBonusPlayerCollision(TimeBonus* t, Player* p)
 	}
 }
 
+void GameState::scoreMultiplierPlayerCollision(ScoreMultiplier* s, Player* p)
+{
+	FloatRect scoreMultHitbox(s->getSprite().getGlobalBounds().left + HIT_BOX_REDUCTION, s->getSprite().getGlobalBounds().top + HIT_BOX_REDUCTION,
+		s->getSprite().getGlobalBounds().width - HIT_BOX_REDUCTION, s->getSprite().getGlobalBounds().height - HIT_BOX_REDUCTION);
+	FloatRect playerHitbox(p->getSprite().getGlobalBounds().left + HIT_BOX_REDUCTION, p->getSprite().getGlobalBounds().top + HIT_BOX_REDUCTION,
+		p->getSprite().getGlobalBounds().width - HIT_BOX_REDUCTION, p->getSprite().getGlobalBounds().height - HIT_BOX_REDUCTION);
+
+	if (scoreMultHitbox.intersects(playerHitbox) && s->isEnabled())
+	{
+		if (p->pickUpItem(ScoreMultipliers))
+		{
+			s->disable();
+			_scoreMult = SCORE_MULTIPLIER;
+			_hud->updateHUD(ScoreMultBonus, 0);
+		}
+	}
+}
+
 void GameState::fruitGroundCollision(Fruit* f)
 {
 	if (f->hasReachedBottom())
@@ -254,16 +292,16 @@ void GameState::fruitGroundCollision(Fruit* f)
 		switch (f->getKind())
 		{
 			case Watermelon:
-				_score += WATERMELON_SCORE;
+				_score += WATERMELON_SCORE * _scoreMult;
 				break;
 			case Apple:
-				_score += APPLE_SCORE;
+				_score += APPLE_SCORE * _scoreMult;;
 				break;
 			case Pear:
-				_score += PEAR_SCORE;
+				_score += PEAR_SCORE * _scoreMult;
 				break;
 			case Banana:
-				_score += BANANA_SCORE;
+				_score += BANANA_SCORE * _scoreMult;;
 				break;
 		}
 		f->setHasReachedBottom(false);
@@ -319,15 +357,21 @@ void GameState::restart()
 	_life->disable();
 	_timeBonus->respawn();
 	_timeBonus->disable();
+	_scoreMultiplier->respawn();
+	_scoreMultiplier->disable();
 
 	_gameOver = false;
 	_score = 0;
 	_time = GAME_TIME;
 	_timeSinceLastFrame = 0;
+	_scoreMult = 1;
+	_scoreMultBonusCounter = 0;
 
 	_hud->updateHUD(Lives, _player->getLives());
 	_hud->updateHUD(Score, _score);
 	_hud->updateHUD(TimeLeft, _time);
+	if (_scoreMult == SCORE_MULTIPLIER)
+		_hud->updateHUD(ScoreMultBonus, 0);
 
 	_clock->restart();
 	run();

@@ -1,17 +1,19 @@
 #include "HUD.h"
 #include "UtilityFunctions.h"
 
-HUD::HUD()
+HUD::HUD() : _showScoreMultBonus(false)
 {
 	_font.loadFromFile(FONT_PATH);
 
 	_lives = new Text("Lives: 3", _font, HUD_TEXT_SIZE);
 	_score = new Text("Score: 0", _font, HUD_TEXT_SIZE);
 	_time = new Text("Time: 120", _font, HUD_TEXT_SIZE);
+	_scoreMult = new Text("Score x2", _font, HUD_TEXT_SIZE);
 
 	formatText(_lives, 32, HUD_TEXT_Y, TEXT_COLOR_GREEN, Color::White, true);
 	formatText(_score, SCREEN_WIDTH / 2 - _score->getGlobalBounds().width / 2, HUD_TEXT_Y, TEXT_COLOR_BLUE, Color::White, true);
 	formatText(_time, SCREEN_WIDTH - _time->getGlobalBounds().width - 32, HUD_TEXT_Y, TEXT_COLOR_GREEN, Color::White, true);
+	formatText(_scoreMult, 32, SCREEN_HEIGHT - _scoreMult->getGlobalBounds().height - 45, TEXT_COLOR_YELLOW, Color::Green, true);
 
 	_clockTickBuffer.loadFromFile(CLOCK_TICK_SOUND);
 	_clockTick.setBuffer(_clockTickBuffer);
@@ -22,6 +24,7 @@ HUD::~HUD()
 	delete _lives;
 	delete _score;
 	delete _time;
+	delete _scoreMult;
 }
 
 void HUD::updateHUD(Element element, int number)
@@ -63,6 +66,9 @@ void HUD::updateHUD(Element element, int number)
 				}
 			}
 			break;
+		case ScoreMultBonus:
+			_showScoreMultBonus = !_showScoreMultBonus;
+			break;
 	}
 }
 
@@ -71,4 +77,6 @@ void HUD::draw(RenderWindow* window)
 	window->draw(*_lives);
 	window->draw(*_score);
 	window->draw(*_time);
+	if (_showScoreMultBonus)
+		window->draw(*_scoreMult);
 }

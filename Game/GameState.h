@@ -10,6 +10,7 @@ class Fruit;
 class Coin;
 class Life;
 class TimeBonus;
+class ScoreMultiplier;
 class Entity;
 class HUD;
 class PauseState;
@@ -24,6 +25,7 @@ private:
 	Coin* _coins[COINS];
 	Life* _life;
 	TimeBonus* _timeBonus;
+	ScoreMultiplier* _scoreMultiplier;
 
 	Entity* _ground;
 	Entity* _sky;
@@ -42,11 +44,14 @@ private:
 	int _score;
 	float _time;
 	float _timeSinceLastFrame;
+	int _scoreMult;
+	float _scoreMultBonusCounter;
 
 	void fruitPlayerCollision(Fruit* f, Player* p);
 	void coinPlayerCollision(Coin* c, Player* p);
 	void lifePlayerCollision(Life* l, Player* p);
 	void timeBonusPlayerCollision(TimeBonus* t, Player* p);
+	void scoreMultiplierPlayerCollision(ScoreMultiplier* s, Player* p);
 	void fruitGroundCollision(Fruit* f);
 
 	void result();

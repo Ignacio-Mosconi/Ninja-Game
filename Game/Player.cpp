@@ -10,6 +10,7 @@ _flickeringCounter(0), _hasCollectedItem(false), _pickUpCooldown(0)
 	_pickUpCoinBuffer.loadFromFile(PICK_UP_COIN_SOUND);
 	_pickUpLifeBuffer.loadFromFile(PICK_UP_LIFE_SOUND);
 	_pickUpTimeBonusBuffer.loadFromFile(PICK_UP_TIME_BONUS_SOUND);
+	_pickUpScoreMultBuffer.loadFromFile(PICK_UP_SCORE_MULT_SOUND);
 	_gameOverBuffer.loadFromFile(GAME_OVER_SOUND);
 
 	_jump.setBuffer(_jumpBuffer);
@@ -17,6 +18,7 @@ _flickeringCounter(0), _hasCollectedItem(false), _pickUpCooldown(0)
 	_pickUpCoin.setBuffer(_pickUpCoinBuffer);
 	_pickUpLife.setBuffer(_pickUpLifeBuffer);
 	_pickUpTimeBonus.setBuffer(_pickUpTimeBonusBuffer);
+	_pickUpScoreMult.setBuffer(_pickUpScoreMultBuffer);
 	_gameOver.setBuffer(_gameOverBuffer);
 
 	_sprite.setTextureRect(IntRect(_imagePos.x, _imagePos.y, PLAYER_WIDTH, PLAYER_HEIGHT));
@@ -141,7 +143,8 @@ void Player::jump(float elapsed)
 				else
 				{
 					if ((Keyboard::isKeyPressed(Keyboard::Right) || Joystick::getAxisPosition(0, Joystick::PovX) > 0 ||
-						Joystick::getAxisPosition(0, Joystick::X) > STICK_SENSITIVITY) && _sprite.getPosition().x < SCREEN_WIDTH - PLAYER_WIDTH)
+						Joystick::getAxisPosition(0, Joystick::X) > STICK_SENSITIVITY) &&
+						_sprite.getPosition().x < SCREEN_WIDTH - PLAYER_WIDTH)
 					{
 						_sprite.move(_moveSpeed * elapsed, _jumpSpeed * elapsed);
 						if (_facing == Left)
@@ -201,8 +204,7 @@ void Player::fall(float elapsed)
 
 bool Player::pickUpItem(Collectables collectable)
 {
-	if (Keyboard::isKeyPressed(Keyboard::COLLECT_KEY) || Joystick::isButtonPressed(0, COLLECT_BUTTON) &&
-		!_hasCollectedItem)
+	if (Keyboard::isKeyPressed(Keyboard::COLLECT_KEY) || Joystick::isButtonPressed(0, COLLECT_BUTTON) && !_hasCollectedItem)
 		switch (collectable)
 		{
 			case Coins:
@@ -216,6 +218,10 @@ bool Player::pickUpItem(Collectables collectable)
 				return true;
 			case TimeBonuses:
 				_pickUpTimeBonus.play();
+				_hasCollectedItem = true;
+				return true;
+			case ScoreMultipliers:
+				_pickUpScoreMult.play();
 				_hasCollectedItem = true;
 				return true;
 		}

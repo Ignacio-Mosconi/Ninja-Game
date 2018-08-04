@@ -21,7 +21,8 @@ enum Collectables
 {
 	Coins,
 	LifeBonuses,
-	TimeBonuses
+	TimeBonuses,
+	ScoreMultipliers
 };
 
 enum Animation
@@ -42,6 +43,7 @@ private:
 	SoundBuffer _pickUpCoinBuffer;
 	SoundBuffer _pickUpLifeBuffer;
 	SoundBuffer _pickUpTimeBonusBuffer;
+	SoundBuffer _pickUpScoreMultBuffer;
 	SoundBuffer _gameOverBuffer;
 
 	Sound _jump;
@@ -49,6 +51,7 @@ private:
 	Sound _pickUpCoin;
 	Sound _pickUpLife;
 	Sound _pickUpTimeBonus;
+	Sound _pickUpScoreMult;
 	Sound _gameOver;
 
 	PlayerState _currentState;

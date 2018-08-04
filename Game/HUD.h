@@ -13,6 +13,7 @@ enum Element
 	Lives,
 	Score,
 	TimeLeft,
+	ScoreMultBonus
 };
 
 class HUD
@@ -23,9 +24,12 @@ private:
 	Text* _lives;
 	Text* _score;
 	Text* _time;
+	Text* _scoreMult;
 
 	SoundBuffer _clockTickBuffer;
 	Sound _clockTick;
+
+	bool _showScoreMultBonus;
 
 public:
 	HUD();
