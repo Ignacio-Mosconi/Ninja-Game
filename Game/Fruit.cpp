@@ -58,7 +58,7 @@ void Fruit::respawn()
 	_enabled = true;
 	_sprite.setColor(Color::White);
 	_sprite.setPosition(rand() % (FRUIT_MAX_X - FRUIT_MIN_X - FRUIT_WIDTH) + FRUIT_MIN_X, FRUIT_MIN_Y);
-	_speed = rand() % (FRUIT_MAX_SPEED - FRUIT_MIN_SPEED) + FRUIT_MIN_SPEED * (_gameTime / 2);
+	_speed = (rand() % (FRUIT_MAX_SPEED - FRUIT_MIN_SPEED) + FRUIT_MIN_SPEED) * (_gameTime / 100);
 	_rotationSpeed = _speed / 5;
 	_spawnTime = rand() % (FRUIT_MAX_SPAWN_TIME - FRUIT_MIN_SPAWN_TIME) + FRUIT_MIN_SPAWN_TIME;
 	_kind = chooseKind();

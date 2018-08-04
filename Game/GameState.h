@@ -46,6 +46,8 @@ private:
 	float _timeSinceLastFrame;
 	int _scoreMult;
 	float _scoreMultBonusCounter;
+	int _activeFruits;
+	float _timeAtFruitPoolIncrease;
 
 	void fruitPlayerCollision(Fruit* f, Player* p);
 	void coinPlayerCollision(Coin* c, Player* p);

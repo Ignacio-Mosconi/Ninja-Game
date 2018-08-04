@@ -11,7 +11,8 @@
 #include "EndGameState.h"
 
 GameState::GameState(RenderWindow& window) : State(window),
-_gameOver(false), _score(0), _time(GAME_TIME), _timeSinceLastFrame(0), _scoreMult(1), _scoreMultBonusCounter(0)
+_gameOver(false), _score(0), _time(GAME_TIME), _timeSinceLastFrame(0), _scoreMult(1), _scoreMultBonusCounter(0),
+_activeFruits(INIT_ACTIVE_FRUITS), _timeAtFruitPoolIncrease(0)
 {
 	srand(time(0));
 
@@ -143,7 +144,12 @@ void GameState::update(float elapsed)
 
 	_player->update(elapsed);
 	Fruit::increaseGameTime(elapsed);
-	for (int i = 0; i < FRUITS; i++)
+	if (Fruit::getGameTime() - _timeAtFruitPoolIncrease >= FRUIT_POOL_INCREASE_RATE && _activeFruits < FRUITS)
+	{
+		_activeFruits++;
+		_timeAtFruitPoolIncrease = Fruit::getGameTime();
+	}
+	for (int i = 0; i < _activeFruits; i++)
 	{
 		_fruits[i]->update(elapsed);
 		fruitPlayerCollision(_fruits[i], _player);
@@ -346,6 +352,8 @@ void GameState::restart()
 	_timeSinceLastFrame = 0;
 	_scoreMult = 1;
 	_scoreMultBonusCounter = 0;
+	_activeFruits = INIT_ACTIVE_FRUITS;
+	_timeAtFruitPoolIncrease = 0;
 
 	_player->respawn();
 	_player->setLives(PLAYER_LIVES);
