@@ -10,12 +10,11 @@ _mouseX(0), _mouseY(0), _clicked(false), _resumeGame(false), _quitGame(false)
 	_options[0] = new Text("Resume", _font, PAUSED_OPTIONS_TEXT_SIZE);
 	_options[1] = new Text("Quit", _font, PAUSED_OPTIONS_TEXT_SIZE);
 
-	formatText(_title, SCREEN_WIDTH / 2 - _title->getGlobalBounds().width / 2,
-		SCREEN_HEIGHT / 4 - _title->getGlobalBounds().height / 2, TEXT_COLOR_GREEN, Color::White, true);
-	formatText(_options[0], SCREEN_WIDTH / 2 - _options[0]->getGlobalBounds().width / 2,
-		SCREEN_HEIGHT / 2 - _options[0]->getGlobalBounds().height / 2, Color::White);
-	formatText(_options[1], SCREEN_WIDTH / 2 - _options[1]->getGlobalBounds().width / 2,
-		SCREEN_HEIGHT / 2 + 128 - _options[1]->getGlobalBounds().height / 2, Color::White);
+	formatText(_title, getScreenWidth() / 2 - _title->getGlobalBounds().width / 2,
+		getScreenHeight() / 4 - _title->getGlobalBounds().height / 2, TEXT_COLOR_GREEN, Color::White, true);
+	for (int i = 0; i < PAUSE_OPTIONS; i++)
+		formatText(_options[i], getScreenWidth() / 2 - _options[i]->getGlobalBounds().width / 2,
+			getScreenHeight() / 2 - _options[0]->getGlobalBounds().height / 2 + 128 * i, Color::White);
 
 	_selectBuffer.loadFromFile(SELECT_SOUND);
 	_select.setBuffer(_selectBuffer);

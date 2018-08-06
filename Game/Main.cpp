@@ -12,7 +12,9 @@ using namespace sf;
 
 int main()
 {
-	RenderWindow window(VideoMode(SCREEN_WIDTH, SCREEN_HEIGHT), GAME_TITLE, Style::Titlebar | Style::Close);
+	VideoMode videoMode = VideoMode::getFullscreenModes()[0];
+	RenderWindow window(videoMode, GAME_TITLE, Style::Fullscreen);
+	State::setScreenDimensions(window.getSize());
 	window.setMouseCursorVisible(false);
 	window.clear();
 	window.display();

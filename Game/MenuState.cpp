@@ -26,25 +26,25 @@ _mouseX(0), _mouseY(0), _clicked(false), _startGame(false), _currentScreen(Main)
 
 	_creditsOptions[0] = new Text("Back", _font, OPTIONS_TEXT_SIZE);
 
-	formatText(_title, SCREEN_WIDTH / 2 - _title->getGlobalBounds().width / 2,
-		SCREEN_HEIGHT / 3 - _title->getGlobalBounds().height / 2, Color::Red, Color::White, true);
+	formatText(_title, getScreenWidth() / 2 - _title->getGlobalBounds().width / 2,
+		getScreenHeight() / 3 - _title->getGlobalBounds().height / 2, Color::Red, Color::White, true);
 	for (int i = 0; i < MENU_OPTIONS; i++)
-		formatText(_options[i], SCREEN_WIDTH / 2 - _options[i]->getGlobalBounds().width / 2,
-			SCREEN_HEIGHT / 2 + 96 * (i + 1) - _options[i]->getGlobalBounds().height / 2, Color::White);
+		formatText(_options[i], getScreenWidth() / 2 - _options[i]->getGlobalBounds().width / 2,
+			getScreenHeight() / 2 + 96 * (i + 1) - _options[i]->getGlobalBounds().height / 2, Color::White);
 
-	formatText(_creditsTitle, SCREEN_WIDTH / 2 - _creditsTitle->getGlobalBounds().width / 2,
-		SCREEN_HEIGHT / 6 - _creditsTitle->getGlobalBounds().height / 2, Color::Red, Color::White, true);
+	formatText(_creditsTitle, getScreenWidth() / 2 - _creditsTitle->getGlobalBounds().width / 2,
+		getScreenHeight() / 6 - _creditsTitle->getGlobalBounds().height / 2, Color::Red, Color::White, true);
 	for (int i = 0; i < CREDITS_ITEMS; i++)
 	{
-		formatText(_credits[i], 32, SCREEN_HEIGHT * 2 / 5 + 64 * i - _credits[i]->getGlobalBounds().height / 2, TEXT_COLOR_GREEN);
-		formatText(_names[i], SCREEN_WIDTH - _names[i]->getGlobalBounds().width - 32,
-			SCREEN_HEIGHT * 2 / 5 + 64 * i - _names[i]->getGlobalBounds().height / 2, Color::White);
+		formatText(_credits[i], 32, getScreenHeight() * 2 / 5 + 64 * i - _credits[i]->getGlobalBounds().height / 2, TEXT_COLOR_GREEN);
+		formatText(_names[i], getScreenWidth() - _names[i]->getGlobalBounds().width - 32,
+			getScreenHeight() * 2 / 5 + 64 * i - _names[i]->getGlobalBounds().height / 2, Color::White);
 	}
-	formatText(_poweredBySFML, SCREEN_WIDTH / 2 - _poweredBySFML->getGlobalBounds().width / 2,
-		SCREEN_HEIGHT * 2/5 + 64 * 6 - _poweredBySFML->getGlobalBounds().height / 2, Color::Red);
+	formatText(_poweredBySFML, getScreenWidth() / 2 - _poweredBySFML->getGlobalBounds().width / 2,
+		getScreenHeight() * 2/5 + 64 * 6 - _poweredBySFML->getGlobalBounds().height / 2, Color::Red);
 
-	formatText(_creditsOptions[0], SCREEN_WIDTH - _creditsOptions[0]->getGlobalBounds().width - 32,
-		SCREEN_HEIGHT - _creditsOptions[0]->getGlobalBounds().height - 32, Color::White);
+	formatText(_creditsOptions[0], getScreenWidth() - _creditsOptions[0]->getGlobalBounds().width - 32,
+		getScreenHeight() - _creditsOptions[0]->getGlobalBounds().height - 32, Color::White);
 
 	_selectBuffer.loadFromFile(SELECT_SOUND);
 	_select.setBuffer(_selectBuffer);

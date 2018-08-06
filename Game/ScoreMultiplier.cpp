@@ -1,4 +1,5 @@
 #include "ScoreMultiplier.h"
+#include "State.h"
 
 ScoreMultiplier::ScoreMultiplier(int x, int y, const string& imagePath) : Collectible(x, y, imagePath, 
 rand() % (SCORE_MULT_MAX_SPAWN_TIME - SCORE_MULT_MIN_SPAWN_TIME) + SCORE_MULT_MIN_SPAWN_TIME, SCORE_MULT_DURATION)
@@ -37,8 +38,8 @@ void ScoreMultiplier::respawn()
 	_sprite.setColor(Color::White);
 	_onScreenTime = SCORE_MULT_DURATION;
 	_spawnTime = rand() % (SCORE_MULT_MAX_SPAWN_TIME - SCORE_MULT_MIN_SPAWN_TIME) + SCORE_MULT_MIN_SPAWN_TIME;
-	_sprite.setPosition(rand() % (COLLECTIBLE_MAX_X - COLLECTIBLE_MIN_X - SCORE_MULT_WIDTH) + COLLECTIBLE_MIN_X,
-		rand() % (COLLECTIBLE_MAX_Y - COLLECTIBLE_MIN_Y) + COLLECTIBLE_MIN_Y);
+	_sprite.setPosition(rand() % (State::getScreenWidth() - COLLECTIBLE_SIDES_SPACE - SCORE_MULT_WIDTH) + COLLECTIBLE_SIDES_SPACE,
+		rand() % (State::getScreenHeight() - GROUND_HEIGHT - SCORE_MULT_HEIGHT - COLLECTIBLE_MIN_Y) + COLLECTIBLE_MIN_Y);
 }
 
 void ScoreMultiplier::animate(float elapsed)

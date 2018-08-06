@@ -1,6 +1,7 @@
 #include "Coin.h"
+#include "State.h"
 
-Coin::Coin(int x, int y, const string& imagePath): 
+Coin::Coin(int x, int y, const string& imagePath) : 
 Collectible(x, y, imagePath, rand() % (COIN_MAX_SPAWN_TIME - COIN_MIN_SPAWN_TIME) + COIN_MIN_SPAWN_TIME, COIN_DURATION)
 {
 	_sprite.setTextureRect(IntRect(_imagePosX, 0, COIN_WIDTH, COIN_HEIGHT));
@@ -37,8 +38,8 @@ void Coin::respawn()
 	_sprite.setColor(Color::White);
 	_onScreenTime = COIN_DURATION;
 	_spawnTime = rand() % (COIN_MAX_SPAWN_TIME - COIN_MIN_SPAWN_TIME) + COIN_MIN_SPAWN_TIME;
-	_sprite.setPosition(rand() % (COLLECTIBLE_MAX_X - COLLECTIBLE_MIN_X - COIN_WIDTH) + COLLECTIBLE_MIN_X, 
-		rand() % (COLLECTIBLE_MAX_Y - COLLECTIBLE_MIN_Y) + COLLECTIBLE_MIN_Y);
+	_sprite.setPosition(rand() % (State::getScreenWidth() - COLLECTIBLE_SIDES_SPACE - COIN_WIDTH) + COLLECTIBLE_SIDES_SPACE, 
+		rand() % (State::getScreenHeight() - GROUND_HEIGHT - COIN_HEIGHT - COLLECTIBLE_MIN_Y) + COLLECTIBLE_MIN_Y);
 }
 
 void Coin::animate(float elapsed)

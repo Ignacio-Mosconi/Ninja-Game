@@ -1,5 +1,4 @@
 #include "SplashState.h"
-#include <iostream>
 
 SplashState::SplashState(RenderWindow& window, const string& logoPath) : State(window),
 _onScreenTime(0), _fadeTime(0), _start(false)
@@ -7,7 +6,7 @@ _onScreenTime(0), _fadeTime(0), _start(false)
 	_logoTexture.loadFromFile(logoPath);
 	_logo.setTexture(_logoTexture);
 	_logo.setOrigin(_logo.getGlobalBounds().width / 2, _logo.getGlobalBounds().height / 2);
-	_logo.setPosition(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2);
+	_logo.setPosition(getScreenWidth() / 2, getScreenHeight() / 2);
 }
 
 SplashState::~SplashState()

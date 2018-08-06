@@ -25,7 +25,7 @@ private:
 	bool _hasReachedBottom;
 
 	static float _gameTime;
-
+	
 	void move(float elapsed);
 	Kind chooseKind();
 

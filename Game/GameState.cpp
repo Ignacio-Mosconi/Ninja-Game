@@ -16,20 +16,16 @@ _activeFruits(INIT_ACTIVE_FRUITS), _timeAtFruitPoolIncrease(0)
 {
 	srand(time(0));
 
-	_player = new Player(SCREEN_WIDTH / 2 - PLAYER_WIDTH / 2, SCREEN_HEIGHT - (GROUND_HEIGHT + PLAYER_HEIGHT), PLAYER_PATH);
+	_player = new Player(0, 0, PLAYER_PATH);
 	for (int i = 0; i < FRUITS; i++)
-		_fruits[i] = new Fruit(rand() % (FRUIT_MAX_X - FRUIT_MIN_X - FRUIT_WIDTH) + FRUIT_MIN_X, FRUIT_MIN_Y, FRUIT_PATH);
+		_fruits[i] = new Fruit(0, 0, FRUIT_PATH);
 	for (int i = 0; i < COINS; i++)
-		_coins[i] = new Coin(rand() % (COLLECTIBLE_MAX_X - COLLECTIBLE_MIN_X - COIN_WIDTH) + COLLECTIBLE_MIN_X,
-			rand() % (COLLECTIBLE_MAX_Y - COLLECTIBLE_MIN_Y) + COLLECTIBLE_MIN_Y, COIN_PATH);
-	_life = new Life(rand() % (COLLECTIBLE_MAX_X - COLLECTIBLE_MIN_X - LIFE_WIDTH) + COLLECTIBLE_MIN_X,
-		rand() % (COLLECTIBLE_MAX_Y - COLLECTIBLE_MIN_Y) + COLLECTIBLE_MIN_Y, LIFE_PATH);
-	_timeBonus = new TimeBonus(rand() % (COLLECTIBLE_MAX_X - COLLECTIBLE_MIN_X - TIME_BONUS_WIDTH) + COLLECTIBLE_MIN_X,
-		rand() % (COLLECTIBLE_MAX_Y - COLLECTIBLE_MIN_Y) + COLLECTIBLE_MIN_Y, TIME_BONUS_PATH);
-	_scoreMultiplier = new ScoreMultiplier(rand() % (COLLECTIBLE_MAX_X - COLLECTIBLE_MIN_X - SCORE_MULT_WIDTH) + COLLECTIBLE_MIN_X,
-		rand() % (COLLECTIBLE_MAX_Y - COLLECTIBLE_MIN_Y) + COLLECTIBLE_MIN_Y, SCORE_MULT_PATH);
+		_coins[i] = new Coin(0, 0, COIN_PATH);
+	_life = new Life(0, 0, LIFE_PATH);
+	_timeBonus = new TimeBonus(0, 0, TIME_BONUS_PATH);
+	_scoreMultiplier = new ScoreMultiplier(0, 0, SCORE_MULT_PATH);
 	
-	_ground = new Entity(0, SCREEN_HEIGHT - GROUND_HEIGHT, GROUND_PATH);
+	_ground = new Entity(0, State::getScreenHeight() - GROUND_HEIGHT, GROUND_PATH);
 	_sky = new Entity(0, 0, SKY_PATH);
 	
 	_hud = new HUD();

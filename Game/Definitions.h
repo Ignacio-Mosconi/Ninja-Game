@@ -2,8 +2,6 @@
 #define DEFINITIONS_H
 
 // Game Properties
-#define SCREEN_WIDTH 1600
-#define SCREEN_HEIGHT 900
 #define FRAME_RATE 60
 #define GAME_TITLE "Ninja Thief"
 
@@ -76,8 +74,7 @@
 #define FRUIT_HEIGHT 45
 #define FRUIT_MIN_SPEED 2
 #define FRUIT_MAX_SPEED 30
-#define FRUIT_MIN_X 45
-#define FRUIT_MAX_X 1555
+#define FRUIT_SIDES_SPACE 45
 #define FRUIT_MIN_Y 90
 #define FRUIT_MIN_SPAWN_TIME 3
 #define FRUIT_MAX_SPAWN_TIME 15
@@ -88,10 +85,8 @@
 #define FRUIT_MAX_INDEX 3
 
 // Collectibles
-#define COLLECTIBLE_MIN_X 32
-#define COLLECTIBLE_MAX_X 1578
-#define COLLECTIBLE_MIN_Y 400
-#define COLLECTIBLE_MAX_Y 738
+#define COLLECTIBLE_SIDES_SPACE 32
+#define COLLECTIBLE_MIN_Y 600
 #define COLLECTIBLE_START_FLICKERING 2.5
 
 #define COINS 3
@@ -153,8 +148,8 @@
 #define LIFE_PATH "Assets/Images/Life.png"
 #define TIME_BONUS_PATH "Assets/Images/Time Bonus.png"
 #define SCORE_MULT_PATH "Assets/Images/Score Multiplier.png"
-#define GROUND_PATH "Assets/Images/Ground.png"
-#define SKY_PATH "Assets/Images/Sky Backdrop.png"
+#define GROUND_PATH "Assets/Images/Ground2.png"
+#define SKY_PATH "Assets/Images/Sky Backdrop2.png"
 
 // Sounds File Paths
 #define MAIN_THEME "Assets/Sounds/Music.wav"

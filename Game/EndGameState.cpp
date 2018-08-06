@@ -14,16 +14,16 @@ _mouseX(0), _mouseY(0), _restartGame(false), _quitGame(false), _highestScore(0)
 	_youScoredText = new Text("You scored: 0", _font, END_GAME_SCORE_TEXT_SIZE);
 	_highestScoreText = new Text("Highest Score: " + to_string(_highestScore), _font, END_GAME_SCORE_TEXT_SIZE);
 
-	formatText(_title, SCREEN_WIDTH / 2 - _title->getGlobalBounds().width / 2,
-		SCREEN_HEIGHT / 4 - _title->getGlobalBounds().height / 2, TEXT_COLOR_RED, Color::Red, true);
-	formatText(_options[0], 32, SCREEN_HEIGHT - _options[0]->getGlobalBounds().height - 90,
+	formatText(_title, getScreenWidth() / 2 - _title->getGlobalBounds().width / 2,
+		getScreenHeight() / 4 - _title->getGlobalBounds().height / 2, TEXT_COLOR_RED, Color::Red, true);
+	formatText(_options[0], 32, getScreenHeight() - _options[0]->getGlobalBounds().height - 90,
 		Color::White, TEXT_COLOR_BLUE, true);
-	formatText(_options[1], SCREEN_WIDTH - _options[1]->getGlobalBounds().width - 32,
-		SCREEN_HEIGHT - _options[1]->getGlobalBounds().height - 90, Color::White, Color::Red, true);
-	formatText(_youScoredText, SCREEN_WIDTH / 2 - _youScoredText->getGlobalBounds().width / 2,
-		SCREEN_HEIGHT / 2 - _youScoredText->getGlobalBounds().height / 2, Color::White, Color::Black, true);
-	formatText(_highestScoreText, SCREEN_WIDTH / 2 - _highestScoreText->getGlobalBounds().width / 2,
-		SCREEN_HEIGHT / 2 - _highestScoreText->getGlobalBounds().height / 2 + 64, Color::White, Color::Black, true);
+	formatText(_options[1], getScreenWidth() - _options[1]->getGlobalBounds().width - 32,
+		getScreenHeight() - _options[1]->getGlobalBounds().height - 90, Color::White, Color::Red, true);
+	formatText(_youScoredText, getScreenWidth() / 2 - _youScoredText->getGlobalBounds().width / 2,
+		getScreenHeight() / 2 - _youScoredText->getGlobalBounds().height / 2, Color::White, Color::Black, true);
+	formatText(_highestScoreText, getScreenWidth() / 2 - _highestScoreText->getGlobalBounds().width / 2,
+		getScreenHeight() / 2 - _highestScoreText->getGlobalBounds().height / 2 + 64, Color::White, Color::Black, true);
 
 	_selectBuffer.loadFromFile(SELECT_SOUND);
 	_select.setBuffer(_selectBuffer);

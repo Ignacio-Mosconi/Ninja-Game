@@ -1,4 +1,5 @@
 #include "Life.h"
+#include "State.h"
 
 Life::Life(int x, int y, const string& imagePath):
 Collectible(x, y, imagePath, rand() % (LIFE_MAX_SPAWN_TIME - LIFE_MIN_SPAWN_TIME) + LIFE_MIN_SPAWN_TIME, LIFE_DURATION)
@@ -37,8 +38,8 @@ void Life::respawn()
 	_sprite.setColor(Color::White);
 	_onScreenTime = LIFE_DURATION;
 	_spawnTime = rand() % (LIFE_MAX_SPAWN_TIME - LIFE_MIN_SPAWN_TIME) + LIFE_MIN_SPAWN_TIME;
-	_sprite.setPosition(rand() % (COLLECTIBLE_MAX_X - COLLECTIBLE_MIN_X - LIFE_WIDTH) + COLLECTIBLE_MIN_X,
-		rand() % (COLLECTIBLE_MAX_Y - COLLECTIBLE_MIN_Y) + COLLECTIBLE_MIN_Y);
+	_sprite.setPosition(rand() % (State::getScreenWidth() - COLLECTIBLE_SIDES_SPACE - LIFE_WIDTH) + COLLECTIBLE_SIDES_SPACE,
+		rand() % (State::getScreenHeight() - GROUND_HEIGHT - LIFE_HEIGHT - COLLECTIBLE_MIN_Y) + COLLECTIBLE_MIN_Y);
 }
 
 void Life::animate(float elapsed)

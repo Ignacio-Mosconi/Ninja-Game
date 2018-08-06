@@ -12,6 +12,8 @@ protected:
 	RenderWindow* _window;
 	Clock* _clock;
 
+	static Vector2u _screenDimensions;
+
 	virtual void input() = 0;
 	virtual void update(float elapsed) = 0;
 	virtual void draw() const = 0;
@@ -19,6 +21,10 @@ protected:
 public:
 	State(RenderWindow& window);
 	~State();
+
+	int static getScreenWidth() { return _screenDimensions.x; }
+	int static getScreenHeight() { return _screenDimensions.y; }
+	void static setScreenDimensions(Vector2u screenDimensions) { _screenDimensions = screenDimensions; }
 };
 
 #endif

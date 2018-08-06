@@ -1,4 +1,5 @@
 #include "TimeBonus.h"
+#include "State.h"
 
 TimeBonus::TimeBonus(int x, int y, const string& imagePath) :
 Collectible(x, y, imagePath, rand() % (TIME_BONUS_MAX_SPAWN_TIME - TIME_BONUS_MIN_SPAWN_TIME) + TIME_BONUS_MIN_SPAWN_TIME,
@@ -38,8 +39,8 @@ void TimeBonus::respawn()
 	_sprite.setColor(Color::White);
 	_onScreenTime = TIME_BONUS_DURATION;
 	_spawnTime = rand() % (TIME_BONUS_MAX_SPAWN_TIME - TIME_BONUS_MIN_SPAWN_TIME) + TIME_BONUS_MIN_SPAWN_TIME;
-	_sprite.setPosition(rand() % (COLLECTIBLE_MAX_X - COLLECTIBLE_MIN_X - TIME_BONUS_WIDTH) + COLLECTIBLE_MIN_X,
-		rand() % (COLLECTIBLE_MAX_Y - COLLECTIBLE_MIN_Y) + COLLECTIBLE_MIN_Y);
+	_sprite.setPosition(rand() % (State::getScreenWidth() - COLLECTIBLE_SIDES_SPACE - TIME_BONUS_WIDTH) + COLLECTIBLE_SIDES_SPACE, 
+		rand() % (State::getScreenHeight() - GROUND_HEIGHT - TIME_BONUS_HEIGHT - COLLECTIBLE_MIN_Y) + COLLECTIBLE_MIN_Y);
 }
 
 void TimeBonus::animate(float elapsed)

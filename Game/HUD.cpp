@@ -1,4 +1,5 @@
 #include "HUD.h"
+#include "State.h"
 #include "UtilityFunctions.h"
 
 HUD::HUD() : _showScoreMultBonus(false)
@@ -11,9 +12,9 @@ HUD::HUD() : _showScoreMultBonus(false)
 	_scoreMult = new Text("Score x2", _font, HUD_SCORE_MULT_TEXT_SIZE);
 
 	formatText(_lives, 32, HUD_TEXT_Y, TEXT_COLOR_GREEN, Color::White, true);
-	formatText(_score, SCREEN_WIDTH / 2 - _score->getGlobalBounds().width / 2, HUD_TEXT_Y, TEXT_COLOR_BLUE, Color::White, true);
-	formatText(_time, SCREEN_WIDTH - _time->getGlobalBounds().width - 32, HUD_TEXT_Y, TEXT_COLOR_GREEN, Color::White, true);
-	formatText(_scoreMult, 32, SCREEN_HEIGHT - _scoreMult->getGlobalBounds().height - 32, TEXT_COLOR_YELLOW, Color::Green, true);
+	formatText(_score, State::getScreenWidth() / 2 - _score->getGlobalBounds().width / 2, HUD_TEXT_Y, TEXT_COLOR_BLUE, Color::White, true);
+	formatText(_time, State::getScreenWidth() - _time->getGlobalBounds().width - 32, HUD_TEXT_Y, TEXT_COLOR_GREEN, Color::White, true);
+	formatText(_scoreMult, 32, State::getScreenHeight() - _scoreMult->getGlobalBounds().height - 32, TEXT_COLOR_YELLOW, Color::Green, true);
 
 	_clockTickBuffer.loadFromFile(CLOCK_TICK_SOUND);
 	_clockTick.setBuffer(_clockTickBuffer);
@@ -48,7 +49,7 @@ void HUD::updateHUD(Element element, int number)
 			break;
 		case Score:
 			_score->setString("Score: " + to_string(number));
-			formatText(_score, SCREEN_WIDTH / 2 - _score->getGlobalBounds().width / 2, HUD_TEXT_Y, TEXT_COLOR_BLUE, Color::White, true);
+			formatText(_score, State::getScreenWidth() / 2 - _score->getGlobalBounds().width / 2, HUD_TEXT_Y, TEXT_COLOR_BLUE, Color::White, true);
 			break;
 		case TimeLeft:
 			_time->setString("Time: " + to_string(number));
