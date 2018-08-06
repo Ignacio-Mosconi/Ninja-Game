@@ -2,6 +2,8 @@
 #define DEFINITIONS_H
 
 // Game Properties
+#define DEFAULT_WIDTH 1920
+#define DEFAULT_HEIGHT 1080
 #define FRAME_RATE 60
 #define GAME_TITLE "Ninja Thief"
 
@@ -55,7 +57,8 @@
 #define PLAYER_JUMP_SPEED -1000
 #define PLAYER_JUMP_HEIGHT 576
 #define GRAVITY 1200
-#define GROUND_HEIGHT 72
+#define GROUND_POS_PERCENTAGE 2/30
+//#define GROUND_HEIGHT 72
 #define FLICKERING_TIME 5
 #define FLICKERING_RATE 0.5
 #define IDLE_MAX_INDEX 5

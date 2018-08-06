@@ -39,7 +39,7 @@ void ScoreMultiplier::respawn()
 	_onScreenTime = SCORE_MULT_DURATION;
 	_spawnTime = rand() % (SCORE_MULT_MAX_SPAWN_TIME - SCORE_MULT_MIN_SPAWN_TIME) + SCORE_MULT_MIN_SPAWN_TIME;
 	_sprite.setPosition(rand() % (State::getScreenWidth() - COLLECTIBLE_SIDES_SPACE - SCORE_MULT_WIDTH) + COLLECTIBLE_SIDES_SPACE,
-		rand() % (State::getScreenHeight() - GROUND_HEIGHT - SCORE_MULT_HEIGHT - COLLECTIBLE_MIN_Y) + COLLECTIBLE_MIN_Y);
+		rand() % (State::getScreenHeight() - State::getScreenHeight() * GROUND_POS_PERCENTAGE - SCORE_MULT_HEIGHT - COLLECTIBLE_MIN_Y) + COLLECTIBLE_MIN_Y);
 }
 
 void ScoreMultiplier::animate(float elapsed)

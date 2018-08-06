@@ -130,7 +130,7 @@ void Player::jump(float elapsed)
 	{
 		if (_currentState == Jumping)
 		{
-			if (_sprite.getPosition().y > State::getScreenHeight() - PLAYER_JUMP_HEIGHT - GROUND_HEIGHT)
+			if (_sprite.getPosition().y > State::getScreenHeight() - PLAYER_JUMP_HEIGHT - State::getScreenHeight() / GROUND_POS_PERCENTAGE)
 			{
 				if ((Keyboard::isKeyPressed(Keyboard::Left) || Joystick::getAxisPosition(0, Joystick::PovX) < 0 ||
 					Joystick::getAxisPosition(0, Joystick::X) < -STICK_SENSITIVITY) && _sprite.getPosition().x > 0)
@@ -167,7 +167,7 @@ void Player::jump(float elapsed)
 
 void Player::fall(float elapsed)
 {
-	if (_sprite.getPosition().y + PLAYER_HEIGHT < State::getScreenHeight() - GROUND_HEIGHT)
+	if (_sprite.getPosition().y + PLAYER_HEIGHT < State::getScreenHeight() - State::getScreenHeight() * GROUND_POS_PERCENTAGE)
 	{
 		if ((Keyboard::isKeyPressed(Keyboard::Left) || Joystick::getAxisPosition(0, Joystick::PovX) < 0 ||
 			Joystick::getAxisPosition(0, Joystick::X) < -STICK_SENSITIVITY) && _sprite.getPosition().x > 0)
@@ -198,7 +198,8 @@ void Player::fall(float elapsed)
 	}
 	else
 	{
-		_sprite.setPosition(_sprite.getPosition().x, State::getScreenHeight() - GROUND_HEIGHT - PLAYER_HEIGHT);
+		_sprite.setPosition(_sprite.getPosition().x, 
+			State::getScreenHeight() - State::getScreenHeight() * GROUND_POS_PERCENTAGE - PLAYER_HEIGHT);
 		_imagePos.x = 0;
 		_imagePos.y = (_facing == Right) ? IdleRight : IdleLeft;
 		_currentState = Idle;
@@ -250,7 +251,8 @@ void Player::respawn()
 	_imagePos.x = 0;
 	_imagePos.y = IdleRight;
 	_sprite.setTextureRect(IntRect(_imagePos.x, _imagePos.y, PLAYER_WIDTH, PLAYER_HEIGHT));
-	_sprite.setPosition(State::getScreenWidth() / 2 - PLAYER_WIDTH / 2, State::getScreenHeight() - GROUND_HEIGHT - PLAYER_HEIGHT);
+	_sprite.setPosition(State::getScreenWidth() / 2 - PLAYER_WIDTH / 2,
+		State::getScreenHeight() - State::getScreenHeight() * GROUND_POS_PERCENTAGE - PLAYER_HEIGHT);
 	_sprite.setColor(Color::White);
 }
 

@@ -25,7 +25,7 @@ _activeFruits(INIT_ACTIVE_FRUITS), _timeAtFruitPoolIncrease(0)
 	_timeBonus = new TimeBonus(0, 0, TIME_BONUS_PATH);
 	_scoreMultiplier = new ScoreMultiplier(0, 0, SCORE_MULT_PATH);
 	
-	_ground = new Entity(0, State::getScreenHeight() - GROUND_HEIGHT, GROUND_PATH);
+	_ground = new Entity(0, getScreenHeight() - getScreenHeight() * GROUND_POS_PERCENTAGE, GROUND_PATH);
 	_sky = new Entity(0, 0, SKY_PATH);
 	
 	_hud = new HUD();

@@ -23,7 +23,7 @@ void Fruit::update(float elapsed)
 {
 	if (_enabled)
 	{
-		if (_sprite.getPosition().y < State::getScreenHeight() - GROUND_HEIGHT - FRUIT_HEIGHT)
+		if (_sprite.getPosition().y < State::getScreenHeight() - State::getScreenHeight() * GROUND_POS_PERCENTAGE - FRUIT_HEIGHT)
 			move(elapsed);
 		else
 		{
