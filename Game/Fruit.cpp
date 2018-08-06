@@ -1,5 +1,6 @@
 #include "Fruit.h"
 #include "State.h"
+#include "GameState.h"
 
 float Fruit::_gameTime = 0;
 
@@ -23,7 +24,7 @@ void Fruit::update(float elapsed)
 {
 	if (_enabled)
 	{
-		if (_sprite.getPosition().y < State::getScreenHeight() - State::getScreenHeight() * GROUND_POS_PERCENTAGE - FRUIT_HEIGHT)
+		if (_sprite.getPosition().y < State::getScreenHeight() - GameState::getGroundHeight() - FRUIT_HEIGHT)
 			move(elapsed);
 		else
 		{

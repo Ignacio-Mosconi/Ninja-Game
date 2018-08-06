@@ -1,5 +1,6 @@
 #include "Coin.h"
 #include "State.h"
+#include "GameState.h"
 
 Coin::Coin(int x, int y, const string& imagePath) : 
 Collectible(x, y, imagePath, rand() % (COIN_MAX_SPAWN_TIME - COIN_MIN_SPAWN_TIME) + COIN_MIN_SPAWN_TIME, COIN_DURATION)
@@ -39,7 +40,7 @@ void Coin::respawn()
 	_onScreenTime = COIN_DURATION;
 	_spawnTime = rand() % (COIN_MAX_SPAWN_TIME - COIN_MIN_SPAWN_TIME) + COIN_MIN_SPAWN_TIME;
 	_sprite.setPosition(rand() % (State::getScreenWidth() - COLLECTIBLE_SIDES_SPACE - COIN_WIDTH) + COLLECTIBLE_SIDES_SPACE, 
-		rand() % (State::getScreenHeight() - State::getScreenHeight() * GROUND_POS_PERCENTAGE - COIN_HEIGHT - COLLECTIBLE_MIN_Y) + COLLECTIBLE_MIN_Y);
+		rand() % (State::getScreenHeight() - GameState::getGroundHeight() - COIN_HEIGHT - COLLECTIBLE_MIN_Y) + COLLECTIBLE_MIN_Y);
 }
 
 void Coin::animate(float elapsed)

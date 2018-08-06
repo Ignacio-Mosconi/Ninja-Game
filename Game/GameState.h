@@ -48,6 +48,7 @@ private:
 	float _scoreMultBonusCounter;
 	int _activeFruits;
 	float _timeAtFruitPoolIncrease;
+	int static _groundHeight;
 
 	void fruitPlayerCollision(Fruit* f, Player* p);
 	void coinPlayerCollision(Coin* c, Player* p);
@@ -73,6 +74,7 @@ public:
 	void restart();
 
 	inline bool gameOver() { return _gameOver; }
+	inline int static getGroundHeight() { return _groundHeight; }
 };
 
 #endif

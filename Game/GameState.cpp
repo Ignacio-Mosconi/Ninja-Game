@@ -10,6 +10,8 @@
 #include "PauseState.h"
 #include "EndGameState.h"
 
+int GameState::_groundHeight = 0;
+
 GameState::GameState(RenderWindow& window) : State(window),
 _gameOver(false), _score(0), _time(GAME_TIME), _timeSinceLastFrame(0), _scoreMult(1), _scoreMultBonusCounter(0),
 _activeFruits(INIT_ACTIVE_FRUITS), _timeAtFruitPoolIncrease(0)
@@ -32,6 +34,8 @@ _activeFruits(INIT_ACTIVE_FRUITS), _timeAtFruitPoolIncrease(0)
 
 	_pauseState = new PauseState(*_window);
 	_endGameState = new EndGameState(*_window);
+
+	_groundHeight = getScreenHeight() * GROUND_POS_PERCENTAGE;
 
 	_mainTheme.openFromFile(MAIN_THEME);
 	_mainTheme.setLoop(true);

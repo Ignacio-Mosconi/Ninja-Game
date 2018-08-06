@@ -1,4 +1,5 @@
 #include "Collectible.h"
+#include "State.h"
 
 Collectible::Collectible(int x, int y, const string& imagePath, float spawnTime, float onScreenTime) : Entity(x, y, imagePath),
 _spawnTime(spawnTime), _onScreenTime(onScreenTime), _flickeringCounter(0), _imagePosX(0), _animationCounter(0)
