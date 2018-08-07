@@ -18,6 +18,7 @@ _activeFruits(INIT_ACTIVE_FRUITS), _timeAtFruitPoolIncrease(0)
 {
 	srand(time(0));
 
+	Collectible::setMinY(getScreenHeight() * COLLECTIBLE_MIN_Y_PERCENTAGE);
 	_player = new Player(0, 0, PLAYER_PATH);
 	for (int i = 0; i < FRUITS; i++)
 		_fruits[i] = new Fruit(0, 0, FRUIT_PATH);

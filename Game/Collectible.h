@@ -12,6 +12,7 @@ protected:
 	float _flickeringCounter;
 	int _imagePosX;
 	float _animationCounter;
+	static int _minY;
 
 	virtual void flicker(float elapsed);
 	virtual void animate(float elapsed) = 0;
@@ -25,6 +26,7 @@ public:
 	virtual void respawn() = 0;
 
 	inline bool isEnabled() { return _enabled; }
+	void static setMinY(int minY) { _minY = minY; }
 };
 
 #endif;

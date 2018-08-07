@@ -13,7 +13,7 @@ protected:
 	Clock* _clock;
 
 	static Vector2u _screenDimensions;
-	static Vector2f _scaleFactor;
+	static Vector2f _scaleFactors;
 
 	virtual void input() = 0;
 	virtual void update(float elapsed) = 0;
@@ -25,9 +25,9 @@ public:
 
 	int static getScreenWidth() { return _screenDimensions.x; }
 	int static getScreenHeight() { return _screenDimensions.y; }
-	Vector2f static getScaleFactor() { return _scaleFactor; }
+	Vector2f static getScaleFactors() { return _scaleFactors; }
 	void static setScreenDimensions(Vector2u screenDimensions) { _screenDimensions = screenDimensions; }
-	void static setScaleFactor(Vector2f scaleFactor) { _scaleFactor = scaleFactor; }
+	void static setScaleFactors(Vector2f scaleFactors) { _scaleFactors = scaleFactors; }
 };
 
 #endif

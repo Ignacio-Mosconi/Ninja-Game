@@ -62,6 +62,7 @@ private:
 	int _lives;
 	float _moveSpeed;
 	float _jumpSpeed;
+	int _jumpHeight;
 	bool _isInvincible;
 	float _flickeringTime;
 	float _flickeringCounter;
