@@ -2,6 +2,7 @@
 #include <vld.h>
 #endif
 
+#include <vector>
 #include <SFML/Graphics.hpp>
 #include <SFML/Window/Cursor.hpp>
 #include "SplashState.h"
@@ -12,8 +13,16 @@ using namespace sf;
 
 int main()
 {
-	VideoMode videoMode = VideoMode::getFullscreenModes()[4];
-	RenderWindow window(videoMode, GAME_TITLE, Style::Fullscreen);
+	vector<VideoMode> videoModes(VideoMode::getFullscreenModes());
+	VideoMode bestVideoMode = videoModes[0];
+	for (int i = 0; i < VideoMode::getFullscreenModes().size(); i++)
+		if (videoModes[i].width / videoModes[i].height == DEFAULT_WIDTH / DEFAULT_HEIGHT &&
+			videoModes[i].width * videoModes[i].height >= bestVideoMode.width * bestVideoMode.height)
+		{
+			bestVideoMode = videoModes[i];
+			break;
+		}
+	RenderWindow window(bestVideoMode, GAME_TITLE, Style::Fullscreen);
 	State::setScreenDimensions(window.getSize());
 	State::setScaleFactors(Vector2f((float)window.getSize().x / DEFAULT_WIDTH, (float)window.getSize().y / DEFAULT_HEIGHT));
 	window.setMouseCursorVisible(false);
@@ -40,7 +49,10 @@ int main()
 	while (window.isOpen())
 	{
 		if (!game->gameOver())
+		{
+			menu->changeHighestScore(game->retrieveHighestScore());
 			menu->show();
+		}
 
 		if (menu->startGame())
 		{

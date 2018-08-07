@@ -8,8 +8,9 @@ _mouseX(0), _mouseY(0), _clicked(false), _startGame(false), _currentScreen(Main)
 
 	_title = new Text("Ninja Thief", _font, TITLE_TEXT_SIZE * getScaleFactors().x);
 	_options[0] = new Text("Play", _font, OPTIONS_TEXT_SIZE * getScaleFactors().x);
-	_options[1] = new Text("Credits", _font, OPTIONS_TEXT_SIZE * getScaleFactors().x);
-	_options[2] = new Text("Exit", _font, OPTIONS_TEXT_SIZE * getScaleFactors().x);
+	_options[1] = new Text("Leaderboard", _font, OPTIONS_TEXT_SIZE * getScaleFactors().x);
+	_options[2] = new Text("Credits", _font, OPTIONS_TEXT_SIZE * getScaleFactors().x);
+	_options[3] = new Text("Exit", _font, OPTIONS_TEXT_SIZE * getScaleFactors().x);
 
 	_creditsTitle = new Text("Credits", _font, SUB_TITLE_TEXT_SIZE * getScaleFactors().x);
 	_credits[0] = new Text("Game Director", _font, CREDITS_TEXT_SIZE * getScaleFactors().x);
@@ -23,14 +24,17 @@ _mouseX(0), _mouseY(0), _clicked(false), _startGame(false), _currentScreen(Main)
 	_names[4] = new Text("Bfxr", _font, CREDITS_TEXT_SIZE * getScaleFactors().x);
 	_names[5] = new Text("Ignacio Mosconi", _font, CREDITS_TEXT_SIZE * getScaleFactors().x);
 	_poweredBySFML = new Text("Powered By SFML 2.5.0", _font, CREDITS_TEXT_SIZE * getScaleFactors().x);
-
 	_creditsOptions[0] = new Text("Back", _font, OPTIONS_TEXT_SIZE * getScaleFactors().x);
+
+	_leaderboardTitle = new Text("Leaderboard", _font, SUB_TITLE_TEXT_SIZE * getScaleFactors().x);
+	_leaderboard = new Text("Highest Score: 0 ", _font, HIGHEST_SCORE_TEXT_SIZE * getScaleFactors().x);
+	_leaderboardOptions[0] = new Text("Back", _font, OPTIONS_TEXT_SIZE * getScaleFactors().x);
 
 	formatText(_title, getScreenWidth() / 2 - _title->getGlobalBounds().width / 2,
 		getScreenHeight() / 3 - _title->getGlobalBounds().height / 2, Color::Red, Color::White, true);
 	for (int i = 0; i < MENU_OPTIONS; i++)
 		formatText(_options[i], getScreenWidth() / 2 - _options[i]->getGlobalBounds().width / 2,
-			getScreenHeight() / 2 + 96 * (i + 1) - _options[i]->getGlobalBounds().height / 2, Color::White);
+			getScreenHeight() / 2 + 96 * (i + 1) * State::getScaleFactors().x - _options[i]->getGlobalBounds().height / 2, Color::White);
 
 	formatText(_creditsTitle, getScreenWidth() / 2 - _creditsTitle->getGlobalBounds().width / 2,
 		getScreenHeight() / 6 - _creditsTitle->getGlobalBounds().height / 2, Color::Red, Color::White, true);
@@ -44,9 +48,15 @@ _mouseX(0), _mouseY(0), _clicked(false), _startGame(false), _currentScreen(Main)
 	formatText(_poweredBySFML, getScreenWidth() / 2 - _poweredBySFML->getGlobalBounds().width / 2,
 		getScreenHeight() * 2/5 + 64 * 6 * getScaleFactors().x - _poweredBySFML->getGlobalBounds().height / 2, 
 		Color::Red, Color::White, true);
-
 	formatText(_creditsOptions[0], getScreenWidth() - _creditsOptions[0]->getGlobalBounds().width - 32,
 		getScreenHeight() - _creditsOptions[0]->getGlobalBounds().height - 32, Color::White);
+
+	formatText(_leaderboardTitle, getScreenWidth() / 2 - _leaderboardTitle->getGlobalBounds().width / 2,
+		getScreenHeight() / 6 - _leaderboardTitle->getGlobalBounds().height / 2, Color::Red, Color::White, true);
+	formatText(_leaderboard, getScreenWidth() / 2 - _leaderboard->getGlobalBounds().width / 2,
+		getScreenHeight() / 2 - _leaderboard->getGlobalBounds().height / 2, Color::White);
+	formatText(_leaderboardOptions[0], getScreenWidth() - _leaderboardOptions[0]->getGlobalBounds().width - 32,
+		getScreenHeight() - _leaderboardOptions[0]->getGlobalBounds().height - 32, Color::White);
 
 	_selectBuffer.loadFromFile(SELECT_SOUND);
 	_select.setBuffer(_selectBuffer);
@@ -55,21 +65,28 @@ _mouseX(0), _mouseY(0), _clicked(false), _startGame(false), _currentScreen(Main)
 		_selected[i] = false;
 	for (int i = 0; i < CREDITS_OPTIONS; i++)
 		_creditsSelected[i] = false;
+	for (int i = 0; i < HIGHEST_SCORE_OPTIONS; i++)
+		_highestScoreSelected[i] = false;
 }
 
 MenuState::~MenuState()
 {
 	delete _title;
+	delete _creditsTitle;
+	delete _leaderboardTitle;
 	for (int i = 0; i < MENU_OPTIONS; i++)
 		delete _options[i];
 	for (int i = 0; i < CREDITS_OPTIONS; i++)
 		delete _creditsOptions[i];
+	for (int i = 0; i < HIGHEST_SCORE_OPTIONS; i++)
+		delete _leaderboardOptions[i];
 	for (int i = 0; i < CREDITS_ITEMS; i++)
 	{
 		delete _credits[i];
 		delete _names[i];
 	}
 	delete _poweredBySFML;
+	delete _leaderboard;
 }
 
 void MenuState::show()
@@ -149,43 +166,79 @@ void MenuState::update(float elapsed)
 				else
 				{
 					if (_selected[1])
-						_currentScreen = Credits;
+						_currentScreen = Leaderboard;
 					else
+					{
 						if (_selected[2])
-							_window->close();
+							_currentScreen = Credits;
+						else
+							if (_selected[3])
+								_window->close();
+					}
 				}
 				_clicked = false;
 			}
 			break;
-	case Credits:
-		for (int i = 0; i < CREDITS_OPTIONS; i++)
-		{
-			if (_creditsOptions[i]->getGlobalBounds().contains(_mouseX, _mouseY))
-			{
-				if (!_creditsSelected[i])
-				{
-					_select.play();
-					_creditsSelected[i] = true;
-					_creditsOptions[i]->setFillColor(TEXT_COLOR_RED);
-				}
-			}
-			else
-			{
-				if (_creditsSelected[i])
-				{
-					_creditsSelected[i] = false;
-					_creditsOptions[i]->setFillColor(Color::White);
-				}
-			}
-		}
 
-		if (_clicked)
-		{
-			if (_creditsSelected[0])
-				_currentScreen = Main;
-			_clicked = false;
-		}
-		break;
+		case Leaderboard:
+			for (int i = 0; i < HIGHEST_SCORE_OPTIONS; i++)
+			{
+				if (_leaderboardOptions[i]->getGlobalBounds().contains(_mouseX, _mouseY))
+				{
+					if (!_highestScoreSelected[i])
+					{
+						_select.play();
+						_highestScoreSelected[i] = true;
+						_leaderboardOptions[i]->setFillColor(TEXT_COLOR_RED);
+					}
+				}
+				else
+				{
+					if (_highestScoreSelected[i])
+					{
+						_highestScoreSelected[i] = false;
+						_leaderboardOptions[i]->setFillColor(Color::White);
+					}
+				}
+			}
+
+			if (_clicked)
+			{
+				if (_highestScoreSelected[0])
+					_currentScreen = Main;
+				_clicked = false;
+			}
+			break;
+
+		case Credits:
+			for (int i = 0; i < CREDITS_OPTIONS; i++)
+			{
+				if (_creditsOptions[i]->getGlobalBounds().contains(_mouseX, _mouseY))
+				{
+					if (!_creditsSelected[i])
+					{
+						_select.play();
+						_creditsSelected[i] = true;
+						_creditsOptions[i]->setFillColor(TEXT_COLOR_RED);
+					}
+				}
+				else
+				{
+					if (_creditsSelected[i])
+					{
+						_creditsSelected[i] = false;
+						_creditsOptions[i]->setFillColor(Color::White);
+					}
+				}
+			}
+
+			if (_clicked)
+			{
+				if (_creditsSelected[0])
+					_currentScreen = Main;
+				_clicked = false;
+			}
+			break;
 	}
 }
 
@@ -201,6 +254,12 @@ void MenuState::draw() const
 			for (int i = 0; i < MENU_OPTIONS; i++)
 				_window->draw(*_options[i]);
 			break;
+		case Leaderboard:
+			_window->draw(*_leaderboardTitle);
+			_window->draw(*_leaderboard);
+			for (int i = 0; i < HIGHEST_SCORE_OPTIONS; i++)
+				_window->draw(*_leaderboardOptions[i]);
+			break;
 		case Credits:
 			_window->draw(*_creditsTitle);
 			for (int i = 0; i < CREDITS_OPTIONS; i++)
@@ -215,4 +274,11 @@ void MenuState::draw() const
 	}
 
 	_window->display();
+}
+
+void MenuState::changeHighestScore(const int& highestScore)
+{
+	_leaderboard->setString("Highest Score: " + to_string(highestScore));
+	formatText(_leaderboard, getScreenWidth() / 2 - _leaderboard->getGlobalBounds().width / 2,
+		getScreenHeight() / 2 - _leaderboard->getGlobalBounds().height / 2, Color::White);
 }

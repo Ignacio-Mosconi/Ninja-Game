@@ -8,6 +8,7 @@
 enum MenuScreen
 {
 	Main,
+	Leaderboard,
 	Credits
 };
 
@@ -25,12 +26,17 @@ private:
 	Text* _names[CREDITS_ITEMS];
 	Text* _poweredBySFML;
 
+	Text* _leaderboardTitle;
+	Text* _leaderboardOptions[HIGHEST_SCORE_OPTIONS];
+	Text* _leaderboard;
+
 	SoundBuffer _selectBuffer;
 
 	Sound _select;
 
 	bool _selected[MENU_OPTIONS];
 	bool _creditsSelected[CREDITS_OPTIONS];
+	bool _highestScoreSelected[HIGHEST_SCORE_OPTIONS];
 	int _mouseX;
 	int _mouseY;
 	bool _clicked;
@@ -47,6 +53,8 @@ public:
 	~MenuState();
 
 	void show();
+
+	void changeHighestScore(const int& highestScore);
 
 	inline bool startGame() { return _startGame; }
 	void setStartGame(bool start) { _startGame = start; }

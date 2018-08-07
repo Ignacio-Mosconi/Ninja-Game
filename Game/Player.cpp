@@ -4,8 +4,9 @@
 
 Player::Player(int x, int y, const string& imagePath) : Entity(x, y, imagePath),
 _currentState(Idle), _facing(Right), _animationCounter(0), _imagePos(0, IdleRight), _lives(PLAYER_LIVES),
-_moveSpeed(PLAYER_MOVE_SPEED), _jumpSpeed(PLAYER_JUMP_SPEED), _jumpHeight(State::getScreenHeight() * PLAYER_JUMP_HEIGHT_PERCENTAGE),
-_isInvincible(false), _flickeringTime(FLICKERING_TIME), _flickeringCounter(0), _hasCollectedItem(false), _pickUpCooldown(0)
+_moveSpeed(PLAYER_MOVE_SPEED * State::getScaleFactors().x), _jumpSpeed(PLAYER_JUMP_SPEED * State::getScaleFactors().y), 
+_jumpHeight(State::getScreenHeight() * PLAYER_JUMP_HEIGHT_PERCENTAGE),_isInvincible(false), _flickeringTime(FLICKERING_TIME),
+_flickeringCounter(0), _hasCollectedItem(false), _pickUpCooldown(0)
 {
 	_jumpBuffer.loadFromFile(JUMP_SOUND);
 	_fruitHitBuffer.loadFromFile(FRUIT_HIT_SOUND);

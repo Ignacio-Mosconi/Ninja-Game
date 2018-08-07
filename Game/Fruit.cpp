@@ -5,7 +5,7 @@
 float Fruit::_gameTime = 0;
 
 Fruit::Fruit(int x, int y, const string& imagePath) : Entity(x, y, imagePath),
-_speed(rand() % (FRUIT_MAX_SPEED - FRUIT_MIN_SPEED) + FRUIT_MIN_SPEED), _rotationSpeed(_speed),
+_speed(rand() % ((FRUIT_MAX_SPEED - FRUIT_MIN_SPEED) + FRUIT_MIN_SPEED) * State::getScaleFactors().y), _rotationSpeed(_speed),
 _spawnTime(rand() % (FRUIT_MAX_SPAWN_TIME - FRUIT_MIN_SPAWN_TIME) + FRUIT_MIN_SPAWN_TIME),
 _kind(chooseKind()), _hasReachedBottom(false)
 {
@@ -24,7 +24,7 @@ void Fruit::update(float elapsed)
 {
 	if (_enabled)
 	{
-		if (_sprite.getPosition().y < State::getScreenHeight() - GameState::getGroundHeight() - FRUIT_HEIGHT)
+		if (_sprite.getPosition().y < State::getScreenHeight() - GameState::getGroundHeight() - FRUIT_HEIGHT * State::getScaleFactors().y)
 			move(elapsed);
 		else
 		{
@@ -60,7 +60,7 @@ void Fruit::respawn()
 	_enabled = true;
 	_sprite.setColor(Color::White);
 	_sprite.setPosition(rand() % (State::getScreenWidth() - FRUIT_SIDES_SPACE - FRUIT_WIDTH) + FRUIT_SIDES_SPACE, FRUIT_MIN_Y);
-	_speed = (rand() % (FRUIT_MAX_SPEED - FRUIT_MIN_SPEED) + FRUIT_MIN_SPEED) * (_gameTime / 100);
+	_speed = (rand() % (FRUIT_MAX_SPEED - FRUIT_MIN_SPEED) + FRUIT_MIN_SPEED) * (_gameTime / 100) * State::getScaleFactors().y;
 	_rotationSpeed = _speed / 5;
 	_spawnTime = rand() % (FRUIT_MAX_SPAWN_TIME - FRUIT_MIN_SPAWN_TIME) + FRUIT_MIN_SPAWN_TIME;
 	_kind = chooseKind();

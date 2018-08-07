@@ -49,6 +49,7 @@ public:
 
 	inline bool quitGame() { return _quitGame; }
 	void setQuitGame(bool quitGame) { _quitGame = quitGame; }
+	int getHighestScore() { return _highestScore; }
 };
 
 #endif

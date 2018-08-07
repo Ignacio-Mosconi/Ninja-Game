@@ -73,6 +73,7 @@ public:
 	void pause(bool& wasPaused);
 	void restart();
 
+	int retrieveHighestScore();
 	inline bool gameOver() { return _gameOver; }
 	inline int static getGroundHeight() { return _groundHeight; }
 };

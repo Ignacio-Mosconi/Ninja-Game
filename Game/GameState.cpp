@@ -388,3 +388,8 @@ void GameState::restart()
 	_clock->restart();
 	run();
 }
+
+int GameState::retrieveHighestScore()
+{
+	return _endGameState->getHighestScore();
+}
