@@ -347,6 +347,9 @@ void GameState::result()
 
 void GameState::restart()
 {
+	if (_scoreMult == SCORE_MULTIPLIER)
+		_hud->updateHUD(ScoreMultBonus, 0);
+
 	_gameOver = false;
 	_score = 0;
 	_time = GAME_TIME;
@@ -381,8 +384,6 @@ void GameState::restart()
 	_hud->updateHUD(Lives, _player->getLives());
 	_hud->updateHUD(Score, _score);
 	_hud->updateHUD(TimeLeft, _time);
-	if (_scoreMult == SCORE_MULTIPLIER)
-		_hud->updateHUD(ScoreMultBonus, 0);
 
 	_clock->restart();
 	run();

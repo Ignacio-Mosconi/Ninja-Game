@@ -6,15 +6,15 @@ _mouseX(0), _mouseY(0), _clicked(false), _resumeGame(false), _quitGame(false)
 {
 	_font.loadFromFile(FONT_PATH);
 
-	_title = new Text("Paused", _font, PAUSED_TEXT_SIZE);
-	_options[0] = new Text("Resume", _font, PAUSED_OPTIONS_TEXT_SIZE);
-	_options[1] = new Text("Quit", _font, PAUSED_OPTIONS_TEXT_SIZE);
+	_title = new Text("Paused", _font, PAUSED_TEXT_SIZE * getScaleFactors().x);
+	_options[0] = new Text("Resume", _font, PAUSED_OPTIONS_TEXT_SIZE * getScaleFactors().x);
+	_options[1] = new Text("Quit", _font, PAUSED_OPTIONS_TEXT_SIZE * getScaleFactors().x);
 
 	formatText(_title, getScreenWidth() / 2 - _title->getGlobalBounds().width / 2,
 		getScreenHeight() / 4 - _title->getGlobalBounds().height / 2, TEXT_COLOR_GREEN, Color::White, true);
 	for (int i = 0; i < PAUSE_OPTIONS; i++)
 		formatText(_options[i], getScreenWidth() / 2 - _options[i]->getGlobalBounds().width / 2,
-			getScreenHeight() / 2 - _options[0]->getGlobalBounds().height / 2 + 128 * i, Color::White);
+			getScreenHeight() / 2 - _options[0]->getGlobalBounds().height / 2 + 128 * i * getScaleFactors().x, Color::White);
 
 	_selectBuffer.loadFromFile(SELECT_SOUND);
 	_select.setBuffer(_selectBuffer);
@@ -22,7 +22,7 @@ _mouseX(0), _mouseY(0), _clicked(false), _resumeGame(false), _quitGame(false)
 	_resumeBuffer.loadFromFile(RESUME_SOUND);
 	_resume.setBuffer(_resumeBuffer);
 
-	_alphaRect.setSize(Vector2f(_window->getSize().x, _window->getSize().y));
+	_alphaRect.setSize(Vector2f(getScreenWidth(), getScreenHeight()));
 	Color rectColor(0, 0, 0, ALPHA_RECT_VALUE);
 	_alphaRect.setFillColor(rectColor);
 

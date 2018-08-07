@@ -6,25 +6,25 @@ _mouseX(0), _mouseY(0), _clicked(false), _startGame(false), _currentScreen(Main)
 {
 	_font.loadFromFile(FONT_PATH);
 
-	_title = new Text("Ninja Thief", _font, TITLE_TEXT_SIZE);
-	_options[0] = new Text("Play", _font, OPTIONS_TEXT_SIZE);
-	_options[1] = new Text("Credits", _font, OPTIONS_TEXT_SIZE);
-	_options[2] = new Text("Exit", _font, OPTIONS_TEXT_SIZE);
+	_title = new Text("Ninja Thief", _font, TITLE_TEXT_SIZE * getScaleFactors().x);
+	_options[0] = new Text("Play", _font, OPTIONS_TEXT_SIZE * getScaleFactors().x);
+	_options[1] = new Text("Credits", _font, OPTIONS_TEXT_SIZE * getScaleFactors().x);
+	_options[2] = new Text("Exit", _font, OPTIONS_TEXT_SIZE * getScaleFactors().x);
 
-	_creditsTitle = new Text("Credits", _font, SUB_TITLE_TEXT_SIZE);
-	_credits[0] = new Text("Game Director", _font, CREDITS_TEXT_SIZE);
-	_credits[1] = new Text("Game Designer", _font, CREDITS_TEXT_SIZE);
-	_credits[2] = new Text("Gameplay Programmer", _font, CREDITS_TEXT_SIZE);
-	_credits[3] = new Text("Lead Artist", _font, CREDITS_TEXT_SIZE);
-	_credits[4] = new Text("Sound Effects By", _font, CREDITS_TEXT_SIZE);
-	_credits[5] = new Text("Music By", _font, CREDITS_TEXT_SIZE);
+	_creditsTitle = new Text("Credits", _font, SUB_TITLE_TEXT_SIZE * getScaleFactors().x);
+	_credits[0] = new Text("Game Director", _font, CREDITS_TEXT_SIZE * getScaleFactors().x);
+	_credits[1] = new Text("Game Designer", _font, CREDITS_TEXT_SIZE * getScaleFactors().x);
+	_credits[2] = new Text("Lead Programmer", _font, CREDITS_TEXT_SIZE * getScaleFactors().x);
+	_credits[3] = new Text("Lead Artist", _font, CREDITS_TEXT_SIZE * getScaleFactors().x);
+	_credits[4] = new Text("Sound Effects By", _font, CREDITS_TEXT_SIZE * getScaleFactors().x);
+	_credits[5] = new Text("Music By", _font, CREDITS_TEXT_SIZE * getScaleFactors().x);
 	for (int i = 0; i < CREDITS_ITEMS - 1; i++)
-		_names[i] = new Text("Ignacio Mosconi", _font, CREDITS_TEXT_SIZE);
-	_names[4] = new Text("Bfxr", _font, CREDITS_TEXT_SIZE);
-	_names[5] = new Text("Ignacio Mosconi", _font, CREDITS_TEXT_SIZE);
-	_poweredBySFML = new Text("Powered By SFML 2.5.0", _font, CREDITS_TEXT_SIZE);
+		_names[i] = new Text("Ignacio Mosconi", _font, CREDITS_TEXT_SIZE * getScaleFactors().x);
+	_names[4] = new Text("Bfxr", _font, CREDITS_TEXT_SIZE * getScaleFactors().x);
+	_names[5] = new Text("Ignacio Mosconi", _font, CREDITS_TEXT_SIZE * getScaleFactors().x);
+	_poweredBySFML = new Text("Powered By SFML 2.5.0", _font, CREDITS_TEXT_SIZE * getScaleFactors().x);
 
-	_creditsOptions[0] = new Text("Back", _font, OPTIONS_TEXT_SIZE);
+	_creditsOptions[0] = new Text("Back", _font, OPTIONS_TEXT_SIZE * getScaleFactors().x);
 
 	formatText(_title, getScreenWidth() / 2 - _title->getGlobalBounds().width / 2,
 		getScreenHeight() / 3 - _title->getGlobalBounds().height / 2, Color::Red, Color::White, true);
@@ -36,12 +36,14 @@ _mouseX(0), _mouseY(0), _clicked(false), _startGame(false), _currentScreen(Main)
 		getScreenHeight() / 6 - _creditsTitle->getGlobalBounds().height / 2, Color::Red, Color::White, true);
 	for (int i = 0; i < CREDITS_ITEMS; i++)
 	{
-		formatText(_credits[i], 32, getScreenHeight() * 2 / 5 + 64 * i - _credits[i]->getGlobalBounds().height / 2, TEXT_COLOR_GREEN);
+		formatText(_credits[i], 32, getScreenHeight() * 2 / 5 + 64 * i * State::getScaleFactors().x -
+			_credits[i]->getGlobalBounds().height / 2, TEXT_COLOR_GREEN);
 		formatText(_names[i], getScreenWidth() - _names[i]->getGlobalBounds().width - 32,
-			getScreenHeight() * 2 / 5 + 64 * i - _names[i]->getGlobalBounds().height / 2, Color::White);
+			getScreenHeight() * 2 / 5 + 64 * i * getScaleFactors().x - _names[i]->getGlobalBounds().height / 2, Color::White);
 	}
 	formatText(_poweredBySFML, getScreenWidth() / 2 - _poweredBySFML->getGlobalBounds().width / 2,
-		getScreenHeight() * 2/5 + 64 * 6 - _poweredBySFML->getGlobalBounds().height / 2, Color::Red);
+		getScreenHeight() * 2/5 + 64 * 6 * getScaleFactors().x - _poweredBySFML->getGlobalBounds().height / 2, 
+		Color::Red, Color::White, true);
 
 	formatText(_creditsOptions[0], getScreenWidth() - _creditsOptions[0]->getGlobalBounds().width - 32,
 		getScreenHeight() - _creditsOptions[0]->getGlobalBounds().height - 32, Color::White);

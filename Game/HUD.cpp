@@ -6,10 +6,10 @@ HUD::HUD() : _showScoreMultBonus(false)
 {
 	_font.loadFromFile(FONT_PATH);
 
-	_lives = new Text("Lives: 3", _font, HUD_TEXT_SIZE);
-	_score = new Text("Score: 0", _font, HUD_TEXT_SIZE);
-	_time = new Text("Time: 120", _font, HUD_TEXT_SIZE);
-	_scoreMult = new Text("Score x2", _font, HUD_SCORE_MULT_TEXT_SIZE);
+	_lives = new Text("Lives: 3", _font, HUD_TEXT_SIZE * State::getScaleFactors().x);
+	_score = new Text("Score: 0", _font, HUD_TEXT_SIZE * State::getScaleFactors().x);
+	_time = new Text("Time: 120", _font, HUD_TEXT_SIZE * State::getScaleFactors().x);
+	_scoreMult = new Text("Score x2", _font, HUD_SCORE_MULT_TEXT_SIZE * State::getScaleFactors().x);
 
 	formatText(_lives, 32, HUD_TEXT_Y, TEXT_COLOR_GREEN, Color::White, true);
 	formatText(_score, State::getScreenWidth() / 2 - _score->getGlobalBounds().width / 2, HUD_TEXT_Y, TEXT_COLOR_BLUE, Color::White, true);

@@ -8,11 +8,11 @@ _mouseX(0), _mouseY(0), _restartGame(false), _quitGame(false), _highestScore(0)
 	
 	loadHighScore();
 
-	_title = new Text("Game Over", _font, END_GAME_TEXT_SIZE);
-	_options[0] = new Text("Restart", _font, END_GAME_OPTIONS_TEXT_SIZE);
-	_options[1] = new Text("Quit", _font, END_GAME_OPTIONS_TEXT_SIZE);
-	_youScoredText = new Text("You scored: 0", _font, END_GAME_SCORE_TEXT_SIZE);
-	_highestScoreText = new Text("Highest Score: " + to_string(_highestScore), _font, END_GAME_SCORE_TEXT_SIZE);
+	_title = new Text("Game Over", _font, END_GAME_TEXT_SIZE * getScaleFactors().x);
+	_options[0] = new Text("Restart", _font, END_GAME_OPTIONS_TEXT_SIZE * getScaleFactors().x);
+	_options[1] = new Text("Quit", _font, END_GAME_OPTIONS_TEXT_SIZE * getScaleFactors().x);
+	_youScoredText = new Text("You scored: 0", _font, END_GAME_SCORE_TEXT_SIZE * getScaleFactors().x);
+	_highestScoreText = new Text("Highest Score: " + to_string(_highestScore), _font, END_GAME_SCORE_TEXT_SIZE * getScaleFactors().x);
 
 	formatText(_title, getScreenWidth() / 2 - _title->getGlobalBounds().width / 2,
 		getScreenHeight() / 4 - _title->getGlobalBounds().height / 2, TEXT_COLOR_RED, Color::Red, true);
@@ -23,12 +23,13 @@ _mouseX(0), _mouseY(0), _restartGame(false), _quitGame(false), _highestScore(0)
 	formatText(_youScoredText, getScreenWidth() / 2 - _youScoredText->getGlobalBounds().width / 2,
 		getScreenHeight() / 2 - _youScoredText->getGlobalBounds().height / 2, Color::White, Color::Black, true);
 	formatText(_highestScoreText, getScreenWidth() / 2 - _highestScoreText->getGlobalBounds().width / 2,
-		getScreenHeight() / 2 - _highestScoreText->getGlobalBounds().height / 2 + 64, Color::White, Color::Black, true);
+		getScreenHeight() / 2 + 64 * getScaleFactors().x - _highestScoreText->getGlobalBounds().height / 2,
+		Color::White, Color::Black, true);
 
 	_selectBuffer.loadFromFile(SELECT_SOUND);
 	_select.setBuffer(_selectBuffer);
 
-	_alphaRect.setSize(Vector2f(_window->getSize().x, _window->getSize().y));
+	_alphaRect.setSize(Vector2f(getScreenWidth(), getScreenHeight()));
 	Color rectColor(0, 0, 0, ALPHA_RECT_VALUE);
 	_alphaRect.setFillColor(rectColor);
 
