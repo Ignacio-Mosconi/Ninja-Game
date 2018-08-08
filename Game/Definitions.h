@@ -153,8 +153,8 @@
 #define LIFE_PATH "Assets/Images/Life.png"
 #define TIME_BONUS_PATH "Assets/Images/Time Bonus.png"
 #define SCORE_MULT_PATH "Assets/Images/Score Multiplier.png"
-#define GROUND_PATH "Assets/Images/Ground2.png"
-#define SKY_PATH "Assets/Images/Sky Backdrop2.png"
+#define GROUND_PATH "Assets/Images/Ground.png"
+#define SKY_PATH "Assets/Images/Sky Backdrop.png"
 
 // Sounds File Paths
 #define MAIN_THEME "Assets/Sounds/Music.wav"
